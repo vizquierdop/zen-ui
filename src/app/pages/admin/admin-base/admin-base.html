@@ -1,0 +1,31 @@
+<main>
+    <mat-drawer-container class="main-container" [hasBackdrop]="hasBackdrop" autosize="true">
+        <mat-drawer #drawer [opened]="isOpened" class="drawer" [mode]="drawerMode">
+            <div class="navbar-image-group">
+                <div class="header-logo">
+                    <img [routerLink]="['admin']" src="images/resources/generic-avatar.png" alt="Generic Avatar">
+                    <span>TEST BUSINESS</span>
+                </div>
+            </div>
+            <mat-nav-list cdkScrollable class="list">
+
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content class="content">
+            <mat-toolbar class="toolbar">
+                <button mat-icon-button color="accent" (click)="drawer.toggle()" aria-label="Menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <img [routerLink]="['admin']" src="images/zen-logo.png" alt="ZEN LOGOTYPE">
+                <div class="logout-container">
+                    <button mat-icon-button color="accent" (click)="logout()" aria-label="Logout icon">
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </div>
+            </mat-toolbar>
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</main>

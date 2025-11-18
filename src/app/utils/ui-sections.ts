@@ -1,8 +1,8 @@
-import { UISection } from '../models/basic/ui-section.model';
+import { UISectionModel } from '../models/basic/ui-section.model';
 import { RoleType } from '../models/enums/role.enum';
 import { UISectionKeysEnum } from '../models/enums/section-keys.enum';
 
-export const UISections: UISection[] = [
+export const UISections: UISectionModel[] = [
   {
     key: UISectionKeysEnum.ADMIN_PROFILE,
     label: 'Profile',

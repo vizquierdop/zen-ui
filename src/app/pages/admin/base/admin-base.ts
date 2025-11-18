@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { UISection } from '../../../models/basic/ui-section.model';
+import { UISectionModel } from '../../../models/basic/ui-section.model';
 import { UISections } from '../../../utils/ui-sections';
 
 @Component({
@@ -30,7 +30,7 @@ export class AdminBase {
 
   isOpened = true;
 
-  sections: UISection[] = UISections;
+  sections: UISectionModel[] = UISections;
 
   constructor(private readonly router: Router) {}
 

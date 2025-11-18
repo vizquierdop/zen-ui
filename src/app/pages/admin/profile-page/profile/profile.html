@@ -1,1 +1,16 @@
-<p>profile works!</p>
+@if (isLoading()) {
+<div class="admin-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-actions">
+        <span class="title primary">My profile</span>
+        <div class="buttons">
+            <button class="save-button" mat-flat-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
+                <span class="semi-bold">Save</span>
+            </button>
+        </div>
+    </div>
+</div>

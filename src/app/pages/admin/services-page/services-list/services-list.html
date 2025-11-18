@@ -1,1 +1,28 @@
-<p>services-list works!</p>
+@if (isLoading()) {
+<div class="admin-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-actions">
+        <span class="title primary">Services</span>
+        <div class="search-container">
+            <div class="input-box">
+                <input #searchInput (keydown.enter)="onSearch()" placeholder="Search...">
+                <button (click)="onSearch()" mat-icon-button class="input-button-container search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="filter-button" (click)="openFilterDialog()" mat-flat-button color="accent">
+                <mat-icon>filter_alt</mat-icon>
+                <span>Filters</span>
+            </button>
+            <button class="create-button" mat-flat-button color="primary" (click)="openCreateModal()">
+                <mat-icon>add</mat-icon>
+                <span class="semi-bold">Create</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,12 @@
                 </div>
             </div>
             <mat-nav-list cdkScrollable class="list">
-
+                @for (section of sections; track section) {
+                    <a [class]="section.class" [routerLink]="[section.route]" routerLinkActive="active">
+                        <mat-icon>{{ section.icon }}</mat-icon>
+                        <span class="semi-bold">{{ section.label }}</span>
+                    </a>
+                }
             </mat-nav-list>
         </mat-drawer>
         <mat-drawer-content class="content">

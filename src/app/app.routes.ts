@@ -7,6 +7,28 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./pages/admin/admin-base/admin-base').then((m) => m.AdminBase),
+    loadComponent: () => import('./pages/admin/base/admin-base').then((m) => m.AdminBase),
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () => import('./pages/admin/profile-page/profile/profile').then((m) => m.AdminProfile),
+      },
+      {
+        path: 'services',
+        loadComponent: () => import('./pages/admin/services-page/services-list/services-list').then((m) => m.AdminServicesList),
+      },
+      {
+        path: 'reservations',
+        loadComponent: () => import('./pages/admin/reservations-page/reservations-list/reservations-list').then((m) => m.AdminReservationsList),
+      },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./pages/admin/calendar-page/calendar/calendar').then((m) => m.AdminCalendar),
+      },
+      {
+        path: 'holidays',
+        loadComponent: () => import('./pages/admin/holidays-page/holidays/holidays').then((m) => m.AdminHolidays),
+      },
+    ]
   },
 ];

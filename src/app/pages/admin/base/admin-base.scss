@@ -74,6 +74,40 @@ main {
         padding-bottom: 1.25rem;
         padding-left: 0px;
         padding-right: 0px;
+        .list-item {
+          text-decoration-line: none;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1rem;
+          border-start-end-radius: 1.5rem;
+          border-end-end-radius: 1.5rem;
+          width: 80%;
+          outline: 2px solid transparent;
+          outline-offset: 2px;
+          cursor: pointer;
+          mat-icon {
+            color: variables.$secondary;
+          }
+          span {
+            font-size: 14px;
+            line-height: 1.5rem;
+            color: variables.$light-gray;
+          }
+        }
+        .list-item:hover {
+          background-color: variables.$primary-50;
+        }
+        .list-item.active {
+          mat-icon {
+            color: variables.$white;
+          }
+          span {
+            color: variables.$white;
+            font-weight: 600;
+          }
+        }
       }
     }
     .content {

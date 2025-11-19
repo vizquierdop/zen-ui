@@ -1,7 +1,7 @@
-import { PaginationBaseRequestModel, PaginationBaseResponseModel } from "../basic/ui-pagination.models";
+import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { OfferedServiceModel } from "../entities/offered-service.models";
 
-export interface OfferedServiceGetAllRequestDTO extends PaginationBaseRequestModel {
+export interface OfferedServiceGetAllRequestDTO extends UIPaginationBaseRequestModel {
     search?: string;
     name?: string;
     duration?: number;
@@ -9,7 +9,7 @@ export interface OfferedServiceGetAllRequestDTO extends PaginationBaseRequestMod
     active?: boolean;
 }
 
-export type OfferedServiceGetAllResponseDTO = PaginationBaseResponseModel<OfferedServiceModel>;
+export type OfferedServiceGetAllResponseDTO = UIPaginationBaseResponseModel<OfferedServiceModel>;
 
 export interface OfferedServiceCreateRequestDTO {
     name: string;

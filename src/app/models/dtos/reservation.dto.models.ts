@@ -1,7 +1,7 @@
-import { PaginationBaseRequestModel, PaginationBaseResponseModel } from "../basic/ui-pagination.models";
+import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { ReservationModel } from "../entities/reservation.models";
 
-export interface ReservationGetAllRequestDTO extends PaginationBaseRequestModel {
+export interface ReservationGetAllRequestDTO extends UIPaginationBaseRequestModel {
     search?: string;
     customerName?: number;
     customerEmail?: number;
@@ -14,7 +14,7 @@ export interface ReservationGetAllRequestDTO extends PaginationBaseRequestModel 
     serviceIds?: number[];
 }
 
-export type ReservationGetAllResponseDTO = PaginationBaseResponseModel<ReservationModel>;
+export type ReservationGetAllResponseDTO = UIPaginationBaseResponseModel<ReservationModel>;
 
 export interface ReservationCreateRequestDTO {
     date: string;

@@ -1,11 +1,11 @@
-export interface PaginationBaseRequestModel {
+export interface UIPaginationBaseRequestModel {
     paginationSkip?: number;
     paginationLength?: number;
     orderBy?: string;
     orderDirection?: number;
 }
 
-export interface PaginationBaseResponseModel<T> {
+export interface UIPaginationBaseResponseModel<T> {
     items: T[];
     pageNumber: number;
     totalPages: number;

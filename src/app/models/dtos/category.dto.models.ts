@@ -1,11 +1,11 @@
-import { PaginationBaseRequestModel, PaginationBaseResponseModel } from "../basic/ui-pagination.models";
+import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { CategoryModel } from "../entities/category.models";
 
-export interface CategoryGetallRequestDTO extends PaginationBaseRequestModel {
+export interface CategoryGetallRequestDTO extends UIPaginationBaseRequestModel {
     name?: string;
 }
 
-export type CategoryGetAllResponseDTO = PaginationBaseResponseModel<CategoryModel>;
+export type CategoryGetAllResponseDTO = UIPaginationBaseResponseModel<CategoryModel>;
 
 export interface CategoryCreateRequestDTO {
     name: string;

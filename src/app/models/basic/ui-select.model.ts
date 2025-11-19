@@ -1,4 +1,4 @@
 export interface UISelectModel {
-    label: string;
-    value: string | number | boolean;
+  label: string;
+  value: string | number | boolean;
 }

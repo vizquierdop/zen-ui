@@ -1,0 +1,152 @@
+<div class="dialog__container">
+  <div class="dialog__header">
+    <h2 mat-dialog-title>Advanced Search</h2>
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content>
+    <form [formGroup]="filtersForm" (keydown.enter)="sendFilters()" class="filters-form">
+      @for (filter of filtersList; track $index; let i = $index;) {
+      @switch (filter.type) {
+      @case ('boolean') {
+      <mat-form-field appearance="outline" class="boolean-field">
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-select [formControlName]="filter.name">
+          <mat-option [value]="null">Any</mat-option>
+          <mat-option [value]="true">Yes</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+      }
+
+      @case ('select') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-select [formControlName]="filter.name">
+          <mat-option [value]="null">Any</mat-option>
+          @for (option of filter.values; track $index) {
+          <mat-option [value]="option.value">{{option.label}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      }
+
+      @case ('select-strict') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-select [formControlName]="filter.name">
+          @for (option of filter.values; track $index) {
+          <mat-option [value]="option.value">{{option.label}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      }
+
+      @case ('string') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <input matInput [formControlName]="filter.name" />
+      </mat-form-field>
+      }
+
+      @case ('number') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <input matInput [formControlName]="filter.name" />
+      </mat-form-field>
+      }
+
+      @case ('date') {
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>{{filter.label}}</mat-label>
+        <input matInput [matDatepicker]="picker" [formControlName]="filter.name" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      }
+
+      @case ('range') {
+      <mat-form-field appearance="outline" class="range-field">
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate [formControlName]="filter.name + 'Start'">
+          <input matEndDate [formControlName]="filter.name + 'End'">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+      }
+
+      @case ('autoComplete') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <input id="input{{filter.name}}" type="text" placeholder="Buscar..." matInput [formControlName]="filter.name"
+          [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (element of filter.filteredValues; track element) {
+          <mat-option [value]="element.label" (click)="addChip(filter, element)">{{ element.label }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      }
+
+      @case ('multi') {
+      <mat-form-field appearance="outline">
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-select [formControlName]="filter.name" multiple>
+          @for (option of filter.values; track $index) {
+          <mat-option [value]="option.value">{{option.label}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      }
+
+      @case ('number-range') {
+        @let ref = 'numberRange' + i;
+        <div class="number-range-container" [id]="ref">
+          <mat-label>{{filter.label}}</mat-label>
+          <!-- @if (numberRangeDisplay) { -->
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Min</mat-label>
+                <input matInput [formControlName]="filter.name + 'Start'">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Max</mat-label>
+                <input matInput [formControlName]="filter.name + 'End'">
+              </mat-form-field>
+            </div>
+        </div>
+      }
+
+      @default {}
+      }
+      }
+    </form>
+    @if (multiSelectFilters().length > 0) {
+    @for (multi of multiSelectFilters(); track $index) {
+      @if (multi.selectedOptions && multi.selectedOptions.length > 0) {
+        <div>
+          <span>{{multi.label}}:</span>
+          <mat-chip-set>
+            @for (chip of multi.selectedOptions; track $index) {
+              <mat-chip [removable]="true" (removed)="removeChip(multi, chip)">
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                {{chip.label}}
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      }
+    }
+  }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+    <button mat-button color="primary" (click)="clearFilters()">Clear</button>
+    <button mat-button color="accent" (click)="sendFilters()" cdkFocusInitial>Search</button>
+  </mat-dialog-actions>
+</div>

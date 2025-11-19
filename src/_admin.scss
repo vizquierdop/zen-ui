@@ -115,3 +115,24 @@
     }
   }
 }
+
+.active-filters-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  span.regular {
+    font-size: 18px;
+    color: variables.$primary;
+  }
+  mat-chip-set {
+    flex: 1;
+    mat-chip {
+      button {
+        mat-icon {
+          color: variables.$white;
+        }
+      }
+    }
+  }
+}

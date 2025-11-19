@@ -1,0 +1,63 @@
+@use "../../../variables";
+
+
+.filters-form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  row-gap: 20px;
+  mat-form-field {
+    width: 330px;
+    height: fit-content;
+  }
+}
+.cancel-button {
+  color: variables.$error;
+}
+.cancel-button:hover {
+  background-color: #ffecec;
+}
+
+mat-chip {
+  button {
+    mat-icon {
+      color: variables.$white;
+    }
+  }
+}
+
+.number-range-container {
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 5px;
+  mat-label {
+    font-size: 0.9rem;
+    color: #1a1c1e;
+  }
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+  }
+  mat-slider {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .mat-mdc-dialog-actions {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}

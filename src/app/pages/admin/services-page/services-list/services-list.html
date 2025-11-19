@@ -25,4 +25,19 @@
             </button>
         </div>
     </div>
+    @if (hasFilters) {
+    <div class="active-filters-container">
+        <span class="regular">Filtros activos</span>
+        <mat-chip-set>
+            @for (filter of (filters() | keyvalue); track filter.value) {
+            <mat-chip [removable]="true" (removed)="removeFilter(filter.key)">
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+                {{ filter | filtersChipsPipe : serviceFilters }}
+            </mat-chip>
+            }
+        </mat-chip-set>
+    </div>
+    }
 </div>

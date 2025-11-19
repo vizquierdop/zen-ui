@@ -161,6 +161,20 @@ $zen-ui-theme: mat.define-theme(
   @include mat.color-variants-backwards-compatibility($zen-ui-theme);
   @include mat.button-density(0);
   @include mat.form-field-density(-5);
+
+  --mat-chip-outline-color: #122a43; // Primary-25
+  --mat-chip-trailing-action-state-layer-color: #ffffff;
+  --mat-chip-elevated-container-color: #51769e; // Primary-60;
+  --mat-chip-label-text-color: #ffffff;
+  --mat-tab-header-active-label-text-color: #1e436b; // Primary
+  .mat-primary.mat-mdc-tab-group {
+    --mat-tab-inactive-label-text-color: #ababae; // Neutral 70
+  }
+  --mat-tab-header-active-hover-label-text-color: #1e436b; // Primary
+  --mat-tab-header-active-focus-label-text-color: #1e436b; // Primary
+  --mat-option-selected-state-layer-color: #ccf4ef; // Secondary-90
+  --mat-datepicker-calendar-header-text-color: #1e436b; // Primary
+  --mat-datepicker-calendar-date-text-color: #1e436b; // Primary
 }
 
 html,
@@ -196,4 +210,25 @@ button {
 
 .semi-bold {
   font-weight: 600;
+}
+
+.dialog__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: variables.$primary;
+  h2,
+  mat-icon {
+    color: variables.$white !important;
+  }
+  button {
+    margin-right: 10px;
+  }
 }

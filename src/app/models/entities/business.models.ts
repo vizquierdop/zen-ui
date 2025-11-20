@@ -3,7 +3,7 @@ import { CategoryModel } from "./category.models";
 import { OfferedServiceModel } from "./offered-service.models";
 import { ProvinceModel } from "./province.models";
 import { UserModel, UserShortModel } from "./user.models";
-import { VacationModel } from "./vacation.models";
+import { HolidayModel } from "./holiday.models";
 
 export interface BusinessModel {
     id: number;
@@ -28,7 +28,7 @@ export interface BusinessModel {
     userId: number;
     user: UserShortModel;
     services: OfferedServiceModel[];
-    vacations: VacationModel[];
+    vacations: HolidayModel[];
     availabilities: AvailabilityModel[];
 }
 

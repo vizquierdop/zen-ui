@@ -27,16 +27,6 @@
   align-items: center;
   padding-bottom: 10px;
   gap: 80px;
-  .title {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    &.primary {
-      color: variables.$primary;
-    }
-    &.secondary {
-      color: variables.$secondary;
-    }
-  }
   .search-container {
     display: flex;
     flex-direction: row;
@@ -113,6 +103,18 @@
         letter-spacing: 1px;
       }
     }
+  }
+}
+
+.title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+  &.primary {
+    color: variables.$primary;
+  }
+  &.secondary {
+    color: variables.$secondary;
   }
 }
 

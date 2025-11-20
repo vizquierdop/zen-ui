@@ -27,7 +27,7 @@
     </div>
     @if (hasFilters) {
     <div class="active-filters-container">
-        <span class="regular">Filtros activos</span>
+        <span class="regular">Active filters</span>
         <mat-chip-set>
             @for (filter of (filters() | keyvalue); track filter.value) {
             <mat-chip [removable]="true" (removed)="removeFilter(filter.key)">

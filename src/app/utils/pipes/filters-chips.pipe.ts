@@ -38,9 +38,6 @@ export class FiltersChipPipe implements PipeTransform {
         result += ': ' + this.datePipe.transform(filter.value, 'MM/dd/yyyy');
       } else if (filterObj.type === 'boolean') {
         result += ': ' + (filter.value ? 'Yes' : 'No');
-      } else if (filterObj.type === 'boolean-active') {
-        // TODO check Spanish
-        result += ': ' + (filter.value ? 'Activo' : 'Inactivo');
       } else if (filterObj.type === 'multi' || filterObj.type === 'autoComplete') {
         let labels = '';
         filter.value.forEach((o: number, i: number) => {

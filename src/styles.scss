@@ -1,4 +1,3 @@
-
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -9,6 +8,7 @@
 @use './_variables';
 @use './admin';
 @use './public';
+@use '../node_modules/angular-calendar/css/angular-calendar.css';
 
 @include mat.core();
 
@@ -155,7 +155,6 @@ $zen-ui-theme: mat.define-theme(
   )
 );
 
-
 :root {
   @include mat.all-component-themes($zen-ui-theme);
   @include mat.color-variants-backwards-compatibility($zen-ui-theme);
@@ -175,6 +174,39 @@ $zen-ui-theme: mat.define-theme(
   --mat-option-selected-state-layer-color: #ccf4ef; // Secondary-90
   --mat-datepicker-calendar-header-text-color: #1e436b; // Primary
   --mat-datepicker-calendar-date-text-color: #1e436b; // Primary
+
+  .mat-calendar-body-label {
+    opacity: 0;
+  }
+  .mat-calendar-body-label[colspan='7'] {
+    display: none;
+  }
+  .mat-calendar-body-cell-content {
+    font-weight: 500;
+  }
+
+  .mat-calendar-previous-button::after,
+  .mat-calendar-next-button::after {
+    margin: 12px;
+  }
+
+  .month-year-datepicker .mat-calendar-arrow {
+    display: none;
+  }
+  .month-year-datepicker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+
+  .highlighted {
+    background-color: variables.$secondary;
+    .mat-calendar-body-cell-content {
+      color: variables.$white;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
 }
 
 html,

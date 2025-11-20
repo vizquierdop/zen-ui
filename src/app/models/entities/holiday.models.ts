@@ -1,11 +1,11 @@
 import { BusinessShortModel } from "./business.models";
 
-export interface VacationModel {
+export interface HolidayModel {
     id: number;
     startDate: string; // Date
     endDate: string; // Date
 
     // Relations
     businessId: number;
-    business: BusinessShortModel;
+    business?: BusinessShortModel;
 }

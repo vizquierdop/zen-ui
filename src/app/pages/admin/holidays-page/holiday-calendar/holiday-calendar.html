@@ -1,0 +1,9 @@
+<div class="month-container">
+    <div class="header">
+        <p class="month-name">{{ monthName }}</p>
+    </div>
+    <div class="body">
+        <mat-calendar [headerComponent]="customHeaderComponent" [startView]="'month'" [startAt]="startAt"
+            [dateClass]="dateClass()"></mat-calendar>
+    </div>
+</div>

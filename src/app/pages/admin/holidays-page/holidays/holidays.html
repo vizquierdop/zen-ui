@@ -4,13 +4,54 @@
 </div>
 }
 <div class="page-main-container">
-    <div class="page-actions">
-        <span class="title primary">Holidays</span>
-        <div class="buttons">
-            <button class="filter-button" (click)="openAddHolidayModal()" mat-flat-button color="accent">
-                <mat-icon>add</mat-icon>
-                <span>Add holiday</span>
-            </button>
+    <div class="content">
+        <div class="info-section">
+            <div class="row">
+                <span class="title primary">Holidays</span>
+                <div class="buttons">
+                    <button class="filter-button" (click)="openAddHolidayModal()" mat-flat-button color="accent">
+                        <mat-icon>add</mat-icon>
+                        <span>Add holiday</span>
+                    </button>
+                </div>
+            </div>
+            @if (!isLoading()) {
+            <div class="holidays-content">
+                <div class="section">
+                    <div class="subsection-title">Current holidays</div>
+                    <div class="subsection-content">
+                        @if (holidaysList.length > 0) {
+                        @for (holiday of holidaysList; track holiday) {
+                        <div class="row">
+                            <div class="dates">
+                                <span class="holiday-date">{{ holiday.startDate| date : 'MM/dd/yyyy' }}</span>
+                                @if (holiday.startDate !== holiday.endDate) {
+                                <mat-icon>arrow_forward</mat-icon>
+                                <span class="holiday-date">{{ holiday.endDate | date : 'MM/dd/yyyy' }}</span>
+                                }
+                            </div>
+                            <div class="actions">
+                                <button mat-icon-button matTooltip="Remove holiday" (click)="removeHoliday(holiday)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        }
+                        } @else {
+                        <p class="info-message">There are no holidays created yet.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="calendars-section">
+            @if (!isLoading()) {
+            @let months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+            @for (num of months; track $index) {
+            <app-holiday-calendar [month]="num" [selectedDates]="selectedDates"></app-holiday-calendar>
+            }
+            }
         </div>
     </div>
 </div>

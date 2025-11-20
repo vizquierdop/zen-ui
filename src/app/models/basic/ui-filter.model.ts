@@ -7,7 +7,6 @@ export interface UIFilterModel {
     | 'string'
     | 'number'
     | 'boolean'
-    | 'boolean-active'
     | 'select'
     | 'date'
     | 'autoComplete'

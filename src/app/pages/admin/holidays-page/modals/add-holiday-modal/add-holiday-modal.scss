@@ -1,0 +1,20 @@
+@use '../../../../../../variables';
+@use '../../../../../../admin';
+
+.modal-form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  row-gap: 20px;
+}
+
+.cancel-button {
+  color: variables.$error;
+}
+
+.cancel-button:hover {
+  background-color: #ffecec;
+}

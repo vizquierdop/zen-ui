@@ -9,6 +9,7 @@ import { HolidayModel } from '../../../../models/entities/holiday.models';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationModal } from '../../../../components/confirmation-modal/confirmation-modal';
 import { EMPTY, switchMap } from 'rxjs';
+import { AddHolidayModal } from '../modals/add-holiday-modal/add-holiday-modal';
 
 @Component({
   selector: 'app-admin-holidays',
@@ -51,7 +52,12 @@ export class AdminHolidays {
   }
 
   openAddHolidayModal(): void {
-    // TODO Implement openAddHolidayModal method.
+    const dialogRef = this.dialog.open(AddHolidayModal);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadData();
+      }
+    })
   }
 
   removeHoliday(holiday: HolidayModel): void {

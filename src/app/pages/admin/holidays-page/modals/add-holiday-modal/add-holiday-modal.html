@@ -1,0 +1,25 @@
+<div class="dialog__container">
+    <div class="dialog__header">
+        <h2 mat-dialog-title>ADD HOLIDAYS</h2>
+        <button mat-icon-button (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form [formGroup]="addHolidaysForm" class="modal-form">
+            <mat-form-field appearance="outline" class="range-field">
+                <mat-label>Select a range of dates</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="startDate">
+                    <input matEndDate formControlName="endDate">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button class="cancel-button" (click)="close()">Cancel</button>
+        <button mat-button class="save-button" color="primary" [disabled]="addHolidaysForm.invalid" (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

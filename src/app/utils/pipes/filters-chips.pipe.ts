@@ -24,7 +24,7 @@ export class FiltersChipPipe implements PipeTransform {
         } else if (filter.key === `${filterObj.name}End`) {
           result += ' (End)';
         }
-        result += ': ' + this.datePipe.transform(filter.value, 'MM/dd/yyyy');
+        result += ': ' + this.datePipe.transform(filter.value, 'dd/MM/yyyy');
       } else if (filterObj.type === 'number-range') {
         if (filter.key === `${filterObj.name}Start`) {
           result += ' (Start)';
@@ -35,7 +35,7 @@ export class FiltersChipPipe implements PipeTransform {
       } else if (filterObj.type === 'string' || filterObj.type === 'number') {
         result += ': ' + filter.value;
       } else if (filterObj.type === 'date') {
-        result += ': ' + this.datePipe.transform(filter.value, 'MM/dd/yyyy');
+        result += ': ' + this.datePipe.transform(filter.value, 'dd/MM/yyyy');
       } else if (filterObj.type === 'boolean') {
         result += ': ' + (filter.value ? 'Yes' : 'No');
       } else if (filterObj.type === 'multi' || filterObj.type === 'autoComplete') {

@@ -175,6 +175,9 @@ $zen-ui-theme: mat.define-theme(
   --mat-datepicker-calendar-header-text-color: #1e436b; // Primary
   --mat-datepicker-calendar-date-text-color: #1e436b; // Primary
 
+  --mat-fab-small-container-color: #1e436b !important;
+  --mat-fab-small-foreground-color: white !important;
+
   .mat-calendar-body-label {
     opacity: 0;
   }

@@ -1,0 +1,38 @@
+@use '../../../../../variables';
+
+.calendar-reservation {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    border: 2px solid variables.$success;
+    border-radius: 8px;
+    .calendar-reservation-header {
+        background-color: variables.$success;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        .calendar-reservation-time {
+            font-size: 14px;
+            font-weight: 700;
+            color: variables.$white;
+        }
+    }
+    .calendar-reservation-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        .calendar-reservation-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: variables.$black;
+        }
+    }
+}

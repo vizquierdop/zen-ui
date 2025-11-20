@@ -1,0 +1,54 @@
+@use '.././../../../../variables';
+
+.week-calendar-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: variables.$primary;
+  border-bottom: 1px solid #ddd;
+}
+
+.week-header-cell {
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  .day-name {
+    font-size: 14px;
+    color: variables.$white;
+    font-weight: 600;
+  }
+}
+
+.week-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  min-height: 300px;
+}
+
+.week-column {
+  border-right: 1px solid #eee;
+  padding: 8px;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.reservations-placeholder {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -7,4 +7,29 @@
     <div class="page-actions">
         <span class="title primary">Calendar</span>
     </div>
+    <div class="date-selector-container">
+        <div class="date-selector">
+            <button matMiniFab color="primary" (click)="previousWeek()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="date-info pointer" (click)="picker.open()">{{ getMonthName(month) }} {{ year }}</span>
+            <span class="date-info">{{ startWeekDate | date : 'dd/MM/yyyy' }} - {{ endWeekDate | date : 'dd/MM/yyyy' }}</span>
+            <button matMiniFab color="primary" (click)="nextWeek()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+        <div class="date-selector hidden">
+            <button matMiniFab color="primary" style="opacity: 0;">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <input [matDatepicker]="picker">
+            <mat-datepicker [startView]="'year'" panelClass="month-year-datepicker" [startAt]="activeDate"
+                (monthSelected)="setMonth($event); picker.close()" #picker></mat-datepicker>
+            <span style="opacity: 0;"></span>
+            <button matMiniFab color="primary" style="opacity: 0;">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <app-week-calendar [startWeek]="startWeekDate" [reservations]="[]"></app-week-calendar>
 </div>

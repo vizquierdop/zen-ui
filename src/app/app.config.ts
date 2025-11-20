@@ -1,6 +1,6 @@
 import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners, Provider, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import localeEn from '@angular/common/locales/en';
+import localeEs from '@angular/common/locales/es';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe, registerLocaleData } from '@angular/common';
@@ -8,13 +8,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS
 import { DateAdapter as CalendarDateAdapter } from 'angular-calendar';
 import { provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-registerLocaleData(localeEn);
+registerLocaleData(localeEs, 'es');
 
 export function provideLocaleConfig(): Provider[] {
   return [
     {
       provide: LOCALE_ID,
-      useValue: 'en-EN',
+      useValue: 'es-ES',
     },
     {
       provide: DateAdapter,

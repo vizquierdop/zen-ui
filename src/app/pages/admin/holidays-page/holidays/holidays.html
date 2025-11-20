@@ -24,10 +24,10 @@
                         @for (holiday of holidaysList; track holiday) {
                         <div class="row">
                             <div class="dates">
-                                <span class="holiday-date">{{ holiday.startDate| date : 'MM/dd/yyyy' }}</span>
+                                <span class="holiday-date">{{ holiday.startDate| date : 'dd/MM/yyyy' }}</span>
                                 @if (holiday.startDate !== holiday.endDate) {
                                 <mat-icon>arrow_forward</mat-icon>
-                                <span class="holiday-date">{{ holiday.endDate | date : 'MM/dd/yyyy' }}</span>
+                                <span class="holiday-date">{{ holiday.endDate | date : 'dd/MM/yyyy' }}</span>
                                 }
                             </div>
                             <div class="actions">

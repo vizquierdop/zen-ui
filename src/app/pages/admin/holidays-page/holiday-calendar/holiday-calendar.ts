@@ -4,21 +4,7 @@ import { MatCalendarCellCssClasses, MatDatepickerModule } from '@angular/materia
 import { CalendarModule } from 'angular-calendar';
 import { BlankHeaderCalendar } from './blank-header-calendar/blank-header-calendar';
 import { HolidayModel } from '../../../../models/entities/holiday.models';
-
-const MONTH_NAMES: string[] = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import { MONTH_NAMES } from '../../../../utils/lists/month-names';
 
 @Component({
   selector: 'app-holiday-calendar',

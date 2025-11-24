@@ -143,3 +143,11 @@
   font-weight: 600;
   color: variables.$secondary;
 }
+
+.cancel-button {
+  color: variables.$error;
+}
+
+.cancel-button:hover {
+  background-color: #ffecec;
+}

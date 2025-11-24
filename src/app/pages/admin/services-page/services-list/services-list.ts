@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, effect, ElementRef, signal, ViewChild, WritableSignal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  effect,
+  ElementRef,
+  signal,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -10,7 +18,8 @@ import { PersistentFiltersService } from '../../../../services/persistent-filter
 import { UISectionKeysEnum } from '../../../../models/enums/section-keys.enum';
 import { FiltersModal } from '../../../../components/filters-modal/filters-modal';
 import { MatChipsModule } from '@angular/material/chips';
-import { FiltersChipPipe } from "../../../../utils/pipes/filters-chips.pipe";
+import { FiltersChipPipe } from '../../../../utils/pipes/filters-chips.pipe';
+import { CreateUpdateServiceModal } from '../modals/create-update-service-modal/create-update-service-modal';
 
 @Component({
   selector: 'app-admin-services-list',
@@ -21,14 +30,14 @@ import { FiltersChipPipe } from "../../../../utils/pipes/filters-chips.pipe";
     MatButtonModule,
     MatDialogModule,
     MatChipsModule,
-    FiltersChipPipe
-],
+    FiltersChipPipe,
+  ],
   templateUrl: './services-list.html',
   styleUrl: './services-list.scss',
 })
 export class AdminServicesList implements IListPage, AfterViewInit {
   @ViewChild('searchInput') searchInput: ElementRef = ViewChild('searchInput');
-  
+
   isLoading = signal(true);
 
   serviceFilters = ServiceFilters;
@@ -122,6 +131,19 @@ export class AdminServicesList implements IListPage, AfterViewInit {
   }
 
   openCreateModal(): void {
-    // TODO Implement openCreateModal method.
+    const dialogRef = this.dialog.open(CreateUpdateServiceModal, {
+      data: {
+        type: 'create',
+        service: null,
+      },
+      minWidth: '650px',
+      maxWidth: '650px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 }

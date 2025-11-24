@@ -1,0 +1,15 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        .field {
+            flex: 1;
+        }
+    }
+}

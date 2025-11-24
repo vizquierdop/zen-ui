@@ -22,6 +22,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/admin/reservations-page/reservations-list/reservations-list').then((m) => m.AdminReservationsList),
       },
       {
+        path: 'reservations/create',
+        loadComponent: () => import('./pages/admin/reservations-page/reservations-create/reservations-create').then((m) => m.AdminReservationsCreate),
+      },
+      {
         path: 'calendar',
         loadComponent: () => import('./pages/admin/calendar-page/calendar/calendar').then((m) => m.AdminCalendar),
       },

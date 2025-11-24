@@ -1,0 +1,51 @@
+@use '../../../../../variables';
+@use '../../../../../admin';
+
+.page-actions {
+  .title-group {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 2;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.page-content {
+  .reservation-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .form-content-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+    .row {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      .field {
+        flex: 1;
+        mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

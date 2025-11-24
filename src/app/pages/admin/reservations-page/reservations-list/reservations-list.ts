@@ -20,6 +20,7 @@ import { PersistentFiltersService } from '../../../../services/persistent-filter
 import { UISectionKeysEnum } from '../../../../models/enums/section-keys.enum';
 import { UIFilterModel } from '../../../../models/basic/ui-filter.model';
 import { FiltersModal } from '../../../../components/filters-modal/filters-modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-reservations-list',
@@ -47,7 +48,8 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
 
   constructor(
     private readonly dialog: MatDialog,
-    private readonly persistentFiltersService: PersistentFiltersService
+    private readonly persistentFiltersService: PersistentFiltersService,
+    private readonly router: Router,
   ) {
     if (this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_RESERVATIONS)) {
       this.filters.set(
@@ -132,8 +134,8 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
     this.loadData();
   }
 
-  openCreateModal(): void {
-    // TODO Implement openCreateModal method.
+  goCreate(): void {
+    void this.router.navigate(['/admin/reservations/create']);
   }
 
   loadFilterSelectValues(): void {

@@ -178,6 +178,10 @@ $zen-ui-theme: mat.define-theme(
   --mat-fab-small-container-color: #1e436b !important;
   --mat-fab-small-foreground-color: white !important;
 
+  .mdc-text-field--outlined {
+    background-color: white !important;
+  }
+
   .mat-calendar-body-label {
     opacity: 0;
   }

@@ -1,0 +1,94 @@
+@if (isLoading()) {
+<div class="admin-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-actions">
+        <div class="title-group">
+            <button mat-icon-button (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="title primary">Create reservation</span>
+        </div>
+        <div class="buttons">
+            <button class="save-button" mat-flat-button color="primary" (click)="save()"
+                [disabled]="reservationForm.invalid">
+                <mat-icon>save</mat-icon>
+                <span class="semi-bold">Save</span>
+            </button>
+        </div>
+    </div>
+    <div class="page-content">
+        <form class="reservation-form" [formGroup]="reservationForm">
+            <div class="form-content-section">
+                <div class="subsection-title">Customer data</div>
+                <div class="row">
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Customer Name</mat-label>
+                            <input matInput formControlName="customerName">
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Customer Email</mat-label>
+                            <input matInput formControlName="customerEmail">
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Customer Phone</mat-label>
+                            <input matInput formControlName="customerPhone">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="form-content-section">
+                <div class="subsection-title">Reservation data</div>
+                <div class="row">
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Service</mat-label>
+                            <mat-select formControlName="serviceId">
+                                @for (service of servicesOptions; track service) {
+                                <mat-option [value]="service.value">
+                                    {{service.label}}
+                                </mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Start Time</mat-label>
+                            <input matInput formControlName="startTime">
+                        </mat-form-field>
+                    </div>
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>End Time</mat-label>
+                            <input matInput formControlName="endTime">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Comments</mat-label>
+                            <textarea matInput formControlName="comments"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

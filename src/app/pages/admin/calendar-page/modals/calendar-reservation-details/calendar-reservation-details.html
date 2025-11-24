@@ -1,0 +1,54 @@
+<div class="dialog__container">
+    <div class="dialog__header">
+        <h2 mat-dialog-title>RESERVATION DETAILS</h2>
+        <button mat-icon-button (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="field">
+                <mat-label>Customer</mat-label>
+                <app-ui-field value="Test Testing"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Service</mat-label>
+                <app-ui-field value="Hair + beard cut"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Status</mat-label>
+                <app-ui-field class="green" value="ACCEPTED"></app-ui-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <mat-label>Date</mat-label>
+                <app-ui-field value="24/11/2025"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Start</mat-label>
+                <app-ui-field value="16:30"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>End</mat-label>
+                <app-ui-field value="17:00"></app-ui-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <mat-label>Email</mat-label>
+                <app-ui-field value="test@gmail.com"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Phone</mat-label>
+                <app-ui-field value="600112233"></app-ui-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <mat-label>Comments</mat-label>
+                <app-ui-field value="-"></app-ui-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+</div>

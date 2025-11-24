@@ -1,0 +1,7 @@
+<div #uiField class="field-value">
+    @if (value() !== null && value() !== undefined && value() !== '') {
+        <span class="value">{{ value() }}</span>
+    } @else {
+        <span class="value">-</span>
+    }
+</div>

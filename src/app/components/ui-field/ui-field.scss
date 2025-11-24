@@ -1,0 +1,44 @@
+@use '../../../variables';
+@use '../../../admin';
+
+.field-value {
+  background-color: #eeeeee;
+  padding: 5px 16px;
+  border-radius: 10px;
+  text-align: center;
+  .value {
+    color: #5f5f5f;
+    font-weight: 500;
+  }
+  min-width: 30px;
+  &.red {
+    background-color: variables.$error;
+    .value {
+      color: variables.$white;
+    }
+  }
+  &.green {
+    background-color: variables.$success;
+    .value {
+      color: variables.$white;
+    }
+  }
+  &.warning {
+    background-color: variables.$warning;
+    .value {
+      color: variables.$black;
+    }
+  }
+  &.gray {
+    background-color: gray;
+    .value {
+      color: variables.$white;
+    }
+  }
+  &.orange {
+    background-color: orange;
+    .value {
+      color: variables.$black;
+    }
+  }
+}

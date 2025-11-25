@@ -1,0 +1,59 @@
+@use '../../../../../variables';
+@use '../../../../../admin';
+
+.page-content {
+    .profile-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        .profile-section {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 32px;
+            &.top {
+                .profile-picture-group {
+                    display: flex;
+                    flex: 1;
+                    flex-direction: column;
+                    gap: 16px;
+                    border-right: 1px solid variables.$light-gray;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-right: 10px;
+                    .profile-picture {
+                        img {
+                            width: 250px;
+                        }
+                    }
+                    button {
+                        width: 100%;
+                    }
+                }
+                .profile-data-group {
+                    display: flex;
+                    flex: 3;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    gap: 5px;
+                    .row {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        gap: 30px;
+                        align-items: center;
+                        justify-content: flex-start;
+                        mat-form-field {
+                            width: 100%;
+                        }
+                        button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

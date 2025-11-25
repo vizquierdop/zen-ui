@@ -178,6 +178,13 @@ $zen-ui-theme: mat.define-theme(
   --mat-fab-small-container-color: #1e436b !important;
   --mat-fab-small-foreground-color: white !important;
 
+  .mat-accent.mat-mdc-button-base {
+    --mat-button-outlined-outline-color: #009e8b;
+  }
+  .mat-primary.mat-mdc-button-base {
+    --mat-button-outlined-outline-color: #1e436b;
+  }
+
   .mdc-text-field--outlined {
     background-color: white !important;
   }

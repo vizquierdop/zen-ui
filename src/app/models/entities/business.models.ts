@@ -14,6 +14,7 @@ export interface BusinessModel {
     keyword1?: string;
     keyword2?: string;
     keyword3?: string;
+    phone: string;
     simultaneousBookings: number;
     instagramUser?: string;
     xUser?: string;

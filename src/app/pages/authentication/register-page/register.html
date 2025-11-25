@@ -1,0 +1,143 @@
+<div class="register-page-container">
+    <div class="wrapper">
+        <div class="register-wrapper">
+            <div class="register-container">
+                <app-auth-header [type]="'register'"></app-auth-header>
+                <form class="register-form" [formGroup]="registerForm">
+                    <mat-stepper [orientation]="stepperOrientation" #stepper>
+                        <mat-step>
+                            <ng-template matStepLabel>User Type</ng-template>
+                            <div class="step-container">
+                                <div class="user-type-container">
+                                    <div class="help-text-container">
+                                        <span class="help-text">What kind of user are you?</span>
+                                    </div>
+                                    <div class="user-type-buttons">
+                                        <div class="user-type-button"
+                                            [class]="userType() === 'customer' ? 'active' : ''"
+                                            (click)="userType.set('customer')">
+                                            <span class="user-type">Customer</span>
+                                        </div>
+                                        <div class="user-type-button"
+                                            [class]="userType() === 'business' ? 'active' : ''"
+                                            (click)="userType.set('business')">
+                                            <span class="user-type">Business</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (userType() === 'business') {
+                                <span class="user-type-description">“I want to enhance the visibility of my business and
+                                    offer services.”</span>
+                                } @else if (userType() === 'customer') {
+                                <span class="user-type-description">“I want to search local businesses and book their
+                                    services.”</span>
+                                }
+                                <div class="buttons-container">
+                                    <button mat-flat-button color="accent">Go to Log In</button>
+                                    <button matStepperNext mat-flat-button color="primary">Next</button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>Basic Info</ng-template>
+                            <div class="step-container">
+                                <div class="fields-container">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput formControlName="name">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Surname</mat-label>
+                                        <input matInput formControlName="surname">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Province</mat-label>
+                                        <mat-select formControlName="provinceId">
+                                            @for (province of provinceOptions; track province) {
+                                            <mat-option [value]="province.value">{{ province.label }}</mat-option>
+                                            }
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput formControlName="email">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Password</mat-label>
+                                        <input matInput formControlName="password" type="password">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Confirm password</mat-label>
+                                        <input matInput formControlName="confirmPassword" type="password">
+                                    </mat-form-field>
+                                </div>
+                                <div class="buttons-container">
+                                    <button matStepperPrevious mat-flat-button color="accent">Previous</button>
+                                    @if (userType() === 'business') {
+                                    <button matStepperNext mat-flat-button color="primary">Next</button>
+                                    } @else {
+                                    <button mat-flat-button color="primary" [disabled]="registerForm.invalid"
+                                        (click)="register()">Register</button>
+                                    }
+                                </div>
+                            </div>
+                        </mat-step>
+                        @if (userType() === 'business') {
+                        <mat-step>
+                            <ng-template matStepLabel>Business Info</ng-template>
+                            <div class="step-container">
+                                <div class="business-fields-container">
+                                    <div class="business-field">
+                                        <div class="help-text-container">
+                                            <span class="help-text">What is the name of your business?</span>
+                                        </div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Business name</mat-label>
+                                            <input matInput formControlName="businessName">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="business-field">
+                                        <div class="help-text-container">
+                                            <span class="help-text">Select the categories of your business. (Min. 1)</span>
+                                        </div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Categories</mat-label>
+                                            <mat-select formControlName="categories" multiple>
+                                                @for (category of categoryOptions; track category) {
+                                                <mat-option [value]="category.value">{{ category.label }}</mat-option>
+                                                }
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="business-field">
+                                        <div class="help-text-container">
+                                            <span class="help-text">Introduce 3 keywords related to your business.</span>
+                                        </div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Keyword 1</mat-label>
+                                            <input matInput formControlName="keyword1">
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Keyword 2</mat-label>
+                                            <input matInput formControlName="keyword2">
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Keyword 3</mat-label>
+                                            <input matInput formControlName="keyword3">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="buttons-container">
+                                    <button matStepperPrevious mat-flat-button color="accent">Previous</button>
+                                    <button mat-flat-button color="primary" [disabled]="registerForm.invalid"
+                                        (click)="register()">Register</button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        }
+                    </mat-stepper>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

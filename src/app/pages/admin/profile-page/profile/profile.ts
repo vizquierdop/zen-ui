@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
+import { UiCategoryFull } from "../../../../components/ui-category-full/ui-category-full";
 
 @Component({
   selector: 'app-admin-profile',
@@ -31,7 +32,8 @@ import { UISelectModel } from '../../../../models/basic/ui-select.model';
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
-  ],
+    UiCategoryFull
+],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })

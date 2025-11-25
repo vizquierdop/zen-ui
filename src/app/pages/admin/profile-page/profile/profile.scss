@@ -11,6 +11,7 @@
             width: 100%;
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             gap: 32px;
             &.top {
                 .profile-picture-group {
@@ -35,9 +36,9 @@
                     display: flex;
                     flex: 3;
                     flex-direction: column;
-                    justify-content: flex-start;
+                    justify-content: space-between;
                     align-items: flex-start;
-                    gap: 5px;
+                    gap: 12px;
                     .row {
                         width: 100%;
                         display: flex;
@@ -50,6 +51,78 @@
                         }
                         button {
                             width: 100%;
+                        }
+                    }
+                }
+            }
+            &.bottom {
+                .profile-data-group {
+                    display: flex;
+                    flex: 1;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    gap: 12px;
+                    .row {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        gap: 8px;
+                        align-items: center;
+                        justify-content: flex-start;
+                        align-items: center;
+                        .image-container {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: center;
+                            min-width: 60px;
+                            max-width: 60px;
+                            img {
+                                max-height: 36px;
+                            }
+                        }
+                        mat-form-field {
+                            width: 100%;
+                        }
+                        app-ui-category-full {
+                            width: 100%;
+                        }
+                    }
+                    &.contact, &.media, &.categories {
+                        .subsection-title-group {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 10px;
+                            align-items: center;
+                            justify-content: flex-start;
+                            margin-bottom: 12px;
+                            width: 100%;
+                            .square {
+                                background-color: variables.$secondary;
+                                width: 15px;
+                                height: 15px;
+                            }
+                            .subsection-title {
+                                font-size: 1.5rem;
+                            }
+                            .action-button-container {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                justify-content: flex-end;
+                                flex: 1;
+                                .text-icon-button {
+                                    color: variables.$primary;
+                                    display: flex;
+                                    flex-direction: row;
+                                    gap: 5px;
+                                    align-items: center;
+                                    justify-content: flex-end;
+                                    font-size: 0.75rem;
+                                    cursor: pointer;
+                                }
+                            }
                         }
                     }
                 }

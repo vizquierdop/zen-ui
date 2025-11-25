@@ -79,9 +79,110 @@
                 </div>
             </div>
             <div class="profile-section bottom">
-                <div class="profile-data-group contact"></div>
-                <div class="profile-data-group media"></div>
-                <div class="profile-data-group categories"></div>
+                <div class="profile-data-group contact">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Contact data</span>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="firstName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Surname</mat-label>
+                            <input matInput formControlName="lastName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Phone</mat-label>
+                            <input matInput formControlName="phone">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="profile-data-group media">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Social media</span>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/instagram-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Instagram</mat-label>
+                            <input matInput formControlName="instagramUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/x-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>X</mat-label>
+                            <input matInput formControlName="xUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/tiktok-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>TikTok</mat-label>
+                            <input matInput formControlName="tikTokUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/facebook-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Facebook</mat-label>
+                            <input matInput formControlName="facebookUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/google-maps-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Google Maps</mat-label>
+                            <input matInput formControlName="googleMaps">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="profile-data-group categories">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Categories</span>
+                        <div class="action-button-container">
+                            <div class="text-icon-button">
+                                <mat-icon>add</mat-icon>
+                                Add
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
+                    </div>
+                    <div class="row">
+                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
+                    </div>
+                    <!-- @for (categoryGroup of categories.controls; track categoryGroup) {
+                        <div class="row">
+                            <app-ui-category-full [category]="categoryGroup.value"></app-ui-category-full>
+                        </div>
+                    } -->
+                </div>
             </div>
         </form>
     </div>

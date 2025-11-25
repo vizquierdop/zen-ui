@@ -2,131 +2,153 @@
 @use '../../../../../admin';
 
 .page-content {
-    .profile-form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        .profile-section {
+  .profile-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    .profile-section {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 32px;
+      &.top {
+        .profile-picture-group {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          gap: 16px;
+          border-right: 1px solid variables.$light-gray;
+          justify-content: space-between;
+          align-items: center;
+          padding-right: 10px;
+          min-width: 0;
+          .profile-picture {
+            display: flex;
+            width: 100%;
+            img {
+              width: 100%;
+              height: auto;
+              max-width: 250px;
+              object-fit: cover;
+            }
+          }
+          button {
+            width: 100%;
+          }
+        }
+        .profile-data-group {
+          display: flex;
+          flex: 3;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 12px;
+          min-width: 0;
+          .row {
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            gap: 32px;
-            &.top {
-                .profile-picture-group {
-                    display: flex;
-                    flex: 1;
-                    flex-direction: column;
-                    gap: 16px;
-                    border-right: 1px solid variables.$light-gray;
-                    justify-content: flex-start;
-                    align-items: center;
-                    padding-right: 10px;
-                    .profile-picture {
-                        img {
-                            width: 250px;
-                        }
-                    }
-                    button {
-                        width: 100%;
-                    }
-                }
-                .profile-data-group {
-                    display: flex;
-                    flex: 3;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    gap: 12px;
-                    .row {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: row;
-                        gap: 30px;
-                        align-items: center;
-                        justify-content: flex-start;
-                        mat-form-field {
-                            width: 100%;
-                        }
-                        button {
-                            width: 100%;
-                        }
-                    }
-                }
+            gap: 30px;
+            align-items: center;
+            justify-content: flex-start;
+            mat-form-field {
+              width: 100%;
             }
-            &.bottom {
-                .profile-data-group {
-                    display: flex;
-                    flex: 1;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    align-items: flex-start;
-                    gap: 12px;
-                    .row {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: row;
-                        gap: 8px;
-                        align-items: center;
-                        justify-content: flex-start;
-                        align-items: center;
-                        .image-container {
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            justify-content: center;
-                            min-width: 60px;
-                            max-width: 60px;
-                            img {
-                                max-height: 36px;
-                            }
-                        }
-                        mat-form-field {
-                            width: 100%;
-                        }
-                        app-ui-category-full {
-                            width: 100%;
-                        }
-                    }
-                    &.contact, &.media, &.categories {
-                        .subsection-title-group {
-                            display: flex;
-                            flex-direction: row;
-                            gap: 10px;
-                            align-items: center;
-                            justify-content: flex-start;
-                            margin-bottom: 12px;
-                            width: 100%;
-                            .square {
-                                background-color: variables.$secondary;
-                                width: 15px;
-                                height: 15px;
-                            }
-                            .subsection-title {
-                                font-size: 1.5rem;
-                            }
-                            .action-button-container {
-                                display: flex;
-                                flex-direction: row;
-                                align-items: center;
-                                justify-content: flex-end;
-                                flex: 1;
-                                .text-icon-button {
-                                    color: variables.$primary;
-                                    display: flex;
-                                    flex-direction: row;
-                                    gap: 5px;
-                                    align-items: center;
-                                    justify-content: flex-end;
-                                    font-size: 0.75rem;
-                                    cursor: pointer;
-                                }
-                            }
-                        }
-                    }
-                }
+            button {
+              width: 100%;
             }
+          }
         }
+      }
+      &.bottom {
+        flex-wrap: wrap;
+        .profile-data-group {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          gap: 12px;
+          .row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+            align-items: center;
+            .image-container {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              min-width: 60px;
+              max-width: 60px;
+              img {
+                max-height: 36px;
+              }
+            }
+            mat-form-field {
+              width: 100%;
+            }
+            app-ui-category-full {
+              width: 100%;
+            }
+          }
+          &.contact,
+          &.media,
+          &.categories {
+            .subsection-title-group {
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+              align-items: center;
+              justify-content: flex-start;
+              margin-bottom: 12px;
+              width: 100%;
+              .square {
+                background-color: variables.$secondary;
+                width: 15px;
+                height: 15px;
+              }
+              .subsection-title {
+                font-size: 1.5rem;
+              }
+              .action-button-container {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-end;
+                flex: 1;
+                .text-icon-button {
+                  color: variables.$primary;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 5px;
+                  align-items: center;
+                  justify-content: flex-end;
+                  font-size: 0.75rem;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-section.top {
+    flex-wrap: wrap;
+  }
+
+  .profile-section.top .profile-picture-group,
+  .profile-section.top .profile-data-group {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
 }

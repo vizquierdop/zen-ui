@@ -1,14 +1,13 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCalendarCellCssClasses, MatDatepickerModule } from '@angular/material/datepicker';
-import { CalendarModule } from 'angular-calendar';
 import { BlankHeaderCalendar } from './blank-header-calendar/blank-header-calendar';
 import { HolidayModel } from '../../../../models/entities/holiday.models';
 import { MONTH_NAMES } from '../../../../utils/lists/month-names';
 
 @Component({
   selector: 'app-holiday-calendar',
-  imports: [CommonModule, MatDatepickerModule, BlankHeaderCalendar, DatePipe],
+  imports: [CommonModule, MatDatepickerModule],
   providers: [DatePipe],
   templateUrl: './holiday-calendar.html',
   styleUrl: './holiday-calendar.scss',

@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatDialogModule,
     MatChipsModule,
-    DatePipe,
+    // DatePipe,
     FiltersChipPipe,
   ],
   templateUrl: './reservations-list.html',

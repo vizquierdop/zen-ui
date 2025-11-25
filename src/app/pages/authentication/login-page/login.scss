@@ -1,0 +1,96 @@
+@use '../../../../variables';
+@use '../../../../admin';
+
+.login-page-container {
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media (width >= 1152px) {
+      width: 100%;
+      max-width: 40vw;
+    }
+    .login-wrapper {
+      border-radius: 56px;
+      padding: 0.3rem;
+      background: linear-gradient(180deg, variables.$primary 10%, rgba(33, 150, 243, 0) 30%);
+      @media (width >= 1152px) {
+        width: 100%;
+        max-width: 40vw;
+      }
+      .login-container {
+        background-color: #ffffff;
+        padding-block: 80px;
+        padding-inline: 32px;
+        border-radius: 53px;
+        @media (width >= 576px) {
+          padding-inline: 80px;
+        }
+        .image-container {
+          text-align: center;
+          margin-bottom: 32px;
+          img {
+            margin-bottom: 32px;
+            flex-shrink: 0;
+            margin-inline: auto;
+          }
+          .welcome-text {
+            font-size: 1.875rem;
+            line-height: 2rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #18181b;
+            .zen-primary {
+              color: variables.$primary;
+              font-size: 2.5rem;
+              font-weight: 700;
+            }
+            .zen-secondary {
+              color: variables.$secondary;
+              font-size: 2.5rem;
+              font-weight: 700;
+            }
+          }
+          .login-info-text {
+            color: #71717a;
+            font-weight: 500;
+          }
+        }
+        .login-form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          mat-form-field {
+            width: 100%;
+          }
+          .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            mat-label {
+              color: variables.$gray;
+              font-size: 0.85rem;
+            }
+            button {
+              width: 100%;
+            }
+          }
+          .login-button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

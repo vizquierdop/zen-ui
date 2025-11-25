@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
 import { UiCategoryFull } from '../../../../components/ui-category-full/ui-category-full';
 import { ConfigureAvailabilityModal } from '../modals/configure-availability-modal/configure-availability-modal';
+import { AddCategoryModal } from '../modals/add-category-modal/add-category-modal';
 
 @Component({
   selector: 'app-admin-profile',
@@ -96,6 +97,19 @@ export class AdminProfile {
     const dialogRef = this.dialog.open(ConfigureAvailabilityModal, {
       minWidth: '80vw',
       maxWidth: '80vw',
+    });
+  }
+
+  openAddCategoryModal(): void {
+    const dialogRef = this.dialog.open(AddCategoryModal, {
+      minWidth: '400px',
+      maxWidth: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadData();
+      }
     });
   }
 }

@@ -1,0 +1,218 @@
+<div class="dialog__container">
+    <div class="dialog__header">
+        <h2 mat-dialog-title>CONFIGURE AVAILABILITY</h2>
+        <button mat-icon-button (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <div class="row header">
+            <div class="column day">DAY</div>
+            <div class="column active">ACTIVE</div>
+            <div class="column slot">SLOT 1</div>
+            <div class="column slot">SLOT 2</div>
+        </div>
+        <form [formGroup]="mondayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Monday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="tuesdayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Tuesday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="wednesdayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Wednesday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="thursdayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Thursday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="fridayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Friday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="saturdayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Saturday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+        <form [formGroup]="sundayAvailabilityForm" class="row body">
+            <div class="column day">
+                <span>Sunday</span>
+            </div>
+            <div class="column active">
+                <mat-slide-toggle formControlName="active"></mat-slide-toggle>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot1Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot1End">
+                </mat-form-field>
+            </div>
+            <div class="column slot">
+                <mat-form-field appearance="outline">
+                    <mat-label>Start</mat-label>
+                    <input matInput formControlName="slot2Start">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End</mat-label>
+                    <input matInput formControlName="slot2End">
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button class="cancel-button" (click)="close()">Cancel</button>
+        <button mat-button class="save-button" color="primary"
+            [disabled]="mondayAvailabilityForm.invalid || tuesdayAvailabilityForm.invalid || wednesdayAvailabilityForm.invalid || thursdayAvailabilityForm.invalid || fridayAvailabilityForm.invalid || saturdayAvailabilityForm.invalid || sundayAvailabilityForm.invalid"
+            (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
-import { UiCategoryFull } from "../../../../components/ui-category-full/ui-category-full";
+import { UiCategoryFull } from '../../../../components/ui-category-full/ui-category-full';
+import { ConfigureAvailabilityModal } from '../modals/configure-availability-modal/configure-availability-modal';
 
 @Component({
   selector: 'app-admin-profile',
@@ -32,8 +33,8 @@ import { UiCategoryFull } from "../../../../components/ui-category-full/ui-categ
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
-    UiCategoryFull
-],
+    UiCategoryFull,
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -43,7 +44,11 @@ export class AdminProfile {
   categories: FormArray;
   provinceOptions: UISelectModel[] = [];
 
-  constructor(private readonly router: Router, private readonly fb: FormBuilder) {
+  constructor(
+    private readonly router: Router,
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog
+  ) {
     this.loadData();
 
     this.profileForm = this.fb.group({
@@ -88,6 +93,9 @@ export class AdminProfile {
   }
 
   openAvailabilityModal(): void {
-    // TODO Implement openAvailabilityModal method.
+    const dialogRef = this.dialog.open(ConfigureAvailabilityModal, {
+      minWidth: '80vw',
+      maxWidth: '80vw',
+    });
   }
 }

@@ -7,6 +7,7 @@ export interface AvailabilityModel {
     slot1End: string;
     slot2Start?: string;
     slot2End?: string;
+    active: boolean;
 
     // Relations
     businessId: number;

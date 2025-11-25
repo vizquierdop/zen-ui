@@ -27,7 +27,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: './configure-availability-modal.scss',
 })
 export class ConfigureAvailabilityModal implements OnInit {
-  isLoading = signal(false);
+  isLoading = signal(false); // TODO implement isLoading
   mondayAvailabilityForm: FormGroup;
   tuesdayAvailabilityForm: FormGroup;
   wednesdayAvailabilityForm: FormGroup;

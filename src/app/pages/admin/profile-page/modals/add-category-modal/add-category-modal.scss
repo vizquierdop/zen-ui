@@ -1,0 +1,14 @@
+@use '../../../../../../variables';
+@use '../../../../../../admin';
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    mat-form-field {
+        width: 100%;
+    }
+}

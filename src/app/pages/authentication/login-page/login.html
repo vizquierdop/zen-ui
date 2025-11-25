@@ -2,14 +2,7 @@
     <div class="wrapper">
         <div class="login-wrapper">
             <div class="login-container">
-                <div class="image-container">
-                    <img src="images/zen-logo.png" alt="ZEN LOGO">
-                    <div class="welcome-text">
-                        Welcome to <span class="zen-primary">z</span><span class="zen-secondary">e</span><span
-                            class="zen-primary">n</span> !
-                    </div>
-                    <span class="login-info-text">Log in to continue</span>
-                </div>
+                <app-auth-header [type]="'login'"></app-auth-header>
                 <form class="login-form" [formGroup]="loginForm">
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>

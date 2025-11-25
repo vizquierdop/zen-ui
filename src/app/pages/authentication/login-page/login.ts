@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { AuthHeader } from "../../../components/auth-header/auth-header";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-  ],
+    AuthHeader
+],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

@@ -1,0 +1,33 @@
+@use '../../../variables';
+@use '../../../admin';
+
+.image-container {
+  text-align: center;
+  margin-bottom: 32px;
+  img {
+    margin-bottom: 32px;
+    flex-shrink: 0;
+    margin-inline: auto;
+  }
+  .welcome-text {
+    font-size: 1.875rem;
+    line-height: 2rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: #18181b;
+    .zen-primary {
+      color: variables.$primary;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    .zen-secondary {
+      color: variables.$secondary;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+  }
+  .login-info-text {
+    color: #71717a;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,164 @@
+@use '../../../../variables';
+@use '../../../../admin';
+
+.register-page-container {
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 60vw;
+    @media (width >= 1152px) {
+      width: 100%;
+      max-width: 40vw;
+    }
+    .register-wrapper {
+      border-radius: 56px;
+      padding: 0.3rem;
+      background: linear-gradient(180deg, variables.$primary 10%, rgba(33, 150, 243, 0) 30%);
+      @media (width >= 1152px) {
+        width: 100%;
+        max-width: 40vw;
+      }
+      .register-container {
+        background-color: #ffffff;
+        padding-block: 80px;
+        padding-inline: 32px;
+        border-radius: 53px;
+        @media (width >= 576px) {
+          padding-inline: 80px;
+        }
+        .register-form {
+          width: 100%;
+          .step-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 10px 10px 10px;
+            .user-type-container {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+              gap: 16px;
+              .help-text-container {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                .help-text {
+                  font-size: 16px;
+                  color: variables.$primary;
+                  font-weight: 400;
+                }
+              }
+              .user-type-buttons {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                .user-type-button {
+                  width: 230px;
+                  height: 185px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  cursor: pointer;
+                  background-color: white;
+                  border-radius: 20px;
+                  border: 5px solid variables.$gray;
+                  .user-type {
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: variables.$gray;
+                  }
+                  &.active {
+                    border-color: variables.$primary-25;
+                    background-color: variables.$primary;
+                    .user-type {
+                      color: variables.$white;
+                    }
+                  }
+                }
+              }
+            }
+            .user-type-description {
+              color: variables.$secondary;
+              font-size: 16px;
+              font-weight: 700;
+            }
+            .fields-container {
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+              gap: 16px;
+              width: 100%;
+              mat-form-field {
+                width: 100%;
+              }
+            }
+            .business-fields-container {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: flex-start;
+              gap: 24px;
+              .business-field {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 12px;
+                .help-text-container {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: flex-start;
+                  align-items: center;
+                  .help-text {
+                    font-size: 16px;
+                    color: variables.$primary;
+                    font-weight: 400;
+                  }
+                }
+                mat-form-field {
+                  width: 100%;
+                }
+              }
+            }
+            .buttons-container {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              gap: 48px;
+              width: 100%;
+              flex-wrap: wrap;
+              button {
+                flex: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

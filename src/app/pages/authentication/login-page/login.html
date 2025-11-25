@@ -1,0 +1,24 @@
+<div class="login-page-container">
+    <div class="wrapper">
+        <div class="login-wrapper">
+            <div class="login-container">
+                <app-auth-header [type]="'login'"></app-auth-header>
+                <form class="login-form" [formGroup]="loginForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" type="password" />
+                    </mat-form-field>
+                    <button class="login-button" [disabled]="loginForm.invalid" (keydown.enter)="login()" (click)="login()" mat-flat-button color="primary">Log In</button>
+                    <div class="form-group">
+                        <mat-label>or create an account to join us</mat-label>
+                        <button (click)="goToRegister()" mat-flat-button color="accent">Create an account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

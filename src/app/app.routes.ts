@@ -11,28 +11,44 @@ export const routes: Routes = [
     children: [
       {
         path: 'profile',
-        loadComponent: () => import('./pages/admin/profile-page/profile/profile').then((m) => m.AdminProfile),
+        loadComponent: () =>
+          import('./pages/admin/profile-page/profile/profile').then((m) => m.AdminProfile),
       },
       {
         path: 'services',
-        loadComponent: () => import('./pages/admin/services-page/services-list/services-list').then((m) => m.AdminServicesList),
+        loadComponent: () =>
+          import('./pages/admin/services-page/services-list/services-list').then(
+            (m) => m.AdminServicesList
+          ),
       },
       {
         path: 'reservations',
-        loadComponent: () => import('./pages/admin/reservations-page/reservations-list/reservations-list').then((m) => m.AdminReservationsList),
+        loadComponent: () =>
+          import('./pages/admin/reservations-page/reservations-list/reservations-list').then(
+            (m) => m.AdminReservationsList
+          ),
       },
       {
         path: 'reservations/create',
-        loadComponent: () => import('./pages/admin/reservations-page/reservations-create/reservations-create').then((m) => m.AdminReservationsCreate),
+        loadComponent: () =>
+          import('./pages/admin/reservations-page/reservations-create/reservations-create').then(
+            (m) => m.AdminReservationsCreate
+          ),
       },
       {
         path: 'calendar',
-        loadComponent: () => import('./pages/admin/calendar-page/calendar/calendar').then((m) => m.AdminCalendar),
+        loadComponent: () =>
+          import('./pages/admin/calendar-page/calendar/calendar').then((m) => m.AdminCalendar),
       },
       {
         path: 'holidays',
-        loadComponent: () => import('./pages/admin/holidays-page/holidays/holidays').then((m) => m.AdminHolidays),
+        loadComponent: () =>
+          import('./pages/admin/holidays-page/holidays/holidays').then((m) => m.AdminHolidays),
       },
-    ]
+    ],
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/authentication/login-page/login').then((m) => m.Login),
+  }
 ];

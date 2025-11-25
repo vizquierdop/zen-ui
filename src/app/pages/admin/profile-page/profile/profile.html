@@ -7,10 +7,183 @@
     <div class="page-actions">
         <span class="title primary">My profile</span>
         <div class="buttons">
-            <button class="save-button" mat-flat-button color="primary" (click)="save()">
+            <button class="save-button" mat-flat-button color="primary" [disabled]="profileForm.invalid"
+                (click)="save()">
                 <mat-icon>save</mat-icon>
                 <span class="semi-bold">Save</span>
             </button>
         </div>
+    </div>
+    <div class="page-content">
+        <form class="profile-form" [formGroup]="profileForm">
+            <div class="profile-section top">
+                <div class="profile-picture-group">
+                    <div class="profile-picture">
+                        <img src="images/resources/generic-avatar-big.png" alt="Business profile photo">
+                    </div>
+                    <button matButton="outlined" color="accent">Change photo</button>
+                </div>
+                <div class="profile-data-group">
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Business Name</mat-label>
+                            <input matInput formControlName="businessName">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Province</mat-label>
+                            <mat-select formControlName="provinceId">
+                                @for (province of provinceOptions; track province) {
+                                <mat-option [value]="province.value">{{ province.label }}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="address">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Simultaneous Reservations</mat-label>
+                            <input matInput formControlName="simultaneousReservations">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Keyword 1</mat-label>
+                            <input matInput formControlName="keyword1">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Keyword 2</mat-label>
+                            <input matInput formControlName="keyword1">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Keyword 3</mat-label>
+                            <input matInput formControlName="keyword1">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <button matButton="outlined" color="primary" (click)="goTo('admin/services')">Manage
+                            Services</button>
+                        <button matButton="outlined" color="primary" (click)="goTo('admin/reservations')">Manage
+                            Reservations</button>
+                        <button matButton="outlined" color="primary" (click)="openAvailabilityModal()">Configure
+                            Availability</button>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-section bottom">
+                <div class="profile-data-group contact">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Contact data</span>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="firstName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Surname</mat-label>
+                            <input matInput formControlName="lastName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Phone</mat-label>
+                            <input matInput formControlName="phone">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="profile-data-group media">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Social media</span>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/instagram-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Instagram</mat-label>
+                            <input matInput formControlName="instagramUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/x-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>X</mat-label>
+                            <input matInput formControlName="xUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/tiktok-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>TikTok</mat-label>
+                            <input matInput formControlName="tikTokUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/facebook-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Facebook</mat-label>
+                            <input matInput formControlName="facebookUser">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="image-container">
+                            <img src="images/resources/google-maps-icon.png">
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Google Maps</mat-label>
+                            <input matInput formControlName="googleMaps">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="profile-data-group categories">
+                    <div class="subsection-title-group">
+                        <div class="square"></div>
+                        <span class="subsection-title">Categories</span>
+                        <div class="action-button-container">
+                            <div class="text-icon-button">
+                                <mat-icon>add</mat-icon>
+                                Add
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
+                    </div>
+                    <div class="row">
+                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
+                    </div>
+                    <!-- @for (categoryGroup of categories.controls; track categoryGroup) {
+                        <div class="row">
+                            <app-ui-category-full [category]="categoryGroup.value"></app-ui-category-full>
+                        </div>
+                    } -->
+                </div>
+            </div>
+        </form>
     </div>
 </div>

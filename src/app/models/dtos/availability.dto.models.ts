@@ -9,6 +9,7 @@ export interface AvailabilityCreateSingleDTO {
     slot1End: string;
     slot2Start?: string;
     slot2End?: string;
+    active: boolean;
 }
 
 export interface AvailabilityUpdateRequestDTO {
@@ -23,5 +24,6 @@ export interface AvailabilityUpdateSingleDTO {
     slot1End: string;
     slot2Start?: string;
     slot2End?: string;
+    active: boolean;
 }
 

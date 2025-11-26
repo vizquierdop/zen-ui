@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -8,8 +14,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthHeader } from '../../../components/auth-header/auth-header';
 import { MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { Router } from '@angular/router';
-import { MatSelectModule } from "@angular/material/select";
+import { MatSelectModule } from '@angular/material/select';
 import { UISelectModel } from '../../../models/basic/ui-select.model';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-register',
@@ -23,8 +31,8 @@ import { UISelectModel } from '../../../models/basic/ui-select.model';
     MatProgressSpinnerModule,
     AuthHeader,
     MatStepperModule,
-    MatSelectModule
-],
+    MatSelectModule,
+  ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -37,7 +45,13 @@ export class Register {
   provinceOptions: UISelectModel[] = [];
   categoryOptions: UISelectModel[] = [];
 
-  constructor(private readonly fb: FormBuilder, private readonly router: Router) {
+  breakpoint$: Observable<BreakpointState>;
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {
     this.registerForm = this.fb.group({
       // Basic Info
       name: [null, [Validators.required]],
@@ -53,9 +67,29 @@ export class Register {
       keyword2: [null],
       keyword3: [null],
     });
+
+    this.breakpoint$ = this.breakpointObserver.observe([
+      '(max-width: 752px)',
+    ]);
+
+    this.breakpoint$.subscribe((result) => {
+      this.breakpointChanges();
+    });
+  }
+
+  breakpointChanges(): void {
+    if (this.breakpointObserver.isMatched('(max-width: 752px)')) {
+      this.stepperOrientation = 'vertical';
+    } else {
+      this.stepperOrientation = 'horizontal';
+    }
   }
 
   register(): void {
     // TODO Implement register call
+  }
+
+  goToLogin(): void {
+    void this.router.navigate(['/login']);
   }
 }

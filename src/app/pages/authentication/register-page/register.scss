@@ -23,6 +23,10 @@
       width: 100%;
       max-width: 50vw;
     }
+    // @media (width <= 752px) {
+    //   width: 100%;
+    //   max-width: 80vw;
+    // }
     .register-wrapper {
       border-radius: 56px;
       padding: 0.3rem;
@@ -35,12 +39,16 @@
         width: 100%;
         max-width: 50vw;
       }
+      // @media (width <= 752px) {
+      //   width: 100%;
+      //   max-width: 80vw;
+      // }
       .register-container {
         background-color: #ffffff;
         padding-block: 80px;
         padding-inline: 32px;
         border-radius: 53px;
-        @media (width >= 576px) {
+        @media (width >= 752px) {
           padding-inline: 80px;
         }
         .register-form {
@@ -109,6 +117,7 @@
               color: variables.$secondary;
               font-size: 16px;
               font-weight: 700;
+              text-align: center;
             }
             .fields-container {
               display: flex;
@@ -161,7 +170,65 @@
               width: 100%;
               flex-wrap: wrap;
               button {
-                flex: 1;
+                flex: 1 1 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (width <= 752px) {
+  .register-page-container {
+    .wrapper {
+      width: 100%;
+      max-width: 80vw;
+      .register-wrapper {
+        width: 100%;
+        max-width: 80vw;
+        .register-container {
+          padding-inline: 0;
+          padding-block: 6px;
+          .register-form {
+            .step-container {
+              box-sizing: border-box;
+              .user-type-container {
+                .help-text-container {
+                  .help-text {
+                    font-size: 0.85rem;
+                  }
+                }
+                .user-type-buttons {
+                  flex-direction: column;
+                  gap: 16px;
+                  .user-type-button {
+                    width: 100%;
+                    height: 100px;
+                    box-sizing: border-box;
+                  }
+                }
+              }
+              .user-type-description {
+                font-size: 0.85rem;
+              }
+              .business-fields-container {
+                .business-field {
+                  .help-text-container {
+                    .help-text {
+                      font-size: 0.85rem;
+                    }
+                  }
+                }
+              }
+              .buttons-container {
+                flex-direction: column;
+                gap: 16px;
+                button {
+                  flex: auto;
+                  width: 100%;
+                }
               }
             }
           }

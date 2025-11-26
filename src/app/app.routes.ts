@@ -50,7 +50,13 @@ export const routes: Routes = [
   {
     path: 'public',
     loadComponent: () => import('./pages/public/base/public-base').then((m) => m.PublicBase),
-    children: [],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/public/home-page/home/home').then((m) => m.PublicHome),
+      }
+    ],
   },
   {
     path: 'login',

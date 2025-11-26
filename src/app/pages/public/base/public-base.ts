@@ -25,10 +25,10 @@ import { PublicUISections } from '../../../utils/ui-sections';
 })
 export class PublicBase {
   title = 'zen';
-  drawerMode: MatDrawerMode = 'push';
+  drawerMode: MatDrawerMode = 'over';
   hasBackdrop = false;
 
-  isOpened = true;
+  isOpened = false;
 
   sections: UISectionModel[] = PublicUISections;
 

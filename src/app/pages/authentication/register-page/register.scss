@@ -17,7 +17,11 @@
     max-width: 60vw;
     @media (width >= 1152px) {
       width: 100%;
-      max-width: 40vw;
+      max-width: 60vw;
+    }
+    @media (width >= 1552px) {
+      width: 100%;
+      max-width: 50vw;
     }
     .register-wrapper {
       border-radius: 56px;
@@ -25,7 +29,11 @@
       background: linear-gradient(180deg, variables.$primary 10%, rgba(33, 150, 243, 0) 30%);
       @media (width >= 1152px) {
         width: 100%;
-        max-width: 40vw;
+        max-width: 60vw;
+      }
+      @media (width >= 1552px) {
+        width: 100%;
+        max-width: 50vw;
       }
       .register-container {
         background-color: #ffffff;

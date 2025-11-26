@@ -226,6 +226,13 @@ $zen-ui-theme: mat.define-theme(
   p {
     margin: 0;
   }
+
+  .mat-vertical-stepper-header {
+    padding: 24px 8px;
+  }
+  .mat-vertical-content-container {
+    margin-left: 16px;
+  }
 }
 
 html,

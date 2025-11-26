@@ -1,0 +1,31 @@
+@use '../../../variables';
+@use '../../../admin';
+
+.toolbar {
+  height: fit-content;
+  min-height: 3.5rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+  background: variables.$white;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4daf5b",endColorstr="#126776",GradientType=1);
+  display: flex;
+  justify-content: space-between;
+  img {
+    cursor: pointer;
+    width: 100px;
+  }
+  mat-icon {
+    color: variables.$primary;
+  }
+  .logout-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    span {
+      color: variables.$primary;
+      font-size: 1rem;
+    }
+  }
+}

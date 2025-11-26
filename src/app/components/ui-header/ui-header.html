@@ -1,0 +1,11 @@
+<mat-toolbar class="toolbar">
+    <button mat-icon-button color="accent" (click)="drawerToggle$.emit()" aria-label="Menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <img (click)="goToRoot()" src="images/zen-logo.png" alt="ZEN LOGOTYPE">
+    <div class="logout-container">
+        <button mat-icon-button color="accent" (click)="logout()" aria-label="Logout icon">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

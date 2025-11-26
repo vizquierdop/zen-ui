@@ -48,6 +48,11 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'public',
+    loadComponent: () => import('./pages/public/base/public-base').then((m) => m.PublicBase),
+    children: [],
+  },
+  {
     path: 'login',
     loadComponent: () => import('./pages/authentication/login-page/login').then((m) => m.Login),
   },

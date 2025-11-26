@@ -17,7 +17,8 @@
             </mat-nav-list>
         </mat-drawer>
         <mat-drawer-content class="content">
-            <mat-toolbar class="toolbar">
+            <app-ui-header [origin]="'admin'" (drawerToggle$)="drawer.toggle()"></app-ui-header>
+            <!-- <mat-toolbar class="toolbar">
                 <button mat-icon-button color="accent" (click)="drawer.toggle()" aria-label="Menu icon">
                     <mat-icon>menu</mat-icon>
                 </button>
@@ -27,7 +28,7 @@
                         <mat-icon>logout</mat-icon>
                     </button>
                 </div>
-            </mat-toolbar>
+            </mat-toolbar> -->
             <div class="content-container">
                 <router-outlet></router-outlet>
             </div>

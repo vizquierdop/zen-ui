@@ -45,10 +45,9 @@
             </div>
             <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1" [circular]="true">
                 <ng-template let-appointment #item>
-                    <div>Service: {{ appointment.service.name }}</div>
-                    <div>Business: {{ appointment.service.businessId }}</div>
-                    <div>Date: {{ appointment.date }}</div>
-                    <div>Time: {{ appointment.startTime }} - {{ appointment.endTime }}</div>
+                    <div class="item">
+                        <app-ui-carousel-reservation [reservation]="appointment"></app-ui-carousel-reservation>
+                    </div>
                 </ng-template>
             </p-carousel>
         </div>
@@ -56,6 +55,11 @@
             <div class="row space-between">
                 <span class="title primary">Categories</span>
                 <span class="action secondary">See all</span>
+            </div>
+            <div class="categories-list">
+                @for (category of categories; track category) {
+                    <app-ui-category-item [category]="category"></app-ui-category-item>
+                }
             </div>
         </div>
     </div>

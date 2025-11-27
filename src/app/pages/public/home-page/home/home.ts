@@ -4,6 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CarouselModule } from 'primeng/carousel';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
+import { UiCarouselReservation } from "../../../../components/ui-carousel-reservation/ui-carousel-reservation";
+import { CategoryModel } from '../../../../models/entities/category.models';
+import { UiCategoryItem } from "../../../../components/ui-category-item/ui-category-item";
 
 @Component({
   selector: 'app-public-home',
@@ -12,7 +15,9 @@ import { ReservationModel } from '../../../../models/entities/reservation.models
     CarouselModule,
     MatButtonModule,
     MatIconModule,
-  ],
+    UiCarouselReservation,
+    UiCategoryItem
+],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -51,6 +56,28 @@ export class PublicHome {
       startTime: '12:00',
       endTime: '13:00',
       status: 0,
+    },
+  ];
+  categories: CategoryModel[] = [
+    {
+      id: '1',
+      name: 'Hairdresser',
+    },
+    {
+      id: '2',
+      name: 'Cooking',
+    },
+    {
+      id: '3',
+      name: 'Dentist',
+    },
+    {
+      id: '4',
+      name: 'Chiropodist',
+    },
+    {
+      id: '5',
+      name: 'Beautician',
     },
   ];
 }

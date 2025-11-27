@@ -43,7 +43,7 @@
                 <span class="title primary">Next appointments</span>
                 <span class="action secondary">See all</span>
             </div>
-            <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1">
+            <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1" [circular]="true">
                 <ng-template let-appointment #item>
                     <div>Service: {{ appointment.service.name }}</div>
                     <div>Business: {{ appointment.service.businessId }}</div>

@@ -1,14 +1,27 @@
-import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners, Provider, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  LOCALE_ID,
+  provideBrowserGlobalErrorListeners,
+  Provider,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import localeEs from '@angular/common/locales/es';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe, registerLocaleData } from '@angular/common';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MAT_NATIVE_DATE_FORMATS,
+  NativeDateAdapter,
+} from '@angular/material/core';
 import { DateAdapter as CalendarDateAdapter } from 'angular-calendar';
 import { provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 registerLocaleData(localeEs, 'es');
 
 export function provideLocaleConfig(): Provider[] {
@@ -38,6 +51,10 @@ export const appConfig: ApplicationConfig = {
       useFactory: adapterFactory,
     }),
     DatePipe,
-    providePrimeNG({}),
-  ]
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+    }),
+  ],
 };

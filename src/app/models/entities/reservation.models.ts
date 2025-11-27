@@ -15,5 +15,5 @@ export interface ReservationModel {
     userId?: number;
     user?: UserModel;
     serviceId: number;
-    service: OfferedServiceModel;
+    service?: OfferedServiceModel;
 }

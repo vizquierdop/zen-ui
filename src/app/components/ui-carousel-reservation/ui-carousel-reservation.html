@@ -1,0 +1,20 @@
+<div class="item-container">
+    <div class="item-image-container">
+        <img src="images/resources/business-example-logo.png" alt="Business Logo">
+    </div>
+    <div class="item-info-container">
+        <span class="item-service">{{ reservation.service?.name }}</span>
+        <div class="item-info-group">
+            <mat-icon class="item-info-icon">location_on</mat-icon>
+            <span class="item-info-text">{{ reservation.service?.businessId }}</span>
+        </div>
+        <div class="item-info-group">
+            <mat-icon class="item-info-icon">calendar_today</mat-icon>
+            <span class="item-info-text">{{ reservation.date }}</span>
+        </div>
+        <div class="item-info-group">
+            <mat-icon class="item-info-icon">alarm</mat-icon>
+            <span class="item-info-text">{{ reservation.startTime }} - {{ reservation.endTime }}</span>
+        </div>
+    </div>
+</div>

@@ -178,6 +178,7 @@ $zen-ui-theme: mat.define-theme(
   --mat-fab-small-container-color: #1e436b !important;
   --mat-fab-small-foreground-color: white !important;
   --mat-stepper-container-color: white !important;
+  --p-carousel-content-gap: 20px;
 
   .mat-accent.mat-mdc-button-base {
     --mat-button-outlined-outline-color: #009e8b;
@@ -232,6 +233,20 @@ $zen-ui-theme: mat.define-theme(
   }
   .mat-vertical-content-container {
     margin-left: 16px;
+  }
+
+  .p-carousel .p-carousel-items-content {
+    overflow: visible !important;
+  }
+
+  .p-carousel .p-carousel-item {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .p-carousel .p-carousel-item > div {
+    overflow: visible !important;
+    height: auto !important;
   }
 }
 

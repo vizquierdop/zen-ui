@@ -8,6 +8,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS
 import { DateAdapter as CalendarDateAdapter } from 'angular-calendar';
 import { provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { providePrimeNG } from 'primeng/config';
 registerLocaleData(localeEs, 'es');
 
 export function provideLocaleConfig(): Provider[] {
@@ -37,5 +38,6 @@ export const appConfig: ApplicationConfig = {
       useFactory: adapterFactory,
     }),
     DatePipe,
+    providePrimeNG({}),
   ]
 };

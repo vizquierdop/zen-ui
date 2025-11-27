@@ -43,6 +43,14 @@
                 <span class="title primary">Next appointments</span>
                 <span class="action secondary">See all</span>
             </div>
+            <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1">
+                <ng-template let-appointment #item>
+                    <div>Service: {{ appointment.service.name }}</div>
+                    <div>Business: {{ appointment.service.businessId }}</div>
+                    <div>Date: {{ appointment.date }}</div>
+                    <div>Time: {{ appointment.startTime }} - {{ appointment.endTime }}</div>
+                </ng-template>
+            </p-carousel>
         </div>
         <div class="categories-container">
             <div class="row space-between">

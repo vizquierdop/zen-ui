@@ -10,5 +10,5 @@ export interface OfferedServiceModel {
 
     // Realtions
     businessId: number;
-    business: BusinessModel;
+    business?: BusinessModel;
 }

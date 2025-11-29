@@ -1,0 +1,33 @@
+@use '../../../variables';
+@use '../../../public';
+
+.ui-page-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    .ui-title-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 24px;
+        mat-icon {
+            color: variables.$gray;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: variables.$primary;
+        }
+    }
+    .action-button {
+        button {
+            color: variables.$secondary;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+}

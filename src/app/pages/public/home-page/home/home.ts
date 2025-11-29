@@ -4,9 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CarouselModule } from 'primeng/carousel';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
-import { UiCarouselReservation } from "../../../../components/ui-carousel-reservation/ui-carousel-reservation";
+import { UiCarouselReservation } from '../../../../components/ui-carousel-reservation/ui-carousel-reservation';
 import { CategoryModel } from '../../../../models/entities/category.models';
-import { UiCategoryItem } from "../../../../components/ui-category-item/ui-category-item";
+import { UiCategoryItem } from '../../../../components/ui-category-item/ui-category-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-public-home',
@@ -16,8 +17,8 @@ import { UiCategoryItem } from "../../../../components/ui-category-item/ui-categ
     MatButtonModule,
     MatIconModule,
     UiCarouselReservation,
-    UiCategoryItem
-],
+    UiCategoryItem,
+  ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -80,4 +81,10 @@ export class PublicHome {
       name: 'Beautician',
     },
   ];
+
+  constructor(private readonly router: Router) {}
+
+  goTo(path: string): void {
+    void this.router.navigate([`public/${path}`]);
+  }
 }

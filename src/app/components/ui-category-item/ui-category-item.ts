@@ -19,6 +19,6 @@ export class UiCategoryItem {
   constructor(private readonly router: Router) {}
 
   goToCategory(): void {
-    void this.router.navigate([`public/categories/${this.category.id}`]);
+    void this.router.navigate([`public/businesses?category=${this.category.id}`]);
   }
 }

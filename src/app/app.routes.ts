@@ -53,9 +53,15 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        loadComponent: () => import('./pages/public/home-page/home/home').then((m) => m.PublicHome),
+      },
+      {
+        path: 'categories',
         loadComponent: () =>
-          import('./pages/public/home-page/home/home').then((m) => m.PublicHome),
-      }
+          import('./pages/public/categories-page/categories-list/categories-list').then(
+            (m) => m.PublicCategoriesList
+          ),
+      },
     ],
   },
   {

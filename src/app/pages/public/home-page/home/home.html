@@ -54,7 +54,7 @@
         <div class="categories-container">
             <div class="row space-between">
                 <span class="title primary">Categories</span>
-                <span class="action secondary">See all</span>
+                <span class="action secondary" (click)="goTo('categories')">See all</span>
             </div>
             <div class="categories-list">
                 @for (category of categories; track category) {

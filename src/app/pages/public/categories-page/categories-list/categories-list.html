@@ -1,0 +1,18 @@
+<div class="page-main-container">
+    <div class="content">
+        <app-ui-page-header title="Categories" backUrl="public"></app-ui-page-header>
+        <div class="search-container">
+            <div class="input-box">
+                <input #searchInput (keydown.enter)="onSearch()" placeholder="Search...">
+                <button (click)="onSearch()" mat-icon-button class="input-button-container search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="categories-list-container">
+            @for (category of categories; track category) {
+            <app-ui-category-item [category]="category"></app-ui-category-item>
+            }
+        </div>
+    </div>
+</div>

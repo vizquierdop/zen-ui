@@ -17,4 +17,8 @@ export class UiCategoryItem {
   @Input() category!: CategoryModel;
 
   constructor(private readonly router: Router) {}
+
+  goToCategory(): void {
+    void this.router.navigate([`public/categories/${this.category.id}`]);
+  }
 }

@@ -62,6 +62,11 @@ export const routes: Routes = [
             (m) => m.PublicCategoriesList
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./pages/public/profile-page/profile/profile').then((m) => m.PublicProfile),
+      },
     ],
   },
   {

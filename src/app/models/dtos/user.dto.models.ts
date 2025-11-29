@@ -5,6 +5,7 @@ export interface UserCreateRequestDTO {
     password: string;
     firstName: string;
     lastName?: string;
+    phone?: string;
     role: RoleType;
     active: boolean;
     provinceId: number;
@@ -19,6 +20,7 @@ export interface UserUpdateRequestDTO {
     lastName?: string;
     role?: RoleType;
     active?: boolean;
+    phone?: string;
     provinceId?: number;
     businessId?: number;
 }

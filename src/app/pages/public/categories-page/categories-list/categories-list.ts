@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { UiPageHeader } from '../../../../components/ui-page-header/ui-page-header';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +21,8 @@ import { CategoryModel } from '../../../../models/entities/category.models';
   styleUrl: './categories-list.scss',
 })
 export class PublicCategoriesList {
+  isLoading = signal(false);
+  
   categories: CategoryModel[] = [
     {
       id: '1',

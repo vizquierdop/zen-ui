@@ -1,0 +1,30 @@
+@use '../../../../../variables';
+@use '../../../../../public';
+
+.profile-content {
+  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .description {
+    color: variables.$gray;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px;
+    mat-form-field {
+      width: 100%;
+    }
+  }
+  .message {
+    color: variables.$gray;
+    font-size: 10px;
+    font-weight: 500;
+  }
+}

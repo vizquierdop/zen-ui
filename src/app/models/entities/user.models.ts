@@ -10,6 +10,7 @@ export interface UserModel {
     lastName?: string;
     role: RoleType;
     active: boolean;
+    phone?: string;
 
     // Relations
     provinceId: number;
@@ -23,6 +24,7 @@ export interface UserShortModel {
     email: string;
     firstName: string;
     lastName: string;
+    phone: string;
     role: RoleType;
     active: boolean;
 }

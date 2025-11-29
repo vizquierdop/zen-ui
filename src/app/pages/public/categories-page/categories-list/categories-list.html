@@ -1,5 +1,10 @@
+@if (isLoading()) {
+<div class="public-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
 <div class="page-main-container">
-    <div class="content">
+    <div class="page-content">
         <app-ui-page-header title="Categories" backUrl="public"></app-ui-page-header>
         <div class="search-container">
             <div class="input-box">

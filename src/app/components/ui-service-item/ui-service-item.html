@@ -1,0 +1,17 @@
+<div class="service-item-container">
+    <span class="service-item-title">{{ service.name }}</span>
+    <div class="service-info-group">
+        <mat-icon class="service-info-icon">alarm</mat-icon>
+        <span class="service-info-text">{{ service.duration }} min.</span>
+    </div>
+    <div class="service-info-group">
+        <mat-icon class="service-info-icon">description</mat-icon>
+        <span class="service-info-text">{{ service.description }}</span>
+    </div>
+    <div class="action-buttons">
+        <button matButton="outlined" color="primary" class="book-now-button">
+            <mat-icon>check_outline</mat-icon>
+            Book now
+        </button>
+    </div>
+</div>

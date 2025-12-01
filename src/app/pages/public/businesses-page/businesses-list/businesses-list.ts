@@ -29,7 +29,6 @@ import { UiBusinessFull } from "../../../../components/ui-business-full/ui-busin
     MatProgressSpinnerModule,
     UiPageHeader,
     UiMobilePaginator,
-    MatDialogClose,
     UiBusinessFull
 ],
   templateUrl: './businesses-list.html',

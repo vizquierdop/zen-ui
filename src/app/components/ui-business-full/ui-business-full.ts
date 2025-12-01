@@ -18,5 +18,9 @@ import { MatButtonModule } from '@angular/material/button';
 export class UiBusinessFull {
   @Input() business!: BusinessModel;
 
-  constructor(private readonly routeR: Router) {}
+  constructor(private readonly router: Router) {}
+
+  viewDetails(): void {
+    void this.router.navigate([`public/businesses/${this.business.id}`]);
+  }
 }

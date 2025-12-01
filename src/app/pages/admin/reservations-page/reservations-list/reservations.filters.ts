@@ -32,7 +32,7 @@ export const ReservationFilters: UIFilterModel[] = [
     type: 'string',
   },
   {
-    name: 'status',
+    name: 'statusTypes',
     label: 'Status',
     type: 'multi',
     values: [],

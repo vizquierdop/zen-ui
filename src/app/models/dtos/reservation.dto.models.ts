@@ -10,7 +10,7 @@ export interface ReservationGetAllRequestDTO extends UIPaginationBaseRequestMode
     endDate?: string;
     startTime?: string;
     endTime?: string;
-    status?: number; // TODO Implement ReservationStatusType Enum
+    statusTypes?: string; // TODO Implement ReservationStatusType Enum
     serviceIds?: number[];
 }
 

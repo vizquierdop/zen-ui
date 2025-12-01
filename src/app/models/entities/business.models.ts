@@ -27,7 +27,7 @@ export interface BusinessModel {
     province: ProvinceModel;
     categories: CategoryModel[];
     userId: number;
-    user: UserShortModel;
+    user?: UserShortModel;
     services: OfferedServiceModel[];
     vacations: HolidayModel[];
     availabilities: AvailabilityModel[];

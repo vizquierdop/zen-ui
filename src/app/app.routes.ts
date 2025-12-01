@@ -67,6 +67,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/public/profile-page/profile/profile').then((m) => m.PublicProfile),
       },
+      {
+        path: 'reservations',
+        loadComponent: () =>
+          import('./pages/public/reservations-page/reservations-list/reservations-list').then(
+            (m) => m.PublicReservationsList
+          ),
+      }
     ],
   },
   {

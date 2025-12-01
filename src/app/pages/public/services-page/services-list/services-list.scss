@@ -1,0 +1,18 @@
+@use '../../../../../variables';
+@use '../../../../../public';
+
+.services-list-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 0 16px;
+  app-ui-mobile-paginator {
+    width: 100%;
+  }
+  app-ui-service-full {
+    width: 100%;
+  }
+}

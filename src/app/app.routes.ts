@@ -73,7 +73,14 @@ export const routes: Routes = [
           import('./pages/public/reservations-page/reservations-list/reservations-list').then(
             (m) => m.PublicReservationsList
           ),
-      }
+      },
+      {
+        path: 'services',
+        loadComponent: () =>
+          import('./pages/public/services-page/services-list/services-list').then(
+            (m) => m.PublicServicesList
+          ),
+      },
     ],
   },
   {

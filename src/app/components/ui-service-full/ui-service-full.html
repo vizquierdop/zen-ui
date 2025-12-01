@@ -1,0 +1,30 @@
+<div class="service-container">
+    <div class="service-image-container">
+        <img src="images/resources/business-example-logo.png" alt="Business logo">
+    </div>
+    <div class="service-info-container">
+        <div class="service-info-group title">
+            <span class="service-name">{{ service.name }}</span>
+            <button matButton="outlined" class="book-now-button" color="primary">
+                <mat-icon>task_alt</mat-icon>
+                Book now
+            </button>
+        </div>
+        <div class="service-info-group">
+            <mat-icon class="service-info-icon">domain</mat-icon>
+            <span class="service-info-text">{{ service.business?.name }}</span>
+        </div>
+        <div class="service-info-group">
+            <mat-icon class="service-info-icon">location_on</mat-icon>
+            <span class="service-info-text">{{ service.business?.address }}</span>
+        </div>
+        <div class="service-info-group">
+            <mat-icon class="service-info-icon">alarm</mat-icon>
+            <span class="service-info-text">{{ service.duration }} min.</span>
+        </div>
+        <div class="service-info-group">
+            <mat-icon class="service-info-icon">description</mat-icon>
+            <span class="service-info-text">{{ service.description }}</span>
+        </div>
+    </div>
+</div>

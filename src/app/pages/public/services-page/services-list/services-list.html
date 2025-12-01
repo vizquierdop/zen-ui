@@ -1,0 +1,26 @@
+@if (isLoading()) {
+<div class="public-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-content">
+        <app-ui-page-header title="Explore Services" backUrl="public"></app-ui-page-header>
+        <div class="search-container">
+            <div class="input-box">
+                <input #searchInput (keydown.enter)="onSearch()" placeholder="Search...">
+                <button (click)="onSearch()" mat-icon-button class="input-button-container search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="services-list-container">
+            <app-ui-mobile-paginator [itemsLength]="itemsLength" [totalCount]="totalCount"
+                    [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
+                    (nextPage$)="nextPage()"></app-ui-mobile-paginator>
+            @for (service of services; track service) {
+            <app-ui-service-full [service]="service"></app-ui-service-full>
+            }
+        </div>
+    </div>
+</div>

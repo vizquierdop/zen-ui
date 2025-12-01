@@ -1,0 +1,38 @@
+@if (isLoading()) {
+<div class="public-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-content">
+        <app-ui-page-header title="Businesses" backUrl="public"></app-ui-page-header>
+        <div class="businesses-content">
+            <form [formGroup]="filtersForm">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Category</mat-label>
+                        <mat-select formControlName="categoryIds" multiple>
+                            @for (category of categoryOptions; track category) {
+                            <mat-option [value]="category.value">{{ category.label }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+            <div class="businesses-list-container">
+                <app-ui-mobile-paginator [itemsLength]="itemsLength" [totalCount]="totalCount"
+                    [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
+                    (nextPage$)="nextPage()"></app-ui-mobile-paginator>
+                <div class="businesses-list">
+                    @for (business of businesses; track business) {
+                    <app-ui-business-full [business]="business"></app-ui-business-full>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

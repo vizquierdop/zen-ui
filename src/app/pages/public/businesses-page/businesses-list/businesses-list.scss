@@ -1,0 +1,70 @@
+@use '../../../../../variables';
+@use '../../../../../public';
+
+.businesses-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0 16px;
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+  .businesses-list-container {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    app-ui-mobile-paginator {
+      width: 100%;
+    }
+    .businesses-list {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      width: 100%;
+      app-ui-business-full {
+        max-width: 45%;
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: 600px) {
+  .businesses-content {
+    .businesses-list-container {
+      .businesses-list {
+        justify-content: flex-start;
+        app-ui-business-full {
+          max-width: 30%;
+        }
+      }
+    }
+  }
+    
+}

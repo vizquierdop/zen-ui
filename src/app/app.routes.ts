@@ -81,6 +81,13 @@ export const routes: Routes = [
             (m) => m.PublicServicesList
           ),
       },
+      {
+        path: 'businesses',
+        loadComponent: () =>
+          import('./pages/public/businesses-page/businesses-list/businesses-list').then(
+            (m) => m.PublicBusinessesList
+          ),
+      },
     ],
   },
   {

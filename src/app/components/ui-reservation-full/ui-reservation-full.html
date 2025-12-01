@@ -1,0 +1,36 @@
+<div class="reservation-container">
+    <div class="reservation-item">
+        <div class="reservation-image-container">
+            <img src="images/resources/business-example-logo.png" alt="Business Logo">
+        </div>
+        <div class="reservation-info-container">
+            <span class="reservation-service">{{ reservation.service?.name }}</span>
+            <div class="reservation-info-group">
+                <mat-icon class="reservation-info-icon">domain</mat-icon>
+                <span class="reservation-info-text">{{ reservation.service?.business?.name }}</span>
+            </div>
+            <div class="reservation-info-group">
+                <mat-icon class="reservation-info-icon">location_on</mat-icon>
+                <span class="reservation-info-text">{{ reservation.service?.business?.address }}</span>
+            </div>
+            <div class="reservation-info-group">
+                <mat-icon class="reservation-info-icon">calendar_today</mat-icon>
+                <span class="reservation-info-text">{{ reservation.date }}</span>
+            </div>
+            <div class="reservation-info-group">
+                <mat-icon class="reservation-info-icon">alarm</mat-icon>
+                <span class="reservation-info-text">{{ reservation.startTime }} - {{ reservation.endTime }}</span>
+            </div>
+            <div class="reservation-info-group">
+                <span class="reservation-info-text">Status: </span>
+                <span class="reservation-status pending">PENDING</span>
+                <!-- <span class="reservation-status accepted">ACCEPTED</span> -->
+                <!-- <span class="reservation-status cancelled">CANCELLED</span> -->
+            </div>
+        </div>
+    </div>
+    <div class="reservation-actions">
+        <button matButton class="cancel-button">Cancel Reservation</button>
+        <button matButton color="primary">View business</button>
+    </div>
+</div>

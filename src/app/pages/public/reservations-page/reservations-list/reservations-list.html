@@ -1,0 +1,44 @@
+@if (isLoading()) {
+<div class="public-spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+}
+<div class="page-main-container">
+    <div class="page-content">
+        <app-ui-page-header title="Reservations" backUrl="public"></app-ui-page-header>
+        <div class="reservations-content">
+            <form [formGroup]="filtersForm">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>From Date</mat-label>
+                        <input matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>To Date</mat-label>
+                        <input matInput [matDatepicker]="pickerTo" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <button [matButton]="cancelledButtonType()" color="primary"
+                        (click)="updateStatus('cancelled')">Cancelled</button>
+                    <button [matButton]="pendingButtonType()" color="primary"
+                        (click)="updateStatus('pending')">Pending</button>
+                    <button [matButton]="acceptedButtonType()" color="primary"
+                        (click)="updateStatus('accepted')">Accepted</button>
+                </div>
+            </form>
+            <div class="reservations-list-container">
+                <app-ui-mobile-paginator [itemsLength]="itemsLength" [totalCount]="totalCount"
+                    [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
+                    (nextPage$)="nextPage()"></app-ui-mobile-paginator>
+                @for (reservation of reservations; track reservation) {
+                <app-ui-reservation-full [reservation]="reservation"></app-ui-reservation-full>
+                }
+            </div>
+        </div>
+    </div>
+</div>

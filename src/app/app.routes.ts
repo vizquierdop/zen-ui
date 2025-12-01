@@ -88,6 +88,13 @@ export const routes: Routes = [
             (m) => m.PublicBusinessesList
           ),
       },
+      {
+        path: 'businesses/:id',
+        loadComponent: () =>
+          import('./pages/public/businesses-page/business-detail/business-detail').then(
+            (m) => m.PublicBusinessDetail
+          ),
+      },
     ],
   },
   {

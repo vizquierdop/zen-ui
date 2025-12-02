@@ -5,7 +5,7 @@
     <div class="service-info-container">
         <div class="service-info-group title">
             <span class="service-name">{{ service.name }}</span>
-            <button matButton="outlined" class="book-now-button" color="primary">
+            <button matButton="outlined" class="book-now-button" color="primary" (click)="openCreateReservationModal()">
                 <mat-icon>task_alt</mat-icon>
                 Book now
             </button>

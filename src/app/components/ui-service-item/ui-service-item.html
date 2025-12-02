@@ -9,7 +9,7 @@
         <span class="service-info-text">{{ service.description }}</span>
     </div>
     <div class="action-buttons">
-        <button matButton="outlined" color="primary" class="book-now-button">
+        <button matButton="outlined" color="primary" class="book-now-button" (click)="openCreateReservationModal()">
             <mat-icon>check_outline</mat-icon>
             Book now
         </button>

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { OfferedServiceModel } from '../../models/entities/offered-service.models';
+import { UiCreateReservationModal } from '../ui-create-reservation-modal/ui-create-reservation-modal';
 
 @Component({
   selector: 'app-ui-service-item',
@@ -13,4 +14,16 @@ import { OfferedServiceModel } from '../../models/entities/offered-service.model
 })
 export class UiServiceItem {
   @Input() service!: OfferedServiceModel;
+
+  constructor(private readonly dialog: MatDialog) {}
+
+  openCreateReservationModal(): void {
+    const dialogRef = this.dialog.open(UiCreateReservationModal, {
+      data: {
+        service: this.service,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {});
+  }
 }

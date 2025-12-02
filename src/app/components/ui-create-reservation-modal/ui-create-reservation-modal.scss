@@ -1,0 +1,17 @@
+@use '../../../variables';
+@use '../../../public';
+
+.reservation-request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  .field {
+    width: 100%;
+  }
+  mat-form-field {
+    width: 100%;
+  }
+}

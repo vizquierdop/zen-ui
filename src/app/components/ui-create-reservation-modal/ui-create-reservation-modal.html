@@ -1,0 +1,45 @@
+<div class="dialog__container">
+    <div class="dialog__header">
+        <h2 mat-dialog-title>Reservation Request</h2>
+    </div>
+    <mat-dialog-content>
+        @if (isLoading()) {
+        <div class="public-spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
+        }
+        <form [formGroup]="reservationForm" class="reservation-request-form">
+            <div class="field">
+                <mat-label>Business</mat-label>
+                <app-ui-field value="Tony's Barber Shop"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Service</mat-label>
+                <app-ui-field value="Hair + beard cut"></app-ui-field>
+            </div>
+            <div class="field">
+                <mat-label>Duration</mat-label>
+                <app-ui-field value="30 min"></app-ui-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select a date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Hour</mat-label>
+                <mat-select formControlName="startTime">
+                    @for (hourOption of hourOptions; track hourOption) {
+                    <mat-option [value]="hourOption.value">{{hourOption.label}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button class="cancel-button" color="warn" (click)="close()">Cancel</button>
+        <button mat-button class="save-button" color="primary" [disabled]="reservationForm.invalid"
+            (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

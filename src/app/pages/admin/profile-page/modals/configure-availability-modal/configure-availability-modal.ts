@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AvailabilityModel } from '../../../../../models/entities/availability.models';
 
 @Component({
   selector: 'app-configure-availability-modal',
@@ -27,7 +28,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styleUrl: './configure-availability-modal.scss',
 })
 export class ConfigureAvailabilityModal implements OnInit {
-  isLoading = signal(false); // TODO implement isLoading
+  isLoading = signal(false);
   mondayAvailabilityForm: FormGroup;
   tuesdayAvailabilityForm: FormGroup;
   wednesdayAvailabilityForm: FormGroup;
@@ -36,12 +37,15 @@ export class ConfigureAvailabilityModal implements OnInit {
   saturdayAvailabilityForm: FormGroup;
   sundayAvailabilityForm: FormGroup;
 
-  constructor(
-    private readonly dialog: MatDialogRef<ConfigureAvailabilityModal>,
-    // @Inject(MAT_DIALOG_DATA) public data: {
+  availabilities: AvailabilityModel[] = [];
 
-    // }
-    private readonly fb: FormBuilder,
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      availabilities: AvailabilityModel[];
+    },
+    private readonly dialog: MatDialogRef<ConfigureAvailabilityModal>,
+    private readonly fb: FormBuilder
   ) {
     const availabilityForm = this.fb.group({
       id: [null],
@@ -52,17 +56,40 @@ export class ConfigureAvailabilityModal implements OnInit {
       slot2End: [null],
       isActive: [false],
     });
-    this.mondayAvailabilityForm = availabilityForm;
-    this.tuesdayAvailabilityForm = availabilityForm;
-    this.wednesdayAvailabilityForm = availabilityForm;
-    this.thursdayAvailabilityForm = availabilityForm;
-    this.fridayAvailabilityForm = availabilityForm;
-    this.saturdayAvailabilityForm = availabilityForm;
-    this.sundayAvailabilityForm = availabilityForm;
+
+    this.mondayAvailabilityForm = this.createAvailabilityForm();
+    this.tuesdayAvailabilityForm = this.createAvailabilityForm();
+    this.wednesdayAvailabilityForm = this.createAvailabilityForm();
+    this.thursdayAvailabilityForm = this.createAvailabilityForm();
+    this.fridayAvailabilityForm = this.createAvailabilityForm();
+    this.saturdayAvailabilityForm = this.createAvailabilityForm();
+    this.sundayAvailabilityForm = this.createAvailabilityForm();
+
+    this.availabilities = data.availabilities;
   }
 
   ngOnInit(): void {
-    
+    this.mondayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 1) ?? {}
+    );
+    this.tuesdayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 2) ?? {}
+    );
+    this.wednesdayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 3) ?? {}
+    );
+    this.thursdayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 4) ?? {}
+    );
+    this.fridayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 5) ?? {}
+    );
+    this.saturdayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 6) ?? {}
+    );
+    this.sundayAvailabilityForm.patchValue(
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 7) ?? {}
+    );
   }
 
   close(): void {
@@ -71,5 +98,17 @@ export class ConfigureAvailabilityModal implements OnInit {
 
   save(): void {
     // TODO Implement save method.
+  }
+
+  private createAvailabilityForm(): FormGroup {
+    return this.fb.group({
+      id: [null],
+      dayOfWeek: [null],
+      slot1Start: [null],
+      slot1End: [null],
+      slot2Start: [null],
+      slot2End: [null],
+      isActive: [false],
+    });
   }
 }

@@ -45,7 +45,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Simultaneous Reservations</mat-label>
-                            <input matInput formControlName="simultaneousReservations">
+                            <input matInput formControlName="simultaneousBookings">
                         </mat-form-field>
                     </div>
                     <div class="row">
@@ -171,17 +171,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
-                    </div>
-                    <div class="row">
-                        <app-ui-category-full [category]="{ id: '1', name: 'Hairdresser' }"></app-ui-category-full>
-                    </div>
-                    <!-- @for (categoryGroup of categories.controls; track categoryGroup) {
+                    @for (categoryGroup of categories.controls; track categoryGroup) {
                         <div class="row">
-                            <app-ui-category-full [category]="categoryGroup.value"></app-ui-category-full>
+                            <app-ui-category-full [category]="categoryGroup.value" (hasToReload$)="loadData()"></app-ui-category-full>
                         </div>
-                    } -->
+                    }
                 </div>
             </div>
         </form>

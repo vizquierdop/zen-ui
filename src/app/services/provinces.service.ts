@@ -8,7 +8,7 @@ import { UISelectModel } from '../models/basic/ui-select.model';
 import { ProvinceGetAllRequestDTO, ProvinceGetAllResponseDTO } from '../models/dtos/province.dto.models';
 
 @Injectable({ providedIn: 'root' })
-export class CategoriesService {
+export class ProvincesService {
   private readonly endpoint = 'Provinces';
   paramsAdapter = new ObjectToQueryParamsAdapter();
 

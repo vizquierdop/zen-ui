@@ -58,7 +58,8 @@ export interface BusinessUpdateRequestDTO {
     facebookUser?: string;
     googleMaps?: string;
     provinceId?: number;
-    userId?: number;
+    isActive?: boolean;
+    // userId?: number;
 }
 
 export interface BusinessCreateRequestDTO {

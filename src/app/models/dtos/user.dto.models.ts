@@ -7,7 +7,7 @@ export interface UserCreateRequestDTO {
     lastName?: string;
     phone?: string;
     role: RoleType;
-    active: boolean;
+    isActive: boolean;
     provinceId: number;
     businessId?: number;
 }
@@ -19,7 +19,7 @@ export interface UserUpdateRequestDTO {
     firstName?: string;
     lastName?: string;
     role?: RoleType;
-    active?: boolean;
+    isActive?: boolean;
     phone?: string;
     provinceId?: number;
     businessId?: number;

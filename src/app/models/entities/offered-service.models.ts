@@ -6,7 +6,7 @@ export interface OfferedServiceModel {
     description?: string;
     duration?: number;
     price: number;
-    active: boolean;
+    isActive: boolean;
 
     // Realtions
     businessId: number;

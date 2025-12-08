@@ -9,7 +9,7 @@ export interface UserModel {
     firstName: string;
     lastName?: string;
     role: RoleType;
-    active: boolean;
+    isActive: boolean;
     phone?: string;
 
     // Relations
@@ -26,5 +26,5 @@ export interface UserShortModel {
     lastName: string;
     phone: string;
     role: RoleType;
-    active: boolean;
+    isActive: boolean;
 }

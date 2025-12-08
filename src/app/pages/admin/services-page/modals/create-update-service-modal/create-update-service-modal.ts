@@ -52,7 +52,7 @@ export class CreateUpdateServiceModal implements OnInit {
       description: [null],
       duration: [null],
       price: [null, [Validators.required]],
-      active: [true],
+      isActive: [true],
     });
   }
 

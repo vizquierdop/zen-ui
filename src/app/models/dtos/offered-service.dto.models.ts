@@ -6,7 +6,8 @@ export interface OfferedServiceGetAllRequestDTO extends UIPaginationBaseRequestM
     name?: string;
     duration?: number;
     price?: number;
-    active?: boolean;
+    isActive?: boolean;
+    businessId?: number;
 }
 
 export type OfferedServiceGetAllResponseDTO = UIPaginationBaseResponseModel<OfferedServiceModel>;
@@ -16,7 +17,7 @@ export interface OfferedServiceCreateRequestDTO {
     description?: string;
     duration?: number;
     price: number;
-    active: boolean;
+    isActive: boolean;
     businessId: number;
 }
 
@@ -26,6 +27,6 @@ export interface OfferedServiceUpdateRequestDTO {
     description?: string;
     duration?: number;
     price?: number;
-    active?: boolean;
+    isActive?: boolean;
     businessId?: number;
 }

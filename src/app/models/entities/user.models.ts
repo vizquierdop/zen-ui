@@ -5,7 +5,7 @@ import { ProvinceModel } from "./province.models";
 export interface UserModel {
     id: number;
     email: string;
-    password: string;
+    // password: string;
     firstName: string;
     lastName?: string;
     role: RoleType;

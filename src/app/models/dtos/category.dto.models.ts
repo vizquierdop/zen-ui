@@ -3,6 +3,7 @@ import { CategoryModel } from "../entities/category.models";
 
 export interface CategoryGetAllRequestDTO extends UIPaginationBaseRequestModel {
     name?: string;
+    search?: string;
 }
 
 export type CategoryGetAllResponseDTO = UIPaginationBaseResponseModel<CategoryModel>;

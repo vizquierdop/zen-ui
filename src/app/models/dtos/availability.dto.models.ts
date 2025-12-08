@@ -1,3 +1,12 @@
+import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
+import { AvailabilityModel } from "../entities/availability.models";
+
+export interface AvailabilityGetAllRequestDTO extends UIPaginationBaseRequestModel {
+    businessId: number;
+}
+
+export type AvailabilityGetAllResponseDTO = UIPaginationBaseResponseModel<AvailabilityModel>
+
 export interface AvailabilityCreateRequestDTO {
     businessId: number;
     availabilities: AvailabilityCreateSingleDTO[];

@@ -1,4 +1,5 @@
 import { RoleType } from "../enums/role.enum";
+import { BusinessCreateRequestDTO } from "./business.dto.models";
 
 export interface UserCreateRequestDTO {
     email: string;
@@ -9,7 +10,7 @@ export interface UserCreateRequestDTO {
     role: RoleType;
     isActive: boolean;
     provinceId: number;
-    businessId?: number;
+    business?: BusinessCreateRequestDTO;
 }
 
 export interface UserUpdateRequestDTO {
@@ -23,4 +24,9 @@ export interface UserUpdateRequestDTO {
     phone?: string;
     provinceId?: number;
     businessId?: number;
+}
+
+export interface UserLoginRequestDTO {
+    email: string;
+    password: string;
 }

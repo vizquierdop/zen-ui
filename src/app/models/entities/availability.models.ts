@@ -11,5 +11,5 @@ export interface AvailabilityModel {
 
     // Relations
     businessId: number;
-    business: BusinessShortModel;
+    // business: BusinessShortModel;
 }

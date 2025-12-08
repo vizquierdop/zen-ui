@@ -30,3 +30,13 @@ export interface UserLoginRequestDTO {
     email: string;
     password: string;
 }
+
+export interface UserLoginResponseDTO {
+  accessToken: string;
+  accessTokenExpiresAt: string; // Date
+  refreshToken: string;
+  refreshTokenExpiresAt: string; // Date
+  userId: number;
+  email: string;
+  role: RoleType;
+}

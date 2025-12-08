@@ -6,6 +6,8 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 @use './_variables';
+@use 'ngx-toastr/toastr';
+
 // @use './admin';
 // @use './public';
 @use '../node_modules/angular-calendar/css/angular-calendar.css';

@@ -21,6 +21,7 @@ export interface BusinessModel {
     tikTokUser?: string;
     facebookUser?: string;
     googleMaps: string;
+    isActive?: boolean;
 
     // Relations
     provinceId: number;

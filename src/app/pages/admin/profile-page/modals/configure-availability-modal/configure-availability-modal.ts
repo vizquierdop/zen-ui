@@ -50,7 +50,7 @@ export class ConfigureAvailabilityModal implements OnInit {
       slot1End: [null],
       slot2Start: [null],
       slot2End: [null],
-      active: [false],
+      isActive: [false],
     });
     this.mondayAvailabilityForm = availabilityForm;
     this.tuesdayAvailabilityForm = availabilityForm;

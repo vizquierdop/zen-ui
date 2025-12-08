@@ -5,11 +5,11 @@ import { ProvinceModel } from "./province.models";
 export interface UserModel {
     id: number;
     email: string;
-    password: string;
+    // password: string;
     firstName: string;
     lastName?: string;
     role: RoleType;
-    active: boolean;
+    isActive: boolean;
     phone?: string;
 
     // Relations
@@ -26,5 +26,5 @@ export interface UserShortModel {
     lastName: string;
     phone: string;
     role: RoleType;
-    active: boolean;
+    isActive: boolean;
 }

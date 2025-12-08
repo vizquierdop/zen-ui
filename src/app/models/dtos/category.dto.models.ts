@@ -1,8 +1,9 @@
 import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { CategoryModel } from "../entities/category.models";
 
-export interface CategoryGetallRequestDTO extends UIPaginationBaseRequestModel {
+export interface CategoryGetAllRequestDTO extends UIPaginationBaseRequestModel {
     name?: string;
+    search?: string;
 }
 
 export type CategoryGetAllResponseDTO = UIPaginationBaseResponseModel<CategoryModel>;

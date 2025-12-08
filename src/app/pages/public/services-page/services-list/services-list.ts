@@ -36,7 +36,7 @@ export class PublicServicesList {
       description: 'Description 1',
       duration: 60,
       price: 100,
-      active: true,
+      isActive: true,
       businessId: 1,
       business: {
         id: 1,
@@ -63,7 +63,7 @@ export class PublicServicesList {
       description: 'Description 2',
       duration: 60,
       price: 100,
-      active: true,
+      isActive: true,
       businessId: 1,
       business: {
         id: 2,

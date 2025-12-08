@@ -62,7 +62,7 @@ export class PublicBusinessDetail {
           description: 'Description 1',
           duration: 60,
           price: 100,
-          active: true,
+          isActive: true,
           businessId: 1,
         },
         {
@@ -71,7 +71,7 @@ export class PublicBusinessDetail {
           description: 'Description 2',
           duration: 30,
           price: 50,
-          active: true,
+          isActive: true,
           businessId: 1,
         },
       ],

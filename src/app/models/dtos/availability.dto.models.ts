@@ -1,3 +1,12 @@
+import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
+import { AvailabilityModel } from "../entities/availability.models";
+
+export interface AvailabilityGetAllRequestDTO extends UIPaginationBaseRequestModel {
+    businessId: number;
+}
+
+export type AvailabilityGetAllResponseDTO = UIPaginationBaseResponseModel<AvailabilityModel>
+
 export interface AvailabilityCreateRequestDTO {
     businessId: number;
     availabilities: AvailabilityCreateSingleDTO[];
@@ -9,7 +18,7 @@ export interface AvailabilityCreateSingleDTO {
     slot1End: string;
     slot2Start?: string;
     slot2End?: string;
-    active: boolean;
+    isActive: boolean;
 }
 
 export interface AvailabilityUpdateRequestDTO {
@@ -24,6 +33,6 @@ export interface AvailabilityUpdateSingleDTO {
     slot1End: string;
     slot2Start?: string;
     slot2End?: string;
-    active: boolean;
+    isActive: boolean;
 }
 

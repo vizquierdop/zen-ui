@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserLoginRequestDTO } from '../models/dtos/user.dto.models';
+import { UserLoginRequestDTO, UserLoginResponseDTO } from '../models/dtos/user.dto.models';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -10,8 +10,8 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) {}
 
-  login(request: UserLoginRequestDTO): Observable<any> {
-    return this.http.post<any>(
+  login(request: UserLoginRequestDTO): Observable<UserLoginResponseDTO> {
+    return this.http.post<UserLoginResponseDTO>(
       `${environment.apiUrl}/${this.endpoint}/login`,
       request,
       {

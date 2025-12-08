@@ -21,6 +21,8 @@ import { DateAdapter as CalendarDateAdapter } from 'angular-calendar';
 import { provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { providePrimeNG } from 'primeng/config';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideToastr } from 'ngx-toastr';
 import Aura from '@primeuix/themes/aura';
 registerLocaleData(localeEs, 'es');
 
@@ -44,6 +46,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideAnimationsAsync(),
+    provideToastr({
+      positionClass: 'toast-bottom-center',
+
+    }),
     provideHttpClient(withInterceptorsFromDi()),
     provideLocaleConfig(),
     provideCalendar({

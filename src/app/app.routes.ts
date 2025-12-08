@@ -1,13 +1,25 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './utils/guards/auth.guard';
+import { RolesGuard } from './utils/guards/roles.guard';
+import { RoleType } from './models/enums/role.enum';
 
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/base/base').then((m) => m.Base),
+    children: [
+      {
+        path: '',
+        redirectTo: '/public',
+        pathMatch: 'full',
+      },
+    ]
   },
   {
     path: 'admin',
     loadComponent: () => import('./pages/admin/base/admin-base').then((m) => m.AdminBase),
+    canActivate: [AuthGuard, RolesGuard],
+    data: { roles: [RoleType.ADMIN, RoleType.BUSINESS] },
     children: [
       {
         path: 'profile',
@@ -50,6 +62,8 @@ export const routes: Routes = [
   {
     path: 'public',
     loadComponent: () => import('./pages/public/base/public-base').then((m) => m.PublicBase),
+    canActivate: [AuthGuard, RolesGuard],
+    data: { roles: [RoleType.ADMIN, RoleType.CUSTOMER] },
     children: [
       {
         path: '',
@@ -102,8 +116,17 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/authentication/login-page/login').then((m) => m.Login),
   },
   {
+    path: 'logout',
+    loadComponent: () =>
+      import('./pages/authentication/logout-page/logout').then((m) => m.Logout),
+  },
+  {
     path: 'register',
     loadComponent: () =>
       import('./pages/authentication/register-page/register').then((m) => m.Register),
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];

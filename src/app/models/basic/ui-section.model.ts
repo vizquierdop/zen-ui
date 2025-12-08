@@ -4,5 +4,5 @@ export interface UISectionModel {
     route: string;
     class: string;
     icon?: string;
-    roles: string[];
+    roles: number[];
 }

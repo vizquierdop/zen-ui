@@ -37,7 +37,7 @@ export interface ReservationUpdateRequestDTO {
     startTime: string;
     endTime: string;
     status: ReservationStatusType;
-    customerName?: number;
+    customerName?: string;
     customerEmail?: string;
     customerPhone?: string;
     userId?: string;

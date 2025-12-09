@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { OfferedServiceModel } from '../../../../../models/entities/offered-service.models';
+import { OfferedServicesService } from '../../../../../services/offered-services.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { OfferedServiceCreateRequestDTO, OfferedServiceUpdateRequestDTO } from '../../../../../models/dtos/offered-service.dto.models';
+import { catchError, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-create-update-service-modal',
@@ -23,6 +27,7 @@ import { OfferedServiceModel } from '../../../../../models/entities/offered-serv
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    ToastrModule,
   ],
   templateUrl: './create-update-service-modal.html',
   styleUrl: './create-update-service-modal.scss',
@@ -37,10 +42,13 @@ export class CreateUpdateServiceModal implements OnInit {
   constructor(
     private readonly dialog: MatDialogRef<CreateUpdateServiceModal>,
     @Inject(MAT_DIALOG_DATA) public data: {
+      businessId: number,
       type: 'create' | 'update',
       service: OfferedServiceModel | null,
     },
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly offeredServicesService: OfferedServicesService,
+    private toastr: ToastrService,
   ) {
     this.type = this.data.type;
     if (this.data.service) {
@@ -53,6 +61,7 @@ export class CreateUpdateServiceModal implements OnInit {
       duration: [null],
       price: [null, [Validators.required]],
       isActive: [true],
+      businessId: [this.data.businessId],
     });
   }
 
@@ -64,7 +73,50 @@ export class CreateUpdateServiceModal implements OnInit {
   }
 
   save(): void {
-    // TODO Implement save method.
+    this.isLoading.set(true);
+    if (this.type === 'create') {
+      const request: OfferedServiceCreateRequestDTO = {
+        name: this.offeredServiceForm.get('name')?.value,
+        description: this.offeredServiceForm.get('description')?.value,
+        duration: +this.offeredServiceForm.get('duration')?.value,
+        price: +this.offeredServiceForm.get('price')?.value,
+        isActive: this.offeredServiceForm.get('isActive')?.value,
+        businessId: this.offeredServiceForm.get('businessId')?.value,
+      };
+      this.offeredServicesService.create(request).pipe(
+        catchError(() => {
+          this.isLoading.set(false);
+          this.toastr.error('Error creating offered service');
+          return EMPTY;
+        })
+      ).subscribe(() => {
+        this.isLoading.set(false);
+        this.toastr.success('Offered service created successfully');
+        this.dialog.close(true);
+      });
+    } else {
+      const request: OfferedServiceUpdateRequestDTO = {
+        id: this.offeredServiceForm.get('id')?.value,
+        name: this.offeredServiceForm.get('name')?.value,
+        description: this.offeredServiceForm.get('description')?.value,
+        duration: +this.offeredServiceForm.get('duration')?.value,
+        price: +this.offeredServiceForm.get('price')?.value,
+        isActive: this.offeredServiceForm.get('isActive')?.value,
+        businessId: this.offeredServiceForm.get('businessId')?.value,
+      };
+
+      this.offeredServicesService.update(request).pipe(
+        catchError(() => {
+          this.isLoading.set(false);
+          this.toastr.error('Error updating offered service');
+          return EMPTY;
+        })
+      ).subscribe(() => {
+        this.isLoading.set(false);
+        this.toastr.success('Offered service updated successfully');
+        this.dialog.close(true);
+      });
+    }
   }
 
   close(): void {

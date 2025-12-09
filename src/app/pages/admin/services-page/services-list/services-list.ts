@@ -20,6 +20,18 @@ import { FiltersModal } from '../../../../components/filters-modal/filters-modal
 import { MatChipsModule } from '@angular/material/chips';
 import { FiltersChipPipe } from '../../../../utils/pipes/filters-chips.pipe';
 import { CreateUpdateServiceModal } from '../modals/create-update-service-modal/create-update-service-modal';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
+import { CdkTableModule } from '@angular/cdk/table';
+import { UIPaginator } from '../../../../components/ui-paginator/ui-paginator';
+import { SERVICES_COLUMNS } from './services.columns';
+import { OfferedServiceModel } from '../../../../models/entities/offered-service.models';
+import { ObjectDataSource } from '../../../../utils/lists/datasource';
+import { UITableTag } from '../../../../components/ui-table-tag/ui-table-tag';
+import { OfferedServicesService } from '../../../../services/offered-services.service';
+import { UsersService } from '../../../../services/users.service';
+import { OfferedServiceGetAllRequestDTO } from '../../../../models/dtos/offered-service.dto.models';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-admin-services-list',
@@ -31,12 +43,27 @@ import { CreateUpdateServiceModal } from '../modals/create-update-service-modal/
     MatDialogModule,
     MatChipsModule,
     FiltersChipPipe,
+    CdkTableModule,
+    UIPaginator,
+    MatSortModule,
+    MatMenuModule,
+    UITableTag,
   ],
   templateUrl: './services-list.html',
   styleUrl: './services-list.scss',
 })
 export class AdminServicesList implements IListPage, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort = ViewChild(MatSort);
   @ViewChild('searchInput') searchInput: ElementRef = ViewChild('searchInput');
+
+  displayedColumns: string[] = SERVICES_COLUMNS.map((c) => c.name);
+  currentPage = signal(1);
+  hasPreviousPage = signal(false);
+  hasNextPage = signal(false);
+  totalPages = signal(0);
+  totalCount = signal(0);
+
+  dataSource = new ObjectDataSource<OfferedServiceModel>();
 
   isLoading = signal(true);
 
@@ -44,9 +71,13 @@ export class AdminServicesList implements IListPage, AfterViewInit {
   filters: WritableSignal<{ [key: string]: any }> = signal({});
   hasFilters = false;
 
+  businessId!: number;
+
   constructor(
     private readonly dialog: MatDialog,
-    private readonly persistentFiltersService: PersistentFiltersService
+    private readonly persistentFiltersService: PersistentFiltersService,
+    private readonly offeredServicesService: OfferedServicesService,
+    private usersService: UsersService
   ) {
     if (this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_SERVICES)) {
       this.filters.set(
@@ -71,14 +102,41 @@ export class AdminServicesList implements IListPage, AfterViewInit {
         this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_SERVICES)
       );
     }
-    this.loadData();
+    this.usersService.user$.subscribe((user) => {
+      if (user && user.businessId) {
+        this.businessId = user.businessId;
+        this.loadData();
+      }
+    });
   }
 
   loadData(): void {
-    // TODO Implement loadData method.
-    setTimeout(() => {
-      this.isLoading.set(false);
-    }, 500);
+    this.isLoading.set(true);
+    const request: OfferedServiceGetAllRequestDTO = {
+      ...this.filters(),
+      paginationLength: 25,
+      paginationSkip: this.currentPage(),
+      // orderBy: this.sort.active,
+      // orderDirection: this.sort.direction === 'asc' ? 0 : 1,
+    };
+
+    if (this.searchInput.nativeElement.value) {
+      request.search = this.searchInput.nativeElement.value;
+    }
+
+    this.offeredServicesService
+      .getAll(request)
+      .pipe(delay(500))
+      .subscribe((response) => {
+        this.dataSource.data.next(response.items);
+        this.hasPreviousPage.set(response.hasPreviousPage);
+        this.hasNextPage.set(response.hasNextPage);
+        this.totalPages.set(response.totalPages);
+        this.currentPage.set(response.pageNumber);
+        this.totalCount.set(response.totalCount);
+
+        this.isLoading.set(false);
+      });
   }
 
   onSearch(): void {
@@ -86,7 +144,7 @@ export class AdminServicesList implements IListPage, AfterViewInit {
       UISectionKeysEnum.ADMIN_SERVICES,
       this.searchInput.nativeElement.value
     );
-    // TODO reset page
+    this.currentPage.set(1);
     this.loadData();
   }
 
@@ -110,7 +168,7 @@ export class AdminServicesList implements IListPage, AfterViewInit {
         });
         this.filters.set(result);
         this.persistentFiltersService.setSectionFilters(UISectionKeysEnum.ADMIN_SERVICES, result);
-        // TODO reset page
+        this.currentPage.set(1);
         this.loadData();
       }
     });
@@ -126,13 +184,14 @@ export class AdminServicesList implements IListPage, AfterViewInit {
       UISectionKeysEnum.ADMIN_SERVICES,
       this.filters()
     );
-    // TODO reset page
+    this.currentPage.set(1);
     this.loadData();
   }
 
   openCreateModal(): void {
     const dialogRef = this.dialog.open(CreateUpdateServiceModal, {
       data: {
+        businessId: this.businessId,
         type: 'create',
         service: null,
       },
@@ -146,4 +205,24 @@ export class AdminServicesList implements IListPage, AfterViewInit {
       }
     });
   }
+
+  viewDetails(offeredService: OfferedServiceModel): void {
+    const dialogRef = this.dialog.open(CreateUpdateServiceModal, {
+      data: {
+        businessId: this.businessId,
+        type: 'update',
+        service: offeredService,
+      },
+      minWidth: '650px',
+      maxWidth: '650px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadData();
+      }
+    });
+  }
+
+  updateStatus(offeredService: OfferedServiceModel): void {}
 }

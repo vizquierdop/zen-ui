@@ -7,7 +7,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { UISectionModel } from '../../../models/basic/ui-section.model';
 import { AdminUISections } from '../../../utils/ui-sections';
-import { UiHeader } from "../../../components/ui-header/ui-header";
+import { UiHeader } from '../../../components/ui-header/ui-header';
+import { UsersService } from '../../../services/users.service';
+import { UserModel } from '../../../models/entities/user.models';
 
 @Component({
   selector: 'app-admin-base',
@@ -20,8 +22,8 @@ import { UiHeader } from "../../../components/ui-header/ui-header";
     RouterLink,
     RouterLinkActive,
     MatListModule,
-    UiHeader
-],
+    UiHeader,
+  ],
   templateUrl: './admin-base.html',
   styleUrl: './admin-base.scss',
 })
@@ -34,7 +36,15 @@ export class AdminBase {
 
   sections: UISectionModel[] = AdminUISections;
 
-  constructor(private readonly router: Router) {}
+  user!: UserModel;
+  userBusinessName = '';
+
+  constructor(private readonly router: Router, private readonly usersService: UsersService) {
+    this.usersService.user$.subscribe((user) => {
+      this.user = user!;
+      this.userBusinessName = `${user!.business!.name}`.toUpperCase();
+    });
+  }
 
   // logout(): void {
   //   void this.router.navigate(['/logout']);

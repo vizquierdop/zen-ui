@@ -322,3 +322,62 @@ button {
     margin-right: 10px;
   }
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  table-layout: fixed;
+
+  &.scrollable {
+    display: block;
+    overflow-x: auto;
+  }
+  .cdk-header-cell {
+    text-align: start;
+    padding: 10px;
+    border-bottom: 2px solid variables.$primary;
+    // border-bottom: 2px solid $primary-80;
+    color: variables.$primary;
+    // color: $white;
+    font-weight: 700;
+    div {
+      font-weight: 700;
+    }
+  }
+  .cdk-header-cell:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .cdk-header-cell:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .cdk-cell {
+    padding: 5px 10px;
+  }
+  .cdk-column-actions {
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: flex-end;
+  }
+  .cdk-row {
+    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    color: #616161;
+  }
+  .cdk-row:hover {
+    // background-color: #f7f7f7;
+    background-color: #ececec;
+    color: variables.$black;
+  }
+  .cdk-row:last-child {
+    border-bottom: none;
+  }
+
+  .centered-sorted-header {
+    .mat-sort-header-container {
+      justify-content: center;
+    }
+  }
+}

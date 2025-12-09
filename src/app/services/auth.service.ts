@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { UserLoginRequestDTO, UserLoginResponseDTO } from '../models/dtos/user.dto.models';
 import { environment } from '../../environments/environment';
+import { BYPASS_LOG } from '../utils/interceptors/auth-interceptor';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json; charset=utf-8',
         }),
+        context: new HttpContext().set(BYPASS_LOG, true),
       }
     );
   }
@@ -25,11 +27,12 @@ export class AuthService {
   refresh(refreshToken: string): Observable<any> {
     return this.http.post<any>(
       `${environment.apiUrl}/${this.endpoint}/refresh`,
-      { refreshToken: refreshToken },
+      { token: refreshToken },
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json; charset=utf-8',
         }),
+        context: new HttpContext().set(BYPASS_LOG, true),
       }
     );
   }

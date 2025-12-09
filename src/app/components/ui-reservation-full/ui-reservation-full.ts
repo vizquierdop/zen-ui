@@ -20,7 +20,6 @@ import { ReservationUpdateRequestDTO } from '../../models/dtos/reservation.dto.m
     MatIconModule,
     MatDialogModule,
     ToastrModule,
-    ConfirmationModal,
   ],
   templateUrl: './ui-reservation-full.html',
   styleUrl: './ui-reservation-full.scss',

@@ -78,23 +78,25 @@
             <th cdk-header-cell *cdkHeaderCellDef></th>
             <td cdk-cell *cdkCellDef="let element">
                 <div class="icon-cell">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();">
-                        <mat-icon>more_vertical</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="confirmReservation(element)">
-                            <mat-icon>
-                                check_outline
-                            </mat-icon>
-                            Confirm
+                    @if (element.status === 0) {
+                        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();">
+                            <mat-icon>more_vertical</mat-icon>
                         </button>
-                        <button mat-menu-item (click)="cancelReservation(element)">
-                            <mat-icon>
-                                close
-                            </mat-icon>
-                            Reject
-                        </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="confirmReservation(element)">
+                                <mat-icon>
+                                    check_outline
+                                </mat-icon>
+                                Confirm
+                            </button>
+                            <button mat-menu-item (click)="cancelReservation(element)">
+                                <mat-icon>
+                                    close
+                                </mat-icon>
+                                Reject
+                            </button>
+                        </mat-menu>
+                    }
                 </div>
             </td>
         </ng-container>

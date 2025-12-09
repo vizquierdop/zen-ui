@@ -27,17 +27,23 @@ import { ObjectDataSource } from '../../../../utils/lists/datasource';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
 import { ReservationsService } from '../../../../services/reservations.service';
 import { UsersService } from '../../../../services/users.service';
-import { ReservationGetAllRequestDTO } from '../../../../models/dtos/reservation.dto.models';
-import { delay } from 'rxjs';
+import {
+  ReservationGetAllRequestDTO,
+  ReservationUpdateRequestDTO,
+} from '../../../../models/dtos/reservation.dto.models';
+import { catchError, delay, EMPTY, switchMap } from 'rxjs';
 import { OfferedServicesService } from '../../../../services/offered-services.service';
 import { EnumService } from '../../../../services/enum.service';
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
-import { UIPaginator } from "../../../../components/ui-paginator/ui-paginator";
-import { MatMenuModule } from "@angular/material/menu";
-import { UITableTag } from "../../../../components/ui-table-tag/ui-table-tag";
+import { UIPaginator } from '../../../../components/ui-paginator/ui-paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { UITableTag } from '../../../../components/ui-table-tag/ui-table-tag';
 import { CdkTableModule } from '@angular/cdk/table';
-import { ReservationStatusTypePipe } from "../../../../utils/pipes/reservation-status-type.pipe";
+import { ReservationStatusTypePipe } from '../../../../utils/pipes/reservation-status-type.pipe';
 import { UpdateReservationModal } from '../modals/update-reservation-modal/update-reservation-modal';
+import { ConfirmationModal } from '../../../../components/confirmation-modal/confirmation-modal';
+import { ReservationStatusType } from '../../../../models/enums/reservation-status-type.enum';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-reservations-list',
@@ -54,8 +60,9 @@ import { UpdateReservationModal } from '../modals/update-reservation-modal/updat
     MatMenuModule,
     UITableTag,
     CdkTableModule,
-    ReservationStatusTypePipe
-],
+    ReservationStatusTypePipe,
+    ToastrModule,
+  ],
   templateUrl: './reservations-list.html',
   styleUrl: './reservations-list.scss',
 })
@@ -87,7 +94,8 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
     private readonly reservationsService: ReservationsService,
     private readonly usersService: UsersService,
     private readonly offeredServicesService: OfferedServicesService,
-    private readonly enumService: EnumService
+    private readonly enumService: EnumService,
+    private readonly toastr: ToastrService,
   ) {
     if (this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_RESERVATIONS)) {
       this.filters.set(
@@ -222,9 +230,77 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
     });
   }
 
-  confirmReservation(reservation: ReservationModel): void {}
+  confirmReservation(reservation: ReservationModel): void {
+    const dialogRef = this.dialog.open(ConfirmationModal, {
+      data: {
+        message: 'The reservation will be confirmed. Do you want to continue?',
+      },
+    });
 
-  cancelReservation(reservation: ReservationModel): void {}
+    dialogRef.afterClosed().pipe(
+      switchMap((result) => {
+        if (result) {
+          const request: ReservationUpdateRequestDTO = {
+            id: reservation.id,
+            date: reservation.date,
+            endTime: reservation.endTime,
+            serviceId: reservation.serviceId,
+            startTime: reservation.startTime,
+            status: ReservationStatusType.ACCEPTED,
+            customerEmail: reservation.customerEmail,
+            customerName: reservation.customerName,
+            customerPhone: reservation.customerPhone,
+          };
+
+          return this.reservationsService.update(request);
+        }
+        return EMPTY;
+      }),
+      catchError(() => {
+        this.toastr.error('Error confirming reservation');
+        return EMPTY;
+      })
+    ).subscribe(() => {
+      this.toastr.success('Reservation confirmed successfully');
+      this.loadData();
+    });
+  }
+
+  cancelReservation(reservation: ReservationModel): void {
+    const dialogRef = this.dialog.open(ConfirmationModal, {
+      data: {
+        message: 'The reservation will be rejected. Do you want to continue?',
+      },
+    });
+
+    dialogRef.afterClosed().pipe(
+      switchMap((result) => {
+        if (result) {
+          const request: ReservationUpdateRequestDTO = {
+            id: reservation.id,
+            date: reservation.date,
+            endTime: reservation.endTime,
+            serviceId: reservation.serviceId,
+            startTime: reservation.startTime,
+            status: ReservationStatusType.CANCELLED,
+            customerEmail: reservation.customerEmail,
+            customerName: reservation.customerName,
+            customerPhone: reservation.customerPhone,
+          };
+
+          return this.reservationsService.update(request);
+        }
+        return EMPTY;
+      }),
+      catchError(() => {
+        this.toastr.error('Error cancelling reservation');
+        return EMPTY;
+      })
+    ).subscribe(() => {
+      this.toastr.success('Reservation cancelled successfully');
+      this.loadData();
+    });
+  }
 
   loadFilterSelectValues(): void {
     this.reservationFilters.map((f: UIFilterModel) => {
@@ -235,7 +311,6 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
     this.offeredServicesService
       .getSelectOptions(this.businessId)
       .subscribe((offeredServices: UISelectModel[]) => {
-
         // OfferedServices
         this.reservationFilters
           .find((f: UIFilterModel) => f.name === 'serviceIds')

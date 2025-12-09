@@ -11,13 +11,13 @@
                 <div class="row">
                     <mat-form-field appearance="outline">
                         <mat-label>From Date</mat-label>
-                        <input matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+                        <input matInput [matDatepicker]="pickerFrom" formControlName="startDate">
                         <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
                         <mat-datepicker #pickerFrom></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>To Date</mat-label>
-                        <input matInput [matDatepicker]="pickerTo" formControlName="toDate">
+                        <input matInput [matDatepicker]="pickerTo" formControlName="endDate">
                         <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
                         <mat-datepicker #pickerTo></mat-datepicker>
                     </mat-form-field>

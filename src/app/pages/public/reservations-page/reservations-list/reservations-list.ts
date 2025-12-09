@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -11,6 +11,10 @@ import { UiPageHeader } from '../../../../components/ui-page-header/ui-page-head
 import { UiMobilePaginator } from '../../../../components/ui-mobile-paginator/ui-mobile-paginator';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
 import { UiReservationFull } from "../../../../components/ui-reservation-full/ui-reservation-full";
+import { ReservationsService } from '../../../../services/reservations.service';
+import { ReservationGetAllRequestDTO } from '../../../../models/dtos/reservation.dto.models';
+import { UsersService } from '../../../../services/users.service';
+import { ReservationStatusType } from '../../../../models/enums/reservation-status-type.enum';
 
 @Component({
   selector: 'app-public-reservations-list',
@@ -31,101 +35,34 @@ import { UiReservationFull } from "../../../../components/ui-reservation-full/ui
   templateUrl: './reservations-list.html',
   styleUrl: './reservations-list.scss',
 })
-export class PublicReservationsList {
+export class PublicReservationsList implements OnInit {
   isLoading = signal(false);
   filtersForm: FormGroup;
 
   cancelledFilter = signal(false);
   pendingFilter = signal(false);
-  acceptedFilter = signal(false);
+  acceptedFilter = signal(true);
 
   cancelledButtonType = signal<'outlined' | 'filled'>('outlined');
   pendingButtonType = signal<'outlined' | 'filled'>('outlined');
-  acceptedButtonType = signal<'outlined' | 'filled'>('outlined');
+  acceptedButtonType = signal<'outlined' | 'filled'>('filled');
 
   itemsLength = signal<number>(0);
   totalCount = signal<number>(0);
   hasPreviousPage = signal<boolean>(false);
   hasNextPage = signal<boolean>(false);
+  reservations: ReservationModel[] = [];
 
-  reservations: ReservationModel[] = [
-    {
-      id: 1,
-      date: '27/11/2025',
-      serviceId: 1,
-      service: {
-        id: 1,
-        name: 'Service 1',
-        description: 'Description 1',
-        duration: 60,
-        price: 100,
-        isActive: true,
-        businessId: 1,
-        business: {
-          id: 1,
-          name: 'Business 1',
-          address: 'Address 1',
-          vacations: [],
-          availabilities: [],
-          categories: [],
-          googleMaps: '',
-          phone: '',
-          province: {
-            id: '1',
-            name: 'Province 1',
-          },
-          provinceId: 1,
-          services: [],
-          simultaneousBookings: 0,
-          userId: 1,
-        }
-      },
-      startTime: '10:00',
-      endTime: '11:00',
-      status: 0,
-    },
-    {
-      id: 1,
-      date: '27/11/2025',
-      serviceId: 2,
-      service: {
-        id: 2,
-        name: 'Service 2',
-        description: 'Description 2',
-        duration: 60,
-        price: 100,
-        isActive: true,
-        businessId: 2,
-        business: {
-          id: 2,
-          name: 'Business 2',
-          address: 'Address 2',
-          vacations: [],
-          availabilities: [],
-          categories: [],
-          googleMaps: '',
-          phone: '',
-          province: {
-            id: '2',
-            name: 'Province 2',
-          },
-          provinceId: 2,
-          services: [],
-          simultaneousBookings: 0,
-          userId: 1,
-        }
-      },
-      startTime: '12:00',
-      endTime: '13:00',
-      status: 0,
-    },
-  ];
+  userId!: number;
 
-  constructor(private readonly fb: FormBuilder) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly reservationsService: ReservationsService,
+    private readonly usersService: UsersService,
+  ) {
     this.filtersForm = this.fb.group({
-      fromDate: [null],
-      toDate: [null],
-      statusTypes: [null],
+      startDate: [null],
+      endDate: [null],
     });
 
     effect(() => {
@@ -134,6 +71,54 @@ export class PublicReservationsList {
       this.acceptedButtonType.set(this.acceptedFilter() ? 'filled' : 'outlined');
     });
   }
+
+  ngOnInit(): void {
+    this.usersService.user$.subscribe((user) => {
+      this.userId = user!.id;
+      this.loadData();
+    });
+  }
+
+  loadData(): void {
+    this.isLoading.set(true);
+    const request: ReservationGetAllRequestDTO = {
+      userId: this.userId,
+      paginationLength: 5,
+      paginationSkip: 1,
+    };
+    if (this.filtersForm.get('startDate')?.value) {
+      request.startDate = this.filtersForm.get('startDate')?.value;
+    }
+    if (this.filtersForm.get('endDate')?.value) {
+      request.endDate = this.filtersForm.get('endDate')?.value;
+    }
+
+    const selectedStatuses: number[] = [];
+    if (this.pendingFilter()) {
+      selectedStatuses.push(ReservationStatusType.PENDING);
+    }
+    if (this.acceptedFilter()) {
+      selectedStatuses.push(ReservationStatusType.ACCEPTED);
+    }
+    if (this.cancelledFilter()) {
+      selectedStatuses.push(ReservationStatusType.CANCELLED);
+    }
+
+    if (selectedStatuses.length > 0) {
+      request.statusTypes = selectedStatuses.join(',');
+    }
+    
+    this.reservationsService.getAll(request).subscribe((response) => {
+      this.reservations = response.items;
+      this.itemsLength.set(response.items.length);
+      this.totalCount.set(response.totalCount);
+      this.hasNextPage.set(response.hasNextPage);
+      this.hasPreviousPage.set(response.hasPreviousPage);
+      this.isLoading.set(false);
+    });
+
+  }
+
   updateStatus(type: 'cancelled' | 'pending' | 'accepted'): void {
     switch (type) {
       case 'cancelled':
@@ -148,6 +133,8 @@ export class PublicReservationsList {
       default:
         break;
     }
+
+    this.loadData();
   }
 
   previousPage(): void {

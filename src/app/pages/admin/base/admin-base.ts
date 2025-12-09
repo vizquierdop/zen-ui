@@ -42,7 +42,9 @@ export class AdminBase {
   constructor(private readonly router: Router, private readonly usersService: UsersService) {
     this.usersService.user$.subscribe((user) => {
       this.user = user!;
-      this.userBusinessName = `${user!.business!.name}`.toUpperCase();
+      if (user && user.business) {
+        this.userBusinessName = `${user!.business!.name}`.toUpperCase();
+      }
     });
   }
 

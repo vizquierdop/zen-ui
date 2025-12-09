@@ -16,6 +16,7 @@ import { ReservationUpdateRequestDTO } from '../../../../../models/dtos/reservat
 import { catchError, EMPTY } from 'rxjs';
 import { UISelectModel } from '../../../../../models/basic/ui-select.model';
 import { EnumService } from '../../../../../services/enum.service';
+import { OfferedServicesService } from '../../../../../services/offered-services.service';
 
 @Component({
   selector: 'app-update-reservation-modal',
@@ -39,20 +40,30 @@ import { EnumService } from '../../../../../services/enum.service';
 export class UpdateReservationModal implements OnInit {
   isLoading = signal(false);
   reservation!: ReservationModel;
+  businessId!: number;
   reservationStatusTypeOptions: UISelectModel[] = [];
+  offeredServiceOptions: UISelectModel[] = [];
   reservationForm: FormGroup;
 
   constructor(
     private readonly dialog: MatDialogRef<UpdateReservationModal>,
-    @Inject(MAT_DIALOG_DATA) public data: { reservation: ReservationModel },
+    @Inject(MAT_DIALOG_DATA) public data: {
+      reservation: ReservationModel,
+      businessId: number;
+    },
     private readonly fb: FormBuilder,
     private readonly reservationsService: ReservationsService,
     private readonly toastr: ToastrService,
-    private enumService: EnumService,
+    private readonly enumService: EnumService,
+    private readonly offeredServicesService: OfferedServicesService,
   ) {
     if (this.data.reservation) {
       this.reservation = this.data.reservation;
     }
+    if (this.data.businessId) {
+      this.businessId = this.data.businessId;
+    }
+
     this.reservationForm = this.fb.group({
       id: [this.reservation.id, Validators.required],
       customerName: [null, Validators.required],
@@ -69,6 +80,8 @@ export class UpdateReservationModal implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadSelectValues();
+
     if (this.reservation.userId) {
       this.reservationForm.get('customerName')?.setValue(`${this.reservation.user?.firstName} ${this.reservation.user?.lastName}`);
       this.reservationForm.get('customerName')?.disable();
@@ -76,6 +89,8 @@ export class UpdateReservationModal implements OnInit {
       this.reservationForm.get('customerEmail')?.disable();
       this.reservationForm.get('customerPhone')?.setValue(this.reservation.user?.phone);
       this.reservationForm.get('customerPhone')?.disable();
+
+      this.reservationForm.get('serviceId')?.disable();
     } else {
       this.reservationForm.get('customerName')?.setValue(this.reservation.customerName);
       this.reservationForm.get('customerName')?.enable();
@@ -84,8 +99,13 @@ export class UpdateReservationModal implements OnInit {
       this.reservationForm.get('customerPhone')?.setValue(this.reservation.customerPhone);
       this.reservationForm.get('customerPhone')?.enable();
     }
-
-    this.reservationStatusTypeOptions = this.enumService.getReservationStatusTypeOptions();
+  }
+  
+  loadSelectValues(): void {
+    this.offeredServicesService.getSelectOptions(this.businessId).subscribe((offeredServices: UISelectModel[]) => {
+      this.offeredServiceOptions = offeredServices;
+      this.reservationStatusTypeOptions = this.enumService.getReservationStatusTypeOptions();
+    });
   }
 
   save(): void {

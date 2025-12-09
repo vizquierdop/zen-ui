@@ -9,9 +9,9 @@
     </div>
     <mat-dialog-content>
         @if (isLoading()) {
-            <div class="admin-spinner-container">
-                <mat-spinner></mat-spinner>
-            </div>
+        <div class="admin-spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
         }
         <form [formGroup]="reservationForm" class="reservation-form">
             <div class="row">
@@ -45,6 +45,16 @@
                 </mat-form-field>
             </div>
             <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service</mat-label>
+                    <mat-select formControlName="serviceId">
+                        @for (service of offeredServiceOptions; track service) {
+                        <mat-option [value]="service.value">
+                            {{service.label}}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status">

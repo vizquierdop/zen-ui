@@ -19,6 +19,8 @@ import { CategoriesService } from '../../../../services/categories.service';
 import { catchError, EMPTY } from 'rxjs';
 import { BusinessGetAllRequestDTO, BusinessGetSingleResponseDTO } from '../../../../models/dtos/business.dto.models';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { UsersService } from '../../../../services/users.service';
+import { UserModel } from '../../../../models/entities/user.models';
 
 @Component({
   selector: 'app-public-businesses-list',
@@ -53,6 +55,8 @@ export class PublicBusinessesList implements OnInit, AfterViewInit {
   categoryOptions: UISelectModel[] = [];
   businesses: BusinessModel[] = [];
 
+  user!: UserModel;
+
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
@@ -60,6 +64,7 @@ export class PublicBusinessesList implements OnInit, AfterViewInit {
     private readonly businessesService: BusinessesService,
     private readonly categoriesService: CategoriesService,
     private readonly toastr: ToastrService,
+    private readonly usersService: UsersService,
   ) {
     this.filtersForm = this.fb.group({
       name: [null],
@@ -75,7 +80,10 @@ export class PublicBusinessesList implements OnInit, AfterViewInit {
         categoryIds: [+categoryId] 
       });
     }
-    this.loadData();
+    this.usersService.user$.subscribe((user) => {
+      this.user = user!;
+      this.loadData();
+    })
   }
 
   ngAfterViewInit(): void {
@@ -95,6 +103,7 @@ export class PublicBusinessesList implements OnInit, AfterViewInit {
       isActive: true,
       name: this.filtersForm.get('name')?.value,
       categoryIds: this.filtersForm.get('categoryIds')?.value,
+      provinceId: this.user.provinceId,
       paginationLength: 5,
       paginationSkip: this.currentPage(),
     };

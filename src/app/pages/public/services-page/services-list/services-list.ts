@@ -10,6 +10,8 @@ import { UiServiceFull } from '../../../../components/ui-service-full/ui-service
 import { UiMobilePaginator } from '../../../../components/ui-mobile-paginator/ui-mobile-paginator';
 import { OfferedServicesService } from '../../../../services/offered-services.service';
 import { OfferedServiceGetAllRequestDTO } from '../../../../models/dtos/offered-service.dto.models';
+import { UsersService } from '../../../../services/users.service';
+import { UserModel } from '../../../../models/entities/user.models';
 
 @Component({
   selector: 'app-public-services-list',
@@ -34,17 +36,23 @@ export class PublicServicesList implements AfterViewInit {
   hasNextPage = signal<boolean>(false);
   currentPage = signal(1);
   services: OfferedServiceModel[] = [];
+
+  user!: UserModel;
   
-  constructor(private readonly router: Router, private readonly offeredServicesService: OfferedServicesService) {}
+  constructor(private readonly router: Router, private readonly offeredServicesService: OfferedServicesService, private readonly usersService: UsersService) {}
 
   ngAfterViewInit(): void {
-    this.loadData();
+    this.usersService.user$.subscribe((user) => {
+      this.user = user!;
+      this.loadData();
+    });
   }
 
   loadData(): void {
     this.isLoading.set(true);
     const request: OfferedServiceGetAllRequestDTO = {
       isActive: true,
+      provinceId: this.user.provinceId,
       paginationLength: 5,
       paginationSkip: this.currentPage(),
     };

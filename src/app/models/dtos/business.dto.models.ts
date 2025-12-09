@@ -11,6 +11,7 @@ export interface BusinessGetAllRequestDTO extends UIPaginationBaseRequestModel {
     categoryIds?: string;
     name?: string;
     isActive: boolean;
+    provinceId?: number;
 }
 
 export type BusinessGetAllResponseDTO = UIPaginationBaseResponseModel<BusinessModel>;

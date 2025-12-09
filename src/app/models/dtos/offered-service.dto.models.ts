@@ -8,6 +8,7 @@ export interface OfferedServiceGetAllRequestDTO extends UIPaginationBaseRequestM
     price?: number;
     isActive?: boolean;
     businessId?: number;
+    provinceId?: number;
 }
 
 export type OfferedServiceGetAllResponseDTO = UIPaginationBaseResponseModel<OfferedServiceModel>;

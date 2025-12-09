@@ -8,7 +8,7 @@ import { Component, effect, ElementRef, input, viewChild } from '@angular/core';
 })
 export class UiField {
   value = input.required<string>();
-  class = input<'green' | 'red' | 'warning' | 'gray' | 'orange' | 'undefined'>();
+  class = input<'green' | 'red' | 'warning' | 'gray' | 'orange' | 'primary' | 'undefined'>();
 
   mainElement = viewChild<ElementRef>('uiField');
 

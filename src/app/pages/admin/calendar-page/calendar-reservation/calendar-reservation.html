@@ -1,8 +1,11 @@
-<div class="calendar-reservation" (click)="openReservationDetailsModal()">
-    <div class="calendar-reservation-header">
-        <span class="calendar-reservation-time">16:30 - 17:00</span>
+<div [class]="'calendar-reservation' + ' ' + reservationClass" (click)="openReservationDetailsModal()">
+    <div [class]="'calendar-reservation-header' + ' ' + reservationClass">
+        <span class="calendar-reservation-time">
+            {{ reservation.startTime }} - {{ reservation.endTime }}
+        </span>
     </div>
     <div class="calendar-reservation-content">
-        <span class="calendar-reservation-name">Test Testing</span>
+        <span class="calendar-reservation-name">{{ reservation.user ? reservation.user.firstName + '' +
+            reservation.user.lastName : reservation.customerName }}</span>
     </div>
 </div>

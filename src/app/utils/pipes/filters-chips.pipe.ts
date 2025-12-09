@@ -14,14 +14,14 @@ export class FiltersChipPipe implements PipeTransform {
     let result = '';
     const filterObj = filters.find(
       (f) =>
-        f.name === filter.key || `${f.name}Start` === filter.key || `${f.name}End` === filter.key
+        f.name === filter.key || `${f.name}Start` === filter.key || `${f.name}End` === filter.key || `Start${f.name}` === filter.key || `End${f.name}` === filter.key
     );
     if (filterObj) {
       result += filterObj.label;
       if (filterObj.type === 'range') {
-        if (filter.key === `${filterObj.name}Start`) {
+        if (filter.key === `Start${filterObj.name}`) {
           result += ' (Start)';
-        } else if (filter.key === `${filterObj.name}End`) {
+        } else if (filter.key === `End${filterObj.name}`) {
           result += ' (End)';
         }
         result += ': ' + this.datePipe.transform(filter.value, 'dd/MM/yyyy');

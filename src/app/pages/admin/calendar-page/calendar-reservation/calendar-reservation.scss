@@ -1,39 +1,62 @@
 @use '../../../../../variables';
 
 .calendar-reservation {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border: 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  &.pending {
+    border-color: variables.$gray;
+  }
+  &.accepted {
+    border-color: variables.$success;
+  }
+  &.cancelled {
+    border-color: variables.$red;
+  }
+  &.completed {
+    border-color: variables.$primary;
+  }
+  .calendar-reservation-header {
     display: flex;
-    flex-direction: column;
-    justify-content: start;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    border: 2px solid variables.$success;
-    border-radius: 8px;
-    cursor: pointer;
-    .calendar-reservation-header {
-        background-color: variables.$success;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding-top: 4px;
-        padding-bottom: 4px;
-        .calendar-reservation-time {
-            font-size: 14px;
-            font-weight: 700;
-            color: variables.$white;
-        }
+    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    .calendar-reservation-time {
+      font-size: 14px;
+      font-weight: 700;
+      color: variables.$white;
     }
-    .calendar-reservation-content {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        .calendar-reservation-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: variables.$black;
-        }
+    &.pending {
+      background-color: variables.$gray;
     }
+    &.accepted {
+      background-color: variables.$success;
+      }
+    &.cancelled {
+      background-color: variables.$red;
+      }
+    &.completed {
+      background-color: variables.$primary;
+      }
+  }
+  .calendar-reservation-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    .calendar-reservation-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: variables.$black;
+    }
+  }
 }

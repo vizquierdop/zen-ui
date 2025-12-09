@@ -21,6 +21,23 @@ import { UISectionKeysEnum } from '../../../../models/enums/section-keys.enum';
 import { UIFilterModel } from '../../../../models/basic/ui-filter.model';
 import { FiltersModal } from '../../../../components/filters-modal/filters-modal';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { RESERVATIONS_COLUMNS } from './reservations.columns';
+import { ObjectDataSource } from '../../../../utils/lists/datasource';
+import { ReservationModel } from '../../../../models/entities/reservation.models';
+import { ReservationsService } from '../../../../services/reservations.service';
+import { UsersService } from '../../../../services/users.service';
+import { ReservationGetAllRequestDTO } from '../../../../models/dtos/reservation.dto.models';
+import { delay } from 'rxjs';
+import { OfferedServicesService } from '../../../../services/offered-services.service';
+import { EnumService } from '../../../../services/enum.service';
+import { UISelectModel } from '../../../../models/basic/ui-select.model';
+import { UIPaginator } from "../../../../components/ui-paginator/ui-paginator";
+import { MatMenuModule } from "@angular/material/menu";
+import { UITableTag } from "../../../../components/ui-table-tag/ui-table-tag";
+import { CdkTableModule } from '@angular/cdk/table';
+import { ReservationStatusTypePipe } from "../../../../utils/pipes/reservation-status-type.pipe";
+import { UpdateReservationModal } from '../modals/update-reservation-modal/update-reservation-modal';
 
 @Component({
   selector: 'app-admin-reservations-list',
@@ -31,14 +48,29 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatDialogModule,
     MatChipsModule,
-    // DatePipe,
+    DatePipe,
     FiltersChipPipe,
-  ],
+    UIPaginator,
+    MatMenuModule,
+    UITableTag,
+    CdkTableModule,
+    ReservationStatusTypePipe
+],
   templateUrl: './reservations-list.html',
   styleUrl: './reservations-list.scss',
 })
 export class AdminReservationsList implements IListPage, AfterViewInit {
+  @ViewChild(MatSort) sort: MatSort = ViewChild(MatSort);
   @ViewChild('searchInput') searchInput: ElementRef = ViewChild('searchInput');
+
+  displayedColumns: string[] = RESERVATIONS_COLUMNS.map((c) => c.name);
+  currentPage = signal(1);
+  hasPreviousPage = signal(false);
+  hasNextPage = signal(false);
+  totalPages = signal(0);
+  totalCount = signal(0);
+
+  dataSource = new ObjectDataSource<ReservationModel>();
 
   isLoading = signal(true);
 
@@ -46,10 +78,16 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
   filters: WritableSignal<{ [key: string]: any }> = signal({});
   hasFilters = false;
 
+  businessId!: number;
+
   constructor(
     private readonly dialog: MatDialog,
     private readonly persistentFiltersService: PersistentFiltersService,
     private readonly router: Router,
+    private readonly reservationsService: ReservationsService,
+    private readonly usersService: UsersService,
+    private readonly offeredServicesService: OfferedServicesService,
+    private readonly enumService: EnumService
   ) {
     if (this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_RESERVATIONS)) {
       this.filters.set(
@@ -75,14 +113,41 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
         this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_RESERVATIONS)
       );
     }
-    this.loadData();
+    this.usersService.user$.subscribe((user) => {
+      if (user && user.businessId) {
+        this.businessId = user.businessId;
+        this.loadData();
+      }
+    });
   }
 
   loadData(): void {
-    // TODO Implement loadData method.
-    setTimeout(() => {
-      this.isLoading.set(false);
-    }, 500);
+    this.isLoading.set(true);
+    const request: ReservationGetAllRequestDTO = {
+      ...this.filters(),
+      paginationLength: 25,
+      paginationSkip: this.currentPage(),
+      // orderBy: this.sort.active,
+      // orderDirection: this.sort.direction === 'asc' ? 0 : 1,
+      businessId: this.businessId,
+    };
+
+    if (this.searchInput.nativeElement.value) {
+      request.search = this.searchInput.nativeElement.value;
+    }
+
+    this.reservationsService
+      .getAll(request)
+      .pipe(delay(500))
+      .subscribe((response) => {
+        this.dataSource.data.next(response.items);
+        this.hasPreviousPage.set(response.hasPreviousPage);
+        this.hasNextPage.set(response.hasNextPage);
+        this.totalPages.set(response.totalPages);
+        this.currentPage.set(response.pageNumber);
+        this.totalCount.set(response.totalCount);
+        this.isLoading.set(false);
+      });
   }
 
   onSearch(): void {
@@ -90,34 +155,37 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
       UISectionKeysEnum.ADMIN_RESERVATIONS,
       this.searchInput.nativeElement.value
     );
-    // TODO reset page
+    this.currentPage.set(1);
     this.loadData();
   }
 
   openFilterDialog(): void {
     const dialogRef = this.dialog.open(FiltersModal, {
-          width: '400px',
-          data: {
-            filtersList: this.reservationFilters,
-            currentFilters: this.filters(),
-          },
-          maxWidth: '750px',
-          minWidth: '750px',
-        });
-    
-        dialogRef.afterClosed().subscribe((result: { [key: string]: any }) => {
-          if (result) {
-            Object.keys(result).forEach((key: string) => {
-              if (result[key] === null || result[key] === '') {
-                delete result[key];
-              }
-            });
-            this.filters.set(result);
-            this.persistentFiltersService.setSectionFilters(UISectionKeysEnum.ADMIN_RESERVATIONS, result);
-            // TODO reset page
-            this.loadData();
+      width: '400px',
+      data: {
+        filtersList: this.reservationFilters,
+        currentFilters: this.filters(),
+      },
+      maxWidth: '750px',
+      minWidth: '750px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: { [key: string]: any }) => {
+      if (result) {
+        Object.keys(result).forEach((key: string) => {
+          if (result[key] === null || result[key] === '') {
+            delete result[key];
           }
         });
+        this.filters.set(result);
+        this.persistentFiltersService.setSectionFilters(
+          UISectionKeysEnum.ADMIN_RESERVATIONS,
+          result
+        );
+        this.currentPage.set(1);
+        this.loadData();
+      }
+    });
   }
 
   removeFilter(field: string): void {
@@ -130,7 +198,7 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
       UISectionKeysEnum.ADMIN_RESERVATIONS,
       this.filters()
     );
-    // TODO reset page
+    this.currentPage.set(1);
     this.loadData();
   }
 
@@ -138,12 +206,46 @@ export class AdminReservationsList implements IListPage, AfterViewInit {
     void this.router.navigate(['/admin/reservations/create']);
   }
 
+  viewDetails(reservation: ReservationModel): void {
+    const dialogRef = this.dialog.open(UpdateReservationModal, {
+      data: {
+        reservation,
+      },
+      maxWidth: '750px',
+      minWidth: '750px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.loadData();
+      }
+    });
+  }
+
+  confirmReservation(reservation: ReservationModel): void {}
+
+  cancelReservation(reservation: ReservationModel): void {}
+
   loadFilterSelectValues(): void {
     this.reservationFilters.map((f: UIFilterModel) => {
       if (f.values) f.values = [];
       return f;
     });
-    
-    // TODO Retrieve select values
+
+    this.offeredServicesService
+      .getSelectOptions(this.businessId)
+      .subscribe((offeredServices: UISelectModel[]) => {
+
+        // OfferedServices
+        this.reservationFilters
+          .find((f: UIFilterModel) => f.name === 'serviceIds')
+          ?.values?.push(...offeredServices);
+
+        // ReservationStatusTypes
+        const reservationStatusTypes = this.enumService.getReservationStatusTypeOptions();
+        this.reservationFilters
+          .find((f: UIFilterModel) => f.name === 'statusTypes')
+          ?.values?.push(...reservationStatusTypes);
+      });
   }
 }

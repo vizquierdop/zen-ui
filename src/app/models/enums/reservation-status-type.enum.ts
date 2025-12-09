@@ -2,6 +2,7 @@ export enum ReservationStatusType {
   PENDING = 0,
   ACCEPTED = 1,
   CANCELLED = 2,
+  COMPLETED = 3,
 }
 
 export function getReservationStatusTypeName(value: string | number): string {
@@ -18,6 +19,10 @@ export function getReservationStatusTypeName(value: string | number): string {
     case 2:
     case 'CANCELLED':
       name = 'CANCELLED';
+      break;
+    case 3:
+    case 'COMPLETED':
+      name = 'COMPLETED';
       break;
     default:
       break;

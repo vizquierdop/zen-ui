@@ -40,4 +40,71 @@
         </mat-chip-set>
     </div>
     }
+    <table cdk-table cdkScrollable [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc">
+        <ng-container cdkColumnDef="customerName">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Name</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.user ? element.user.firstName + ' ' + element.user.lastName : element.customerName }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="serviceName">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Service</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.service.name }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="date">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Date</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.date | date }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="hour">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Hour</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.startTime }} - {{ element.endTime }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="status">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Status</th>
+            <td cdk-cell *cdkCellDef="let element">
+                @let color = element.status === 0 ? '#6C757D' : element.status === 1 ? '#28A745' : element.status === 2
+                ? '#DC3545' : element.status === 3 ? '#1e436b' : '';
+                <app-ui-table-tag [text]="element.status | reservationStatusTypePipe" [color]="color"
+                    size="small"></app-ui-table-tag>
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell *cdkHeaderCellDef></th>
+            <td cdk-cell *cdkCellDef="let element">
+                <div class="icon-cell">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();">
+                        <mat-icon>more_vertical</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="confirmReservation(element)">
+                            <mat-icon>
+                                check_outline
+                            </mat-icon>
+                            Confirm
+                        </button>
+                        <button mat-menu-item (click)="cancelReservation(element)">
+                            <mat-icon>
+                                close
+                            </mat-icon>
+                            Reject
+                        </button>
+                    </mat-menu>
+                </div>
+            </td>
+        </ng-container>
+        <tr *cdkNoDataRow>
+            <td [colSpan]="displayedColumns.length">No results found.</td>
+        </tr>
+        <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;" (click)="viewDetails(row)">
+        </tr>
+    </table>
+    <app-ui-paginator [currentPage]="currentPage" [hasPreviousPage]="hasPreviousPage()" [hasNextPage]="hasNextPage()"
+        [totalPages]="totalPages()" [totalCount]="totalCount()" (hasToReload)="loadData()"></app-ui-paginator>
 </div>

@@ -116,6 +116,7 @@ export class AdminServicesList implements IListPage, AfterViewInit {
       ...this.filters(),
       paginationLength: 25,
       paginationSkip: this.currentPage(),
+      businessId: this.businessId,
       // orderBy: this.sort.active,
       // orderDirection: this.sort.direction === 'asc' ? 0 : 1,
     };

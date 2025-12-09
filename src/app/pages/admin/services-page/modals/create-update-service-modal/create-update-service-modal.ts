@@ -66,7 +66,6 @@ export class CreateUpdateServiceModal implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO Implement loadData method if edit mode.
     if (this.type === 'update' && this.offeredService) {
       this.offeredServiceForm.patchValue(this.offeredService);
     }

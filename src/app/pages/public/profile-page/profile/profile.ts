@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,7 +20,7 @@ import { ProvincesService } from '../../../../services/provinces.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { UserModel } from '../../../../models/entities/user.models';
 import { UserUpdateRequestDTO } from '../../../../models/dtos/user.dto.models';
-import { catchError, EMPTY } from 'rxjs';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-public-profile',
@@ -40,7 +40,7 @@ import { catchError, EMPTY } from 'rxjs';
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
-export class PublicProfile {
+export class PublicProfile implements AfterViewInit {
   isLoading = signal(false);
   profileForm: FormGroup;
 
@@ -62,6 +62,12 @@ export class PublicProfile {
       provinceId: [null, [Validators.required]],
     });
 
+    this.usersService.user$.subscribe((user) => {
+      this.user = user!;
+    });
+  }
+  
+  ngAfterViewInit(): void {
     this.loadSelectValues();
     this.loadData();
   }
@@ -74,8 +80,10 @@ export class PublicProfile {
 
   loadData(): void {
     this.isLoading.set(true);
-    this.usersService.user$.subscribe((user) => {
+    
+    this.usersService.get(this.user.id).subscribe((user) => {
       this.user = user!;
+      this.usersService.setUser(this.user);
       this.profileForm.get('id')?.setValue(this.user.id);
       this.profileForm.get('firstName')?.setValue(this.user.firstName);
       this.profileForm.get('lastName')?.setValue(this.user.lastName);
@@ -103,6 +111,7 @@ export class PublicProfile {
       })
     ).subscribe(() => {
       this.toastr.success('Profile updated successfully', 'Success');
+      this.loadData();
       this.isLoading.set(false);
     })
   }

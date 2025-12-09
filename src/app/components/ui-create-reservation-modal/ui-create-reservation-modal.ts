@@ -23,7 +23,10 @@ import { ReservationsService } from '../../services/reservations.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ReservationCreateRequestDTO } from '../../models/dtos/reservation.dto.models';
 import { ReservationStatusType } from '../../models/enums/reservation-status-type.enum';
-import { catchError, EMPTY } from 'rxjs';
+import { catchError, EMPTY, switchMap } from 'rxjs';
+import { BusinessModel } from '../../models/entities/business.models';
+import { BusinessesService } from '../../services/businesses.service';
+import { BusinessGetSingleResponseDTO } from '../../models/dtos/business.dto.models';
 
 @Component({
   selector: 'app-ui-create-reservation-modal',
@@ -49,12 +52,7 @@ export class UiCreateReservationModal implements OnInit {
   isLoading = signal<boolean>(false);
   service: OfferedServiceModel | null = null;
 
-  // hourOptions: UISelectModel[] = [
-  //   {
-  //     label: '16:00',
-  //     value: '16:00',
-  //   },
-  // ];
+  business!: BusinessGetSingleResponseDTO;
   reservationForm: FormGroup;
   userId!: number;
 
@@ -68,6 +66,7 @@ export class UiCreateReservationModal implements OnInit {
     private readonly usersService: UsersService,
     private readonly reservationsService: ReservationsService,
     private readonly toastr: ToastrService,
+    private readonly businessesService: BusinessesService,
   ) {
     this.service = this.data.service;
     this.reservationForm = this.fb.group({
@@ -80,9 +79,14 @@ export class UiCreateReservationModal implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usersService.user$.subscribe((user) => {
-      this.userId = user!.id;
-      this.reservationForm.get('userId')?.setValue(this.userId);
+    this.usersService.user$.pipe(
+      switchMap((user) => {
+        this.userId = user!.id;
+        this.reservationForm.get('userId')?.setValue(this.userId);
+        return this.businessesService.get(this.service!.businessId);
+      })
+    ).subscribe((business: BusinessGetSingleResponseDTO) => {
+      this.business = business;
     });
 
     this.reservationForm.get('startTime')?.valueChanges.subscribe((startTime: string | null) => {
@@ -121,16 +125,64 @@ export class UiCreateReservationModal implements OnInit {
       status: ReservationStatusType.PENDING,
     };
 
-    this.reservationsService.create(request).pipe(
-      catchError(() => {
+    this.reservationsService
+      .create(request)
+      .pipe(
+        catchError(() => {
+          this.isLoading.set(false);
+          this.toastr.error('Error creating reservation request');
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
         this.isLoading.set(false);
-        this.toastr.error('Error creating reservation request');
-        return EMPTY;
-      })
-    ).subscribe((response) => {
-      this.isLoading.set(false);
-      this.toastr.success('Reservation request created successfully');
-      void this.dialog.close(response);
-    });
+        this.toastr.success('Reservation request created successfully');
+        void this.dialog.close(response);
+      });
   }
+
+  dateFilter = (d: Date | null): boolean => {
+    if (!d || !this.business) {
+      return false;
+    }
+
+    const business = this.business!;
+
+    // Previous dates are disabled
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (d < today) {
+      return false;
+    }
+
+    // Disable non-working days (!availability.isActive)
+    const dayOfWeek = d.getDay();
+    const availability = business.availabilities?.find((a) => a.dayOfWeek === dayOfWeek);
+
+    if (!availability || !availability.isActive) {
+      return false;
+    }
+
+    // Disable vacation days
+    if (business.holidays && business.holidays.length > 0) {
+      
+      const year = d.getFullYear();
+      const month = (d.getMonth() + 1).toString().padStart(2, '0');
+      const day = d.getDate().toString().padStart(2, '0');
+      const checkDateStr = `${year}-${month}-${day}`;
+
+      const isHoliday = business.holidays.some((h) => {
+        const start = h.startDate.split('T')[0];
+        const end = h.endDate.split('T')[0];
+
+        return checkDateStr >= start && checkDateStr <= end;
+      });
+
+      if (isHoliday) {
+        return false;
+      }
+    }
+
+    return true;
+  };
 }

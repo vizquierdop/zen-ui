@@ -1,0 +1,22 @@
+.table-tag {
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 8px;
+  text-transform: uppercase;
+  user-select: none;
+
+  &.small {
+    font-size: 10px;
+    padding: 2px 0;
+  }
+
+  &.medium {
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  &.large {
+    font-size: 14px;
+    padding: 6px 0;
+  }
+}

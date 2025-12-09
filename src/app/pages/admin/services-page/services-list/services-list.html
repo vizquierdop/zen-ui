@@ -40,4 +40,66 @@
         </mat-chip-set>
     </div>
     }
+    <table cdk-table cdkScrollable [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc">
+        <ng-container cdkColumnDef="name">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Name</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.name }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="description">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Description</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.description }}
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="duration">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Duration</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.duration }} min
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="price">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Price</th>
+            <td cdk-cell *cdkCellDef="let element">
+                {{ element.price }} €
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="isActive">
+            <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Status</th>
+            <td cdk-cell *cdkCellDef="let element">
+                @let text = element.isActive ? 'ACTIVE' : 'INACTIVE';
+                @let color = element.isActive ? '#28A745' : '#DC3545';
+                <app-ui-table-tag [text]="text" [color]="color" size="small"></app-ui-table-tag>
+            </td>
+        </ng-container>
+        <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell *cdkHeaderCellDef></th>
+            <td cdk-cell *cdkCellDef="let element">
+                <div class="icon-cell">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();">
+                        <mat-icon>more_vertical</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="updateStatus(element)">
+                            <mat-icon>
+                                update
+                            </mat-icon>
+                            @let action = element.isActive ? 'Deactivate' : 'Activate';
+                            {{ action }} Service
+                        </button>
+                    </mat-menu>
+                </div>
+            </td>
+        </ng-container>
+        <tr *cdkNoDataRow>
+            <td [colSpan]="displayedColumns.length">No results found.</td>
+        </tr>
+        <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+        <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"
+            (click)="viewDetails(row)">
+        </tr>
+    </table>
+    <app-ui-paginator [currentPage]="currentPage" [hasPreviousPage]="hasPreviousPage()" [hasNextPage]="hasNextPage()"
+        [totalPages]="totalPages()" [totalCount]="totalCount()" (hasToReload)="loadData()"></app-ui-paginator>
 </div>

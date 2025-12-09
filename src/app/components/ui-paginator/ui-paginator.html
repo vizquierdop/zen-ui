@@ -1,0 +1,12 @@
+<div class="paginator">
+  <button mat-flat-button (click)="previousPage()" type="button" [disabled]="!hasPreviousPage()">
+    Previous
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Page {{currentPageValue}} of {{totalPages()}}</span>
+  <span>Total items: {{totalCount()}}</span>
+  <button mat-flat-button (click)="nextPage()" type="button" [disabled]="!hasNextPage()">
+    Next
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</div>

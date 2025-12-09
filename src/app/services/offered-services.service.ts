@@ -23,9 +23,9 @@ export class OfferedServicesService {
   ) {}
 
   getAll(request: OfferedServiceGetAllRequestDTO): Observable<OfferedServiceGetAllResponseDTO> {
-    const params = this.paramsAdapter.convert(request);
+    const convertedRequest = this.paramsAdapter.convert(request);
     return this.http.get<OfferedServiceGetAllResponseDTO>(
-      `${environment.apiUrl}/${this.enpoint}`,
+      `${environment.apiUrl}/${this.enpoint}?${convertedRequest}`,
       this.httpHeadersManager.generateCommonHttpOptions()
     );
   }

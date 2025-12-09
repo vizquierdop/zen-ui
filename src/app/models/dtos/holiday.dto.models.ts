@@ -3,8 +3,8 @@ import { HolidayModel } from "../entities/holiday.models";
 
 export interface HolidayGetAllRequestDTO extends UIPaginationBaseRequestModel {
     businessId?: number;
-    startDate?: number;
-    endDate?: number;
+    startDate?: string; // Date
+    endDate?: string; // Date
 }
 
 export type HolidayGetAllResponseDTO = UIPaginationBaseResponseModel<HolidayModel>;

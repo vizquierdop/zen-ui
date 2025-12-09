@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,11 +9,14 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { HolidayCreateRequestDTO } from '../../../../../models/dtos/holiday.dto.models';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { HolidaysService } from '../../../../../services/holidays.service';
+import { catchError, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-add-holiday-modal',
@@ -27,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
+    ToastrModule,
   ],
   providers: [DatePipe],
   templateUrl: './add-holiday-modal.html',
@@ -37,14 +41,20 @@ export class AddHolidayModal implements OnInit {
   addHolidaysForm: FormGroup;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      businessId: number;
+    },
     public dialog: MatDialogRef<AddHolidayModal>,
     private readonly datePipe: DatePipe,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly toastr: ToastrService,
+    private readonly holidaysService: HolidaysService,
   ) {
     this.addHolidaysForm = this.fb.group({
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      businessId: [null],
+      businessId: [this.data.businessId],
     });
   }
   ngOnInit(): void {
@@ -61,11 +71,17 @@ export class AddHolidayModal implements OnInit {
       businessId: this.addHolidaysForm.get('businessId')?.value,
     };
     this.isLoading.set(true);
-    // TODO Call POST /Holiday
-    setTimeout(() => {
+    this.holidaysService.create(request).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error adding holiday');
+        return EMPTY;
+      })
+    ).subscribe(() => {
       this.isLoading.set(false);
+      this.toastr.success('Holiday added successfully');
       this.dialog.close(true);
-    }, 500);
+    });
   }
 
   close(): void {

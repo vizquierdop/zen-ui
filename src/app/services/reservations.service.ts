@@ -23,9 +23,9 @@ export class ReservationsService {
   ) {}
 
   getAll(request: ReservationGetAllRequestDTO): Observable<ReservationGetAllResponseDTO> {
-    const params = this.paramsAdapter.convert(request);
+    const convertedRequest = this.paramsAdapter.convert(request);
     return this.http.get<ReservationGetAllResponseDTO>(
-      `${environment.apiUrl}/${this.enpoint}`,
+      `${environment.apiUrl}/${this.enpoint}?${convertedRequest}`,
       this.httpHeadersManager.generateCommonHttpOptions()
     );
   }

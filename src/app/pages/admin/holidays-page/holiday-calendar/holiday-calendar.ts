@@ -33,14 +33,15 @@ export class HolidayCalendar implements OnInit {
   dateClass() {
     return (date: Date): MatCalendarCellCssClasses => {
       const dateTransformed = this.datePipe.transform(date, 'yyyy-MM-dd')!;
-      const foundDate = this.selectedDates.find((d) => {
-        return (
-          d.startDate === dateTransformed ||
-          d.endDate === dateTransformed ||
-          (d.startDate < dateTransformed && d.endDate > dateTransformed)
-        );
+
+      const isHoliday = this.selectedDates.some((d) => {
+        const start = d.startDate.split('T')[0];
+        const end = d.endDate.split('T')[0];
+
+        return dateTransformed >= start && dateTransformed <= end;
       });
-      return foundDate ? 'highlighted' : '';
+
+      return isHoliday ? 'highlighted' : '';
     };
   }
 }

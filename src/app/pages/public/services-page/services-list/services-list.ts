@@ -34,63 +34,7 @@ export class PublicServicesList implements AfterViewInit {
   hasNextPage = signal<boolean>(false);
   currentPage = signal(1);
   services: OfferedServiceModel[] = [];
-  // services: OfferedServiceModel[] = [
-  //   {
-  //     id: 1,
-  //     name: 'Service 1',
-  //     description: 'Description 1',
-  //     duration: 60,
-  //     price: 100,
-  //     isActive: true,
-  //     businessId: 1,
-  //     business: {
-  //       id: 1,
-  //       name: 'Business 1',
-  //       address: 'Address 1',
-  //       vacations: [],
-  //       availabilities: [],
-  //       categories: [],
-  //       googleMaps: '',
-  //       phone: '',
-  //       province: {
-  //         id: '1',
-  //         name: 'Province 1',
-  //       },
-  //       provinceId: 1,
-  //       services: [],
-  //       simultaneousBookings: 0,
-  //       userId: 1,
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Service 2',
-  //     description: 'Description 2',
-  //     duration: 60,
-  //     price: 100,
-  //     isActive: true,
-  //     businessId: 1,
-  //     business: {
-  //       id: 2,
-  //       name: 'Business 2',
-  //       address: 'Address 2',
-  //       vacations: [],
-  //       availabilities: [],
-  //       categories: [],
-  //       googleMaps: '',
-  //       phone: '',
-  //       province: {
-  //         id: '2',
-  //         name: 'Province 2',
-  //       },
-  //       provinceId: 2,
-  //       services: [],
-  //       simultaneousBookings: 0,
-  //       userId: 2,
-  //     },
-  //   },
-  // ];
-
+  
   constructor(private readonly router: Router, private readonly offeredServicesService: OfferedServicesService) {}
 
   ngAfterViewInit(): void {

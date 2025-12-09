@@ -2,46 +2,47 @@
 <div class="public-spinner-container">
     <mat-spinner></mat-spinner>
 </div>
-}
-<div class="page-main-container">
-    <div class="page-content">
-        <app-ui-page-header [title]="business()!.name" backUrl="public/businesses"></app-ui-page-header>
-        <div class="business-content">
-            <div class="top-section">
-                <div class="image-container">
-                    <img src="images/resources/business-example-logo.png" alt="Business Logo">
-                </div>
-                <div class="info-container">
-                    <div class="business-info-group">
-                        <mat-icon class="business-info-icon">location_on</mat-icon>
-                        <span class="business-info-text">{{ business()!.address }}</span>
+} @else {
+    <div class="page-main-container">
+        <div class="page-content">
+            <app-ui-page-header [title]="business()!.name" backUrl="public/businesses"></app-ui-page-header>
+            <div class="business-content">
+                <div class="top-section">
+                    <div class="image-container">
+                        <img src="images/resources/business-example-logo.png" alt="Business Logo">
                     </div>
-                    <div class="business-info-group">
-                        <mat-icon class="business-info-icon">phone</mat-icon>
-                        <span class="business-info-text">{{ business()!.phone }}</span>
-                    </div>
-                    <div class="business-info-group">
-                        <mat-icon class="business-info-icon">description</mat-icon>
-                        <span class="business-info-text">{{ business()!.description }}</span>
+                    <div class="info-container">
+                        <div class="business-info-group">
+                            <mat-icon class="business-info-icon">location_on</mat-icon>
+                            <span class="business-info-text">{{ business()!.address }}</span>
+                        </div>
+                        <div class="business-info-group">
+                            <mat-icon class="business-info-icon">phone</mat-icon>
+                            <span class="business-info-text">{{ business()!.phone }}</span>
+                        </div>
+                        <div class="business-info-group">
+                            <mat-icon class="business-info-icon">description</mat-icon>
+                            <span class="business-info-text">{{ business()!.description || '-' }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="section">
-                <span class="section-title">Categories</span>
-                <div class="categories-list">
-                    @for (category of business()!.categories; track category) {
-                    <app-ui-category-item [category]="category"></app-ui-category-item>
-                    }
+                <div class="section">
+                    <span class="section-title">Categories</span>
+                    <div class="categories-list">
+                        @for (category of business()!.categories; track category) {
+                        <app-ui-category-item [category]="category"></app-ui-category-item>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="section">
-                <span class="section-title">Services</span>
-                <div class="services-list">
-                    @for (service of business()!.services; track service) {
-                    <app-ui-service-item [service]="service"></app-ui-service-item>
-                    }
+                <div class="section">
+                    <span class="section-title">Services</span>
+                    <div class="services-list">
+                        @for (service of business()!.offeredServices; track service) {
+                        <app-ui-service-item [service]="service"></app-ui-service-item>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}

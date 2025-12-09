@@ -1,5 +1,6 @@
 import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { AvailabilityModel } from "../entities/availability.models";
+import { BusinessModel } from "../entities/business.models";
 import { CategoryModel } from "../entities/category.models";
 import { HolidayModel } from "../entities/holiday.models";
 import { OfferedServiceModel } from "../entities/offered-service.models";
@@ -12,7 +13,7 @@ export interface BusinessGetAllRequestDTO extends UIPaginationBaseRequestModel {
     isActive: boolean;
 }
 
-export type BusinessGetAllResponseDTO = UIPaginationBaseResponseModel<BusinessGetSingleResponseDTO>;
+export type BusinessGetAllResponseDTO = UIPaginationBaseResponseModel<BusinessModel>;
 
 export interface BusinessGetSingleResponseDTO {
     id: number;

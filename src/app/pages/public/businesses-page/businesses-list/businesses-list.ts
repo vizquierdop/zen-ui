@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,10 +10,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { UiPageHeader } from '../../../../components/ui-page-header/ui-page-header';
 import { UiMobilePaginator } from '../../../../components/ui-mobile-paginator/ui-mobile-paginator';
 import { BusinessModel } from '../../../../models/entities/business.models';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogClose } from "@angular/material/dialog";
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
 import { UiBusinessFull } from "../../../../components/ui-business-full/ui-business-full";
+import { BusinessesService } from '../../../../services/businesses.service';
+import { CategoriesService } from '../../../../services/categories.service';
+import { catchError, EMPTY } from 'rxjs';
+import { BusinessGetAllRequestDTO, BusinessGetSingleResponseDTO } from '../../../../models/dtos/business.dto.models';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-public-businesses-list',
@@ -29,149 +34,103 @@ import { UiBusinessFull } from "../../../../components/ui-business-full/ui-busin
     MatProgressSpinnerModule,
     UiPageHeader,
     UiMobilePaginator,
-    UiBusinessFull
+    UiBusinessFull,
+    ToastrModule,
 ],
   templateUrl: './businesses-list.html',
   styleUrl: './businesses-list.scss',
 })
-export class PublicBusinessesList {
-  isLoading = signal(false);
-  filtersForm: FormGroup;
-
+export class PublicBusinessesList implements OnInit, AfterViewInit {
+  isLoading = signal<boolean>(false);
   itemsLength = signal<number>(0);
   totalCount = signal<number>(0);
   hasPreviousPage = signal<boolean>(false);
   hasNextPage = signal<boolean>(false);
+  currentPage = signal(1);
+
+  filtersForm: FormGroup;
 
   categoryOptions: UISelectModel[] = [];
-  businesses: BusinessModel[] = [
-    {
-      id: 1,
-      name: 'Business 1',
-      address: 'Av. Navarra, 3, Zaragoza',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '1',
-        name: 'Province 1',
-      },
-      provinceId: 1,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 1,
-    },
-    {
-      id: 2,
-      name: 'Business 2',
-      address: 'Address 2',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '2',
-        name: 'Province 2',
-      },
-      provinceId: 2,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 2,
-    },
-    {
-      id: 3,
-      name: 'Business 3',
-      address: 'Address 3',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '3',
-        name: 'Province 3',
-      },
-      provinceId: 3,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 3,
-    },
-    {
-      id: 1,
-      name: 'Business 1',
-      address: 'Address 1',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '1',
-        name: 'Province 1',
-      },
-      provinceId: 1,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 1,
-    },
-    {
-      id: 2,
-      name: 'Business 2',
-      address: 'Address 2',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '2',
-        name: 'Province 2',
-      },
-      provinceId: 2,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 2,
-    },
-    {
-      id: 3,
-      name: 'Business 3',
-      address: 'Address 3',
-      vacations: [],
-      availabilities: [],
-      categories: [],
-      googleMaps: '',
-      phone: '',
-      province: {
-        id: '3',
-        name: 'Province 3',
-      },
-      provinceId: 3,
-      services: [],
-      simultaneousBookings: 0,
-      userId: 3,
-    },
-  ];
+  businesses: BusinessModel[] = [];
 
-  constructor(private readonly router: Router, private readonly fb: FormBuilder) {
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly fb: FormBuilder,
+    private readonly businessesService: BusinessesService,
+    private readonly categoriesService: CategoriesService,
+    private readonly toastr: ToastrService,
+  ) {
     this.filtersForm = this.fb.group({
       name: [null],
       categoryIds: [null],
     });
-
+  }
+  
+  ngOnInit(): void {
     this.loadSelectValues();
+    const categoryId = this.route.snapshot.queryParamMap.get('categoryId');
+    if (categoryId) {
+      this.filtersForm.patchValue({ 
+        categoryIds: [+categoryId] 
+      });
+    }
+    this.loadData();
+  }
+
+  ngAfterViewInit(): void {
+    this.filtersForm.get('name')?.valueChanges.subscribe(() => {
+      this.currentPage.set(1);
+      this.loadData();
+    });
+    this.filtersForm.get('categoryIds')?.valueChanges.subscribe(() => {
+      this.currentPage.set(1);
+      this.loadData();
+    });
+  }
+
+  loadData(): void {
+    this.isLoading.set(true);
+    const request: BusinessGetAllRequestDTO = {
+      isActive: true,
+      name: this.filtersForm.get('name')?.value,
+      categoryIds: this.filtersForm.get('categoryIds')?.value,
+      paginationLength: 5,
+      paginationSkip: this.currentPage(),
+    };
+    this.businessesService.getAll(request).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error loading data');
+        return EMPTY;
+      })
+    ).subscribe((response) => {
+      this.businesses = response.items;
+      this.itemsLength.set(response.items.length);
+      this.totalCount.set(response.totalCount);
+      this.hasNextPage.set(response.hasNextPage);
+      this.hasPreviousPage.set(response.hasPreviousPage);
+      this.isLoading.set(false);
+    });
   }
 
   loadSelectValues(): void {
-    // TODO Implement loadSelectValues method.
+    this.categoriesService.getSelectOptions().pipe(
+      catchError(() => {
+        this.toastr.error('Error loading data');
+        return EMPTY;
+      })
+    ).subscribe((categories) => {
+      this.categoryOptions = categories;
+    });
   }
 
   previousPage(): void {
-    // TODO Implement previous page method.
+    this.currentPage.update((val) => val - 1);
+    this.loadData();
   }
   nextPage(): void {
-    // TODO Implement next page method.
+    this.currentPage.update((val) => val + 1);
+    this.loadData();
   }
 }

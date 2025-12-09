@@ -6,10 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ui-category-item',
-  imports: [
-    CommonModule,
-    MatIconModule,
-  ],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './ui-category-item.html',
   styleUrl: './ui-category-item.scss',
 })
@@ -19,6 +16,8 @@ export class UiCategoryItem {
   constructor(private readonly router: Router) {}
 
   goToCategory(): void {
-    void this.router.navigate([`public/businesses?category=${this.category.id}`]);
+    void this.router.navigate(['public/businesses'], {
+      queryParams: { categoryId: this.category.id },
+    });
   }
 }

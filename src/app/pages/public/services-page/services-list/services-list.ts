@@ -67,9 +67,11 @@ export class PublicServicesList implements AfterViewInit {
   }
 
   previousPage(): void {
-    // TODO Implement previous page method.
+    this.currentPage.update((val) => val - 1);
+    this.loadData();
   }
   nextPage(): void {
-    // TODO Implement next page method.
+    this.currentPage.update((val) => val + 1);
+    this.loadData();
   }
 }

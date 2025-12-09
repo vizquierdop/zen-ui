@@ -8,7 +8,7 @@ import {
 import { provideRouter } from '@angular/router';
 import localeEs from '@angular/common/locales/es';
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import {
   DateAdapter,
@@ -24,6 +24,7 @@ import { providePrimeNG } from 'primeng/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideToastr } from 'ngx-toastr';
 import Aura from '@primeuix/themes/aura';
+import { AuthInterceptor } from './utils/interceptors/auth-interceptor';
 registerLocaleData(localeEs, 'es');
 
 export function provideLocaleConfig(): Provider[] {
@@ -52,6 +53,11 @@ export const appConfig: ApplicationConfig = {
 
     }),
     provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     provideLocaleConfig(),
     provideCalendar({
       provide: CalendarDateAdapter,

@@ -11,15 +11,15 @@
         <form [formGroup]="reservationForm" class="reservation-request-form">
             <div class="field">
                 <mat-label>Business</mat-label>
-                <app-ui-field value="Tony's Barber Shop"></app-ui-field>
+                <app-ui-field [value]="service?.business?.name!"></app-ui-field>
             </div>
             <div class="field">
                 <mat-label>Service</mat-label>
-                <app-ui-field value="Hair + beard cut"></app-ui-field>
+                <app-ui-field [value]="service?.name!"></app-ui-field>
             </div>
             <div class="field">
                 <mat-label>Duration</mat-label>
-                <app-ui-field value="30 min"></app-ui-field>
+                <app-ui-field [value]="'' + service?.duration"></app-ui-field>
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>Date</mat-label>
@@ -29,11 +29,12 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Hour</mat-label>
-                <mat-select formControlName="startTime">
+                <input matInput formControlName="startTime" placeholder="00:00">
+                <!-- <mat-select formControlName="startTime">
                     @for (hourOption of hourOptions; track hourOption) {
                     <mat-option [value]="hourOption.value">{{hourOption.label}}</mat-option>
                     }
-                </mat-select>
+                </mat-select> -->
             </mat-form-field>
         </form>
     </mat-dialog-content>

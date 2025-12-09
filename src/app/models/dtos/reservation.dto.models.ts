@@ -27,7 +27,7 @@ export interface ReservationCreateRequestDTO {
     customerName?: number;
     customerEmail?: string;
     customerPhone?: string;
-    customerId?: string;
+    userId?: string;
     serviceId: number;
 }
 
@@ -40,6 +40,6 @@ export interface ReservationUpdateRequestDTO {
     customerName?: number;
     customerEmail?: string;
     customerPhone?: string;
-    customerId?: string;
+    userId?: string;
     serviceId: number;
 }

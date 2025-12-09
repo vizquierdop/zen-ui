@@ -23,14 +23,22 @@
             </div>
             <div class="reservation-info-group">
                 <span class="reservation-info-text">Status: </span>
-                <span class="reservation-status pending">PENDING</span>
-                <!-- <span class="reservation-status accepted">ACCEPTED</span> -->
-                <!-- <span class="reservation-status cancelled">CANCELLED</span> -->
+                @switch (reservation.status) {
+                    @case (0) {
+                        <span class="reservation-status pending">PENDING</span>
+                    }
+                    @case (1) {
+                        <span class="reservation-status accepted">ACCEPTED</span>
+                    }
+                    @case (2) {
+                        <span class="reservation-status cancelled">CANCELLED</span>
+                    }
+                }
             </div>
         </div>
     </div>
     <div class="reservation-actions">
-        <button matButton class="cancel-button">Cancel Reservation</button>
-        <button matButton color="primary">View business</button>
+        <button matButton class="cancel-button" (click)="cancelReservation()">Cancel Reservation</button>
+        <button matButton color="primary" (click)="viewBusiness()">View business</button>
     </div>
 </div>

@@ -60,7 +60,6 @@ export class PublicBusinessDetail implements OnInit {
       })
     ).subscribe((response) => {
       this.business.set(response);
-      console.log('response', response);
       this.isLoading.set(false);
     });
   }

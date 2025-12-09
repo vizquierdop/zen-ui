@@ -30,7 +30,7 @@ export interface BusinessModel {
     userId: number;
     user?: UserShortModel;
     services: OfferedServiceModel[];
-    vacations: HolidayModel[];
+    holidays: HolidayModel[];
     availabilities: AvailabilityModel[];
 }
 

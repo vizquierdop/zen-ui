@@ -23,7 +23,8 @@
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select a date">
+                <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select a date"
+                    [matDatepickerFilter]="dateFilter">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

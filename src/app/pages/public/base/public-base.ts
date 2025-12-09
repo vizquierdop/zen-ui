@@ -7,6 +7,8 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { UiHeader } from '../../../components/ui-header/ui-header';
 import { UISectionModel } from '../../../models/basic/ui-section.model';
 import { PublicUISections } from '../../../utils/ui-sections';
+import { UsersService } from '../../../services/users.service';
+import { UserModel } from '../../../models/entities/user.models';
 
 @Component({
   selector: 'app-public-base',
@@ -31,6 +33,15 @@ export class PublicBase {
   isOpened = false;
 
   sections: UISectionModel[] = PublicUISections;
+  user!: UserModel;
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router, private readonly usersService: UsersService) {
+    this.usersService.user$.subscribe((user) => {
+      this.user = user!;
+    });
+  }
+
+  logout(): void {
+    void this.router.navigate(['/logout']);
+  }
 }

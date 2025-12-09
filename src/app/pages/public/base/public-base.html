@@ -2,8 +2,8 @@
     <mat-drawer-container class="main-container" [hasBackdrop]="true" autosize="true">
         <mat-drawer #drawer [opened]="isOpened" class="drawer" [mode]="drawerMode">
             <div class="navbar-user-group">
-                <span class="welcome-text">Welcome Juan!</span>
-                <div class="logout-container">
+                <span class="welcome-text">Welcome {{ user!.firstName }} {{ user!.lastName || '' }}!</span>
+                <div class="logout-container" (click)="logout()">
                     <span class="logout-text">Log out</span>
                     <mat-icon class="logout-text">logout</mat-icon>
                 </div>

@@ -46,7 +46,7 @@ export class UsersService {
 
   update(request: UserUpdateRequestDTO): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/${this.endpoint}`,
+      `${environment.apiUrl}/${this.endpoint}/${request.id}`,
       request,
       this.httpHeadersManager.generateCommonHttpOptions()
     );

@@ -48,7 +48,7 @@ export class OfferedServicesService {
 
   update(request: OfferedServiceUpdateRequestDTO): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/${this.enpoint}`,
+      `${environment.apiUrl}/${this.enpoint}/${request.id}`,
       request,
       this.httpHeadersManager.generateCommonHttpOptions()
     );

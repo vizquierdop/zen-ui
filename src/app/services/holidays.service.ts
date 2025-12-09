@@ -21,9 +21,9 @@ export class HolidaysService {
   ) {}
 
   getAll(request: HolidayGetAllRequestDTO): Observable<HolidayGetAllResponseDTO> {
-    const params = this.paramsAdapter.convert(request);
+    const convertedRequest = this.paramsAdapter.convert(request);
     return this.http.get<HolidayGetAllResponseDTO>(
-      `${environment.apiUrl}/${this.endpoint}`,
+      `${environment.apiUrl}/${this.endpoint}?${convertedRequest}`,
       this.httpHeadersManager.generateCommonHttpOptions()
     );
   }

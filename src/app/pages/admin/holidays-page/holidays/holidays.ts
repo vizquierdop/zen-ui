@@ -8,8 +8,12 @@ import { HolidayCalendar } from '../holiday-calendar/holiday-calendar';
 import { HolidayModel } from '../../../../models/entities/holiday.models';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmationModal } from '../../../../components/confirmation-modal/confirmation-modal';
-import { EMPTY, switchMap } from 'rxjs';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 import { AddHolidayModal } from '../modals/add-holiday-modal/add-holiday-modal';
+import { HolidaysService } from '../../../../services/holidays.service';
+import { HolidayGetAllRequestDTO, HolidayGetAllResponseDTO } from '../../../../models/dtos/holiday.dto.models';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { UsersService } from '../../../../services/users.service';
 
 @Component({
   selector: 'app-admin-holidays',
@@ -22,6 +26,7 @@ import { AddHolidayModal } from '../modals/add-holiday-modal/add-holiday-modal';
     DatePipe,
     MatTooltipModule,
     HolidayCalendar,
+    ToastrModule,
   ],
   providers: [DatePipe],
   templateUrl: './holidays.html',
@@ -34,30 +39,52 @@ export class AdminHolidays {
 
   selectedDates: HolidayModel[] = [];
 
-  constructor(public dialog: MatDialog, private readonly datePipe: DatePipe) {
-    this.loadData();
+  constructor(
+    public dialog: MatDialog,
+    private readonly datePipe: DatePipe,
+    private readonly holidaysService: HolidaysService,
+    private readonly toastr: ToastrService,
+    private readonly usersService: UsersService
+  ) {
+    this.usersService.user$.subscribe((user) => {
+      this.businessId = user!.businessId!;
+      this.loadData();
+    });
   }
 
   loadData(): void {
-    // TODO Implement loadData method.
-    this.selectedDates = [
-      { id: 1, startDate: '2025-01-01', endDate: '2025-01-05', businessId: 1 },
-    ];
-    this.holidaysList = [
-      { id: 1, startDate: '2025-01-01', endDate: '2025-01-05', businessId: 1 },
-    ];
-    setTimeout(() => {
+    this.isLoading.set(true);
+    const currentYear = new Date().getFullYear();
+
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+    const request: HolidayGetAllRequestDTO = {
+      businessId: this.businessId,
+      startDate: formatDate(new Date(currentYear, 0, 1)),
+      endDate: formatDate(new Date(currentYear+1, 0, 1)),
+      paginationLength: 9999,
+    };
+    this.holidaysService.getAll(request).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error loading holidays');
+        return EMPTY;
+      })
+    ).subscribe((response: HolidayGetAllResponseDTO) => {
+      this.holidaysList = response.items;
+      this.selectedDates = response.items;
       this.isLoading.set(false);
-    }, 500);
+    });
   }
 
   openAddHolidayModal(): void {
-    const dialogRef = this.dialog.open(AddHolidayModal);
+    const dialogRef = this.dialog.open(AddHolidayModal, {
+      data: { businessId: this.businessId },
+    });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadData();
       }
-    })
+    });
   }
 
   removeHoliday(holiday: HolidayModel): void {
@@ -66,18 +93,21 @@ export class AdminHolidays {
       data: { message },
     });
 
-    dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result) {
-          this.isLoading.set(true);
-          this.isLoading.set(false);
-          // TODO Call DELETE /Holiday/{id}.
-          return EMPTY; // TODO change
-        }
-        return EMPTY;
-      })
-    ).subscribe(() => {
-      this.loadData();
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((result) => {
+          if (result) {
+            this.isLoading.set(true);
+            this.isLoading.set(false);
+            return this.holidaysService.delete(holiday.id);
+          }
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.toastr.success('Holiday removed successfully');
+        this.loadData();
+      });
   }
 }

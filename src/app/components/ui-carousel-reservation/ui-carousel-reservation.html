@@ -6,11 +6,11 @@
         <span class="item-service">{{ reservation.service?.name }}</span>
         <div class="item-info-group">
             <mat-icon class="item-info-icon">location_on</mat-icon>
-            <span class="item-info-text">{{ reservation.service?.businessId }}</span>
+            <span class="item-info-text">{{ reservation.service?.business?.name }}</span>
         </div>
         <div class="item-info-group">
             <mat-icon class="item-info-icon">calendar_today</mat-icon>
-            <span class="item-info-text">{{ reservation.date }}</span>
+            <span class="item-info-text">{{ reservation.date | date }}</span>
         </div>
         <div class="item-info-group">
             <mat-icon class="item-info-icon">alarm</mat-icon>

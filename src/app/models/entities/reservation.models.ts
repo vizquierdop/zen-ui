@@ -1,3 +1,4 @@
+import { ReservationStatusType } from "../enums/reservation-status-type.enum";
 import { OfferedServiceModel } from "./offered-service.models";
 import { UserModel } from "./user.models";
 
@@ -6,7 +7,7 @@ export interface ReservationModel {
     date: string; // Date
     startTime: string;
     endTime: string;
-    status: number; // TODO Implement ReservationStatusType Enum
+    status: ReservationStatusType;
     customerName?: string;
     customerEmail?: string;
     customerPhone?: string;

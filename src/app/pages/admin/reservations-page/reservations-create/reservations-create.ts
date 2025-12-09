@@ -16,6 +16,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { UISelectModel } from '../../../../models/basic/ui-select.model';
 import { Router } from '@angular/router';
+import { ReservationStatusType } from '../../../../models/enums/reservation-status-type.enum';
+import { ReservationsService } from '../../../../services/reservations.service';
+import { OfferedServicesService } from '../../../../services/offered-services.service';
+import { EnumService } from '../../../../services/enum.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { UsersService } from '../../../../services/users.service';
+import { ReservationCreateRequestDTO } from '../../../../models/dtos/reservation.dto.models';
+import { EMPTY } from 'rxjs/internal/observable/empty';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-admin-reservations-create',
@@ -30,6 +39,7 @@ import { Router } from '@angular/router';
     MatSelectModule,
     MatDatepickerModule,
     MatProgressSpinnerModule,
+    ToastrModule,
   ],
   templateUrl: './reservations-create.html',
   styleUrl: './reservations-create.scss',
@@ -37,26 +47,38 @@ import { Router } from '@angular/router';
 export class AdminReservationsCreate implements OnInit, AfterViewInit {
   isLoading = signal(false);
   reservationForm: FormGroup;
+  businessId!: number;
 
   reservationStatusOptions: UISelectModel[] = [];
   servicesOptions: UISelectModel[] = [];
 
-  constructor(private readonly fb: FormBuilder, private readonly router: Router) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private readonly reservationsService: ReservationsService,
+    private readonly offeredServicesService: OfferedServicesService,
+    private readonly enumService: EnumService,
+    private usersService: UsersService,
+    private readonly toastr: ToastrService,
+  ) {
     this.reservationForm = this.fb.group({
       customerName: [null, Validators.required],
       customerEmail: [null],
       customerPhone: [null, Validators.required],
       serviceId: [null, Validators.required],
-      status: [0], // TODO Accepted by default
+      status: [ReservationStatusType.PENDING],
       date: [null, Validators.required],
       startTime: [null, Validators.required],
       endTime: [null, Validators.required],
-      comments: [null],
+      // comments: [null],
     });
   }
 
   ngOnInit(): void {
-    this.loadSelectValues();
+    this.usersService.user$.subscribe((user) => {
+      this.businessId = user!.businessId!;
+      this.loadSelectValues();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -64,16 +86,37 @@ export class AdminReservationsCreate implements OnInit, AfterViewInit {
   }
 
   loadSelectValues(): void {
-    // TODO Load reservation statuses options.
-    // TODO Load services options.
+    this.offeredServicesService.getSelectOptions(this.businessId).subscribe((offeredServices: UISelectModel[]) => {
+      this.servicesOptions = offeredServices;
+      this.reservationStatusOptions = this.enumService.getReservationStatusTypeOptions();
+    });
   }
 
   save(): void {
-    // TODO Implement save method.
     this.isLoading.set(true);
-    setTimeout(() => {
+    const request: ReservationCreateRequestDTO = {
+      customerName: this.reservationForm.get('customerName')?.value,
+      customerPhone: this.reservationForm.get('customerPhone')?.value,
+      customerEmail: this.reservationForm.get('customerEmail')?.value,
+      date: this.reservationForm.get('date')?.value,
+      startTime: this.reservationForm.get('startTime')?.value,
+      endTime: this.reservationForm.get('endTime')?.value,
+      status: this.reservationForm.get('status')?.value,
+      serviceId: this.reservationForm.get('serviceId')?.value,
+      // comments: this.reservationForm.get('comments')?.value,
+    };
+
+    this.reservationsService.create(request).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error adding reservation');
+        return EMPTY;
+      })
+    ).subscribe(() => {
       this.isLoading.set(false);
-    }, 500);
+      this.toastr.success('Reservation added successfully');
+      void this.router.navigate(['/admin/reservations']);
+    });
   }
 
   goBack(): void {

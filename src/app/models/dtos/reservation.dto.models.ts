@@ -1,5 +1,6 @@
 import { UIPaginationBaseRequestModel, UIPaginationBaseResponseModel } from "../basic/ui-pagination.models";
 import { ReservationModel } from "../entities/reservation.models";
+import { ReservationStatusType } from "../enums/reservation-status-type.enum";
 
 export interface ReservationGetAllRequestDTO extends UIPaginationBaseRequestModel {
     search?: string;
@@ -12,6 +13,8 @@ export interface ReservationGetAllRequestDTO extends UIPaginationBaseRequestMode
     endTime?: string;
     statusTypes?: string; // TODO Implement ReservationStatusType Enum
     serviceIds?: number[];
+    businessId?: number;
+    userId?: number;
 }
 
 export type ReservationGetAllResponseDTO = UIPaginationBaseResponseModel<ReservationModel>;
@@ -20,7 +23,7 @@ export interface ReservationCreateRequestDTO {
     date: string;
     startTime: string;
     endTime: string;
-    status: number; // TODO Implement ReservationStatusType Enum
+    status: ReservationStatusType;
     customerName?: number;
     customerEmail?: string;
     customerPhone?: string;
@@ -33,7 +36,7 @@ export interface ReservationUpdateRequestDTO {
     date: string;
     startTime: string;
     endTime: string;
-    status: number; // TODO Implement ReservationStatusType Enum
+    status: ReservationStatusType;
     customerName?: number;
     customerEmail?: string;
     customerPhone?: string;

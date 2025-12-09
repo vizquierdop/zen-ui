@@ -8,9 +8,10 @@ import {
   OfferedServiceGetAllResponseDTO,
   OfferedServiceUpdateRequestDTO,
 } from '../models/dtos/offered-service.dto.models';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OfferedServiceModel } from '../models/entities/offered-service.models';
+import { UISelectModel } from '../models/basic/ui-select.model';
 
 @Injectable({ providedIn: 'root' })
 export class OfferedServicesService {
@@ -57,6 +58,12 @@ export class OfferedServicesService {
     return this.http.delete<void>(
       `${environment.apiUrl}/${this.enpoint}/${id}`,
       this.httpHeadersManager.generateCommonHttpOptions()
+    );
+  }
+
+  getSelectOptions(businessId: number): Observable<UISelectModel[]> {
+    return this.getAll({ paginationLength: 9999, isActive: true, businessId }).pipe(
+      map((response) => response.items.map((x) => ({ label: x.name, value: x.id })))
     );
   }
 }

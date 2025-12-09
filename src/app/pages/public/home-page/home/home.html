@@ -46,15 +46,19 @@
         <div class="next-appointments-container">
             <div class="row space-between">
                 <span class="title primary">Next appointments</span>
-                <span class="action secondary">See all</span>
+                <span class="action secondary" (click)="goTo('reservations')">See all</span>
             </div>
-            <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1" [circular]="true">
-                <ng-template let-appointment #item>
-                    <div class="item">
-                        <app-ui-carousel-reservation [reservation]="appointment"></app-ui-carousel-reservation>
-                    </div>
-                </ng-template>
-            </p-carousel>
+            @if (nextAppointments.length === 0) {
+            <span class="no-appointments">You don't have any appointments next week.</span>
+            } @else {
+                <p-carousel [value]="nextAppointments" [numVisible]="1" [numScroll]="1" [circular]="true">
+                    <ng-template let-appointment #item>
+                        <div class="item">
+                            <app-ui-carousel-reservation [reservation]="appointment"></app-ui-carousel-reservation>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            }
         </div>
         <div class="categories-container">
             <div class="row space-between">

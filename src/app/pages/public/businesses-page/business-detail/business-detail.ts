@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -7,8 +7,12 @@ import { UiPageHeader } from '../../../../components/ui-page-header/ui-page-head
 import { MatDialogModule } from '@angular/material/dialog';
 import { UiCategoryItem } from '../../../../components/ui-category-item/ui-category-item';
 import { BusinessModel } from '../../../../models/entities/business.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UiServiceItem } from "../../../../components/ui-service-item/ui-service-item";
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BusinessesService } from '../../../../services/businesses.service';
+import { catchError, EMPTY } from 'rxjs';
+import { BusinessGetSingleResponseDTO } from '../../../../models/dtos/business.dto.models';
 
 @Component({
   selector: 'app-public-business-detail',
@@ -20,63 +24,44 @@ import { UiServiceItem } from "../../../../components/ui-service-item/ui-service
     UiPageHeader,
     MatDialogModule,
     UiCategoryItem,
-    UiServiceItem
+    UiServiceItem,
+    ToastrModule,
 ],
   templateUrl: './business-detail.html',
   styleUrl: './business-detail.scss',
 })
-export class PublicBusinessDetail {
+export class PublicBusinessDetail implements OnInit {
   isLoading = signal<boolean>(false);
-  business = signal<BusinessModel | null>(null);
+  business = signal<BusinessGetSingleResponseDTO | null>(null);
+  businessId = 0;
 
-  constructor(private readonly route: ActivatedRoute) {
-    this.business.set({
-      id: 1,
-      name: 'Business 1',
-      address: 'Av. Navarra, 3, Zaragoza',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      vacations: [],
-      availabilities: [],
-      categories: [
-        {
-          id: '1',
-          name: 'Hairdresser',
-        },
-        {
-          id: '2',
-          name: 'Beautician',
-        },
-      ],
-      googleMaps: '',
-      phone: '976001122',
-      province: {
-        id: '1',
-        name: 'Province 1',
-      },
-      provinceId: 1,
-      services: [
-        {
-          id: 1,
-          name: 'Service 1',
-          description: 'Description 1',
-          duration: 60,
-          price: 100,
-          isActive: true,
-          businessId: 1,
-        },
-        {
-          id: 2,
-          name: 'Service 2',
-          description: 'Description 2',
-          duration: 30,
-          price: 50,
-          isActive: true,
-          businessId: 1,
-        },
-      ],
-      simultaneousBookings: 0,
-      userId: 1,
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly businessesService: BusinessesService,
+    private readonly toastr: ToastrService,
+    private readonly router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.businessId = +this.route.snapshot.paramMap.get('id')!;
+    if (this.businessId) {
+      this.loadData();
+    }
+  }
+
+  loadData(): void {
+    this.isLoading.set(true);
+    this.businessesService.get(this.businessId).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error loading business');
+        void this.router.navigate(['public/businesses']);
+        return EMPTY;
+      })
+    ).subscribe((response) => {
+      this.business.set(response);
+      console.log('response', response);
+      this.isLoading.set(false);
     });
   }
 }

@@ -39,10 +39,9 @@ export class AvailabilitiesService {
     );
   }
 
-  // TODO
   updateBulk(request: AvailabilityUpdateRequestDTO): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/${this.endpoint}/bulk`,
+      `${environment.apiUrl}/${this.endpoint}/business/${request.businessId}`,
       request,
       this.httpHeadersManager.generateCommonHttpOptions()
     );

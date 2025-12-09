@@ -217,6 +217,7 @@ export class AdminProfile implements AfterViewInit {
     const dialogRef = this.dialog.open(ConfigureAvailabilityModal, {
       data: {
         availabilities: this.availabilities,
+        businessId: this.user.businessId!,
       },
       minWidth: '80vw',
       maxWidth: '80vw',

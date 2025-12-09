@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AvailabilityModel } from '../../../../../models/entities/availability.models';
+import { AvailabilitiesService } from '../../../../../services/availabilities.service';
+import { AvailabilityUpdateRequestDTO } from '../../../../../models/dtos/availability.dto.models';
+import { catchError, EMPTY } from 'rxjs';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configure-availability-modal',
@@ -23,6 +27,7 @@ import { AvailabilityModel } from '../../../../../models/entities/availability.m
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    ToastrModule,
   ],
   templateUrl: './configure-availability-modal.html',
   styleUrl: './configure-availability-modal.scss',
@@ -38,14 +43,18 @@ export class ConfigureAvailabilityModal implements OnInit {
   sundayAvailabilityForm: FormGroup;
 
   availabilities: AvailabilityModel[] = [];
+  businessId!: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
       availabilities: AvailabilityModel[];
+      businessId: number;
     },
     private readonly dialog: MatDialogRef<ConfigureAvailabilityModal>,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly availabilitiesService: AvailabilitiesService,
+    private readonly toastr: ToastrService,
   ) {
     const availabilityForm = this.fb.group({
       id: [null],
@@ -66,6 +75,7 @@ export class ConfigureAvailabilityModal implements OnInit {
     this.sundayAvailabilityForm = this.createAvailabilityForm();
 
     this.availabilities = data.availabilities;
+    this.businessId = data.businessId;
   }
 
   ngOnInit(): void {
@@ -88,7 +98,7 @@ export class ConfigureAvailabilityModal implements OnInit {
       this.data.availabilities.find((availability) => availability.dayOfWeek === 6) ?? {}
     );
     this.sundayAvailabilityForm.patchValue(
-      this.data.availabilities.find((availability) => availability.dayOfWeek === 7) ?? {}
+      this.data.availabilities.find((availability) => availability.dayOfWeek === 0) ?? {}
     );
   }
 
@@ -97,7 +107,29 @@ export class ConfigureAvailabilityModal implements OnInit {
   }
 
   save(): void {
-    // TODO Implement save method.
+    this.isLoading.set(true);
+    const request: AvailabilityUpdateRequestDTO = {
+      businessId: this.businessId,
+      availabilities: [
+        this.mondayAvailabilityForm.value,
+        this.tuesdayAvailabilityForm.value,
+        this.wednesdayAvailabilityForm.value,
+        this.thursdayAvailabilityForm.value,
+        this.fridayAvailabilityForm.value,
+        this.saturdayAvailabilityForm.value,
+        this.sundayAvailabilityForm.value,
+      ],
+    };
+    this.availabilitiesService.updateBulk(request).pipe(
+      catchError(() => {
+        this.isLoading.set(false);
+        this.toastr.error('Error updating availabilities');
+        return EMPTY;
+      })
+    ).subscribe(() => {
+      this.isLoading.set(false);
+      this.dialog.close(null);
+    });
   }
 
   private createAvailabilityForm(): FormGroup {

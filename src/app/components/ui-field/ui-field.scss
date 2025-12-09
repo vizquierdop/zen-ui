@@ -41,4 +41,10 @@
       color: variables.$black;
     }
   }
+  &.primary {
+    background-color: variables.$primary;
+    .value {
+      color: variables.$white;
+    }
+  }
 }

@@ -70,8 +70,8 @@
       <mat-form-field appearance="outline" class="range-field">
         <mat-label>{{filter.label}}</mat-label>
         <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate [formControlName]="filter.name + 'Start'">
-          <input matEndDate [formControlName]="filter.name + 'End'">
+          <input matStartDate [formControlName]="'Start' + filter.name">
+          <input matEndDate [formControlName]="'End' + filter.name">
         </mat-date-range-input>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>

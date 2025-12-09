@@ -17,7 +17,7 @@ export const ReservationFilters: UIFilterModel[] = [
     type: 'string',
   },
   {
-    name: '',
+    name: 'Date',
     label: 'Reservation Date',
     type: 'range',
   },

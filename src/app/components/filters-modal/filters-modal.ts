@@ -64,7 +64,10 @@ export class FiltersModal {
     });
 
     this.filtersList.forEach((filter) => {
-      if (filter.type === 'range' || filter.type === 'number-range') {
+      if (filter.type === 'range') {
+        this.filtersForm.addControl(`Start${filter.name}`, new FormControl());
+        this.filtersForm.addControl(`End${filter.name}`, new FormControl());
+      } else if (filter.type === 'number-range') {
         this.filtersForm.addControl(`${filter.name}Start`, new FormControl());
         this.filtersForm.addControl(`${filter.name}End`, new FormControl());
       } else {

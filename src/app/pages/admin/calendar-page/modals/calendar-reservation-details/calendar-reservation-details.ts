@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReservationModel } from '../../../../../models/entities/reservation.models';
 import { UiField } from '../../../../../components/ui-field/ui-field';
 import { MatInputModule } from "@angular/material/input";
+import { ReservationStatusTypePipe } from "../../../../../utils/pipes/reservation-status-type.pipe";
 
 @Component({
   selector: 'app-calendar-reservation-details',
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, UiField, MatInputModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, UiField, MatInputModule, ReservationStatusTypePipe],
   templateUrl: './calendar-reservation-details.html',
   styleUrl: './calendar-reservation-details.scss',
 })

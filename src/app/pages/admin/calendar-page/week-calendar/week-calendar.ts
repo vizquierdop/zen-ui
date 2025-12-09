@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input, input } from '@angular/core';
-import { CalendarReservation } from "../calendar-reservation/calendar-reservation";
+import { CalendarReservation } from '../calendar-reservation/calendar-reservation';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
 
 @Component({
@@ -13,7 +13,7 @@ export class WeekCalendar {
   startWeek = input.required<Date>();
 
   @Input() reservations: ReservationModel[] = [];
-  
+
   readonly dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   weekDays = computed(() => {
@@ -28,4 +28,16 @@ export class WeekCalendar {
     }
     return days;
   });
+
+  getReservationsForDay(day: Date): ReservationModel[] {
+    return this.reservations.filter((reservation) => {
+      const resDate = new Date(reservation.date);
+
+      return (
+        resDate.getFullYear() === day.getFullYear() &&
+        resDate.getMonth() === day.getMonth() &&
+        resDate.getDate() === day.getDate()
+      );
+    });
+  }
 }

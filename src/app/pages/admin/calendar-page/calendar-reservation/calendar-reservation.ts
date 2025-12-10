@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ReservationModel } from '../../../../models/entities/reservation.models';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -11,14 +11,14 @@ import { ReservationStatusType } from '../../../../models/enums/reservation-stat
   templateUrl: './calendar-reservation.html',
   styleUrl: './calendar-reservation.scss',
 })
-export class CalendarReservation implements AfterViewInit {
+export class CalendarReservation implements OnInit {
   @Input() reservation!: ReservationModel;
 
   reservationClass = 'pending';
 
   constructor(private dialog: MatDialog) {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (this.reservation.status === ReservationStatusType.ACCEPTED) {
       this.reservationClass = 'accepted';
     } else if (this.reservation.status === ReservationStatusType.CANCELLED) {

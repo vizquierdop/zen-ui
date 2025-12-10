@@ -173,7 +173,7 @@
                     </div>
                     @for (categoryGroup of categories.controls; track categoryGroup) {
                         <div class="row">
-                            <app-ui-category-full [category]="categoryGroup.value" (hasToReload$)="loadData()"></app-ui-category-full>
+                            <app-ui-category-full [category]="categoryGroup.value" [businessId]="user.businessId!" (hasToReload$)="loadData()"></app-ui-category-full>
                         </div>
                     }
                 </div>

@@ -22,10 +22,9 @@ export class BusinessCategoriesService {
     );
   }
 
-  // TODO Implement in API
-  delete(id: number): Observable<void> {
+  delete(businessId: number, categoryId: number): Observable<void> {
     return this.http.delete<void>(
-      `${environment.apiUrl}/${this.endpoint}/${id}`,
+      `${environment.apiUrl}/${this.endpoint}/business/${businessId}/category/${categoryId}`,
       this.httpHeadersManager.generateCommonHttpOptions()
     );
   }

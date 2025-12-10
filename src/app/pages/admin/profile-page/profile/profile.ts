@@ -229,20 +229,24 @@ export class AdminProfile implements AfterViewInit {
   }
 
   openAddCategoryModal(): void {
-    const dialogRef = this.dialog.open(AddCategoryModal, {
-      data: {
-        categories: this.filterUnusedCategories(this.categoryOptions),
-        businessId: this.profileForm.get('businessId')?.value,
-      },
-      minWidth: '400px',
-      maxWidth: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadData();
-      }
-    });
+    if (this.categories.length < 3) {
+      const dialogRef = this.dialog.open(AddCategoryModal, {
+        data: {
+          categories: this.filterUnusedCategories(this.categoryOptions),
+          businessId: this.profileForm.get('businessId')?.value,
+        },
+        minWidth: '400px',
+        maxWidth: '400px',
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.loadData();
+        }
+      });
+    } else {
+      this.toastr.info('You can only add up to 3 categories.');
+    }
   }
 
   filterUnusedCategories(categoryOptions: UISelectModel[]): UISelectModel[] {

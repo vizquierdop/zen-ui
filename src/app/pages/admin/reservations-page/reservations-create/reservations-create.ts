@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -41,6 +41,7 @@ import { catchError } from 'rxjs';
     MatProgressSpinnerModule,
     ToastrModule,
   ],
+  providers: [DatePipe],
   templateUrl: './reservations-create.html',
   styleUrl: './reservations-create.scss',
 })
@@ -60,6 +61,7 @@ export class AdminReservationsCreate implements OnInit, AfterViewInit {
     private readonly enumService: EnumService,
     private usersService: UsersService,
     private readonly toastr: ToastrService,
+    private readonly datePipe: DatePipe,
   ) {
     this.reservationForm = this.fb.group({
       customerName: [null, Validators.required],
@@ -98,7 +100,7 @@ export class AdminReservationsCreate implements OnInit, AfterViewInit {
       customerName: this.reservationForm.get('customerName')?.value,
       customerPhone: this.reservationForm.get('customerPhone')?.value,
       customerEmail: this.reservationForm.get('customerEmail')?.value,
-      date: this.reservationForm.get('date')?.value,
+      date: this.datePipe.transform(this.reservationForm.get('date')?.value, 'yyyy-MM-dd')!,
       startTime: this.reservationForm.get('startTime')?.value,
       endTime: this.reservationForm.get('endTime')?.value,
       status: this.reservationForm.get('status')?.value,

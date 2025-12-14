@@ -1,6 +1,6 @@
 <div class="category-item" (click)="goToCategory()">
         <div class="category-icon">
-            <img src="images/resources/categories/{{ category.name | lowercase }}.png" [alt]="category.name">
+            <img src="images/resources/categories/{{ category.name.replace(' ', '-') | lowercase }}.png" [alt]="category.name">
         </div>
         <span class="category-name">{{ category.name }}</span>
     </div>

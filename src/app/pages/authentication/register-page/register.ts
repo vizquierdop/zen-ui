@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -61,7 +61,7 @@ export class Register {
     private readonly usersService: UsersService,
     private readonly toastr: ToastrService,
     private readonly categoriesService: CategoriesService,
-    private readonly provincesService: ProvincesService,
+    private readonly provincesService: ProvincesService
   ) {
     this.registerForm = this.fb.group({
       // Basic Info
@@ -80,15 +80,31 @@ export class Register {
       keyword3: [null],
     });
 
-    this.breakpoint$ = this.breakpointObserver.observe([
-      '(max-width: 752px)',
-    ]);
+    this.breakpoint$ = this.breakpointObserver.observe(['(max-width: 752px)']);
 
     this.breakpoint$.subscribe((result) => {
       this.breakpointChanges();
     });
 
     this.loadSelectValues();
+
+    effect(() => {
+      const isBusiness = this.userType() === 'business';
+      const fieldsToCheck = ['businessName', 'keyword1', 'keyword2', 'keyword3'];
+
+      fieldsToCheck.forEach((fieldName) => {
+        const control = this.registerForm.get(fieldName);
+        if (control) {
+          if (isBusiness) {
+            control.setValidators([Validators.required]);
+          } else {
+            control.clearValidators();
+          }
+          control.updateValueAndValidity();
+        }
+      });
+      this.registerForm.updateValueAndValidity();
+    });
   }
 
   loadSelectValues(): void {
@@ -110,6 +126,25 @@ export class Register {
   }
 
   register(): void {
+    const password = this.registerForm.get('password')?.value;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/;
+
+    if (!password || !passwordRegex.test(password)) {
+      this.toastr.error(
+        'Password must be at least 8 characters and contain 3 types of characters (number, uppercase, lowercase, special).'
+      );
+      return;
+    }
+
+    if (
+      this.userType() === 'business' &&
+      (this.registerForm.get('categories')?.value === null ||
+        this.registerForm.get('categories')?.value.length === 0)
+    ) {
+      this.toastr.error('Please select at least one category.');
+      return;
+    }
+
     this.isLoading.set(true);
     const request: UserCreateRequestDTO = {
       email: this.registerForm.get('email')?.value,
@@ -120,29 +155,36 @@ export class Register {
       role: this.userType() === 'business' ? RoleType.BUSINESS : RoleType.CUSTOMER,
       isActive: true,
       provinceId: this.registerForm.get('provinceId')?.value,
-      business: this.userType() === 'business' ? {
-        name: this.registerForm.get('businessName')?.value,
-        categoryIds: this.registerForm.get('categories')?.value,
-        keyword1: this.registerForm.get('keyword1')?.value,
-        keyword2: this.registerForm.get('keyword2')?.value,
-        keyword3: this.registerForm.get('keyword3')?.value,
-        isActive: true,
-        provinceId: this.registerForm.get('provinceId')?.value,
-        address: '',
-        simultaneousBookings: 1,
-      } : undefined,
+      business:
+        this.userType() === 'business'
+          ? {
+              name: this.registerForm.get('businessName')?.value,
+              categoryIds: this.registerForm.get('categories')?.value,
+              keyword1: this.registerForm.get('keyword1')?.value,
+              keyword2: this.registerForm.get('keyword2')?.value,
+              keyword3: this.registerForm.get('keyword3')?.value,
+              isActive: true,
+              provinceId: this.registerForm.get('provinceId')?.value,
+              address: '',
+              simultaneousBookings: 1,
+            }
+          : undefined,
     };
-    this.usersService.register(request).pipe(
-      catchError(() => {
+
+    this.usersService
+      .register(request)
+      .pipe(
+        catchError(() => {
+          this.isLoading.set(false);
+          this.toastr.error('Error registering user');
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
         this.isLoading.set(false);
-        this.toastr.error('Error registering user');
-        return EMPTY;
-      })
-    ).subscribe(() => {
-      this.isLoading.set(false);
-      this.toastr.success('User registered successfully');
-      this.goToLogin();
-    });
+        this.toastr.success('User registered successfully');
+        this.goToLogin();
+      });
   }
 
   goToLogin(): void {

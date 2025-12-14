@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, Inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -45,6 +45,7 @@ import { BusinessGetSingleResponseDTO } from '../../models/dtos/business.dto.mod
     UiField,
     ToastrModule,
   ],
+  providers: [DatePipe],
   templateUrl: './ui-create-reservation-modal.html',
   styleUrl: './ui-create-reservation-modal.scss',
 })
@@ -67,6 +68,7 @@ export class UiCreateReservationModal implements OnInit {
     private readonly reservationsService: ReservationsService,
     private readonly toastr: ToastrService,
     private readonly businessesService: BusinessesService,
+    private readonly datePipe: DatePipe,
   ) {
     this.service = this.data.service;
     this.reservationForm = this.fb.group({
@@ -117,7 +119,7 @@ export class UiCreateReservationModal implements OnInit {
   save(): void {
     this.isLoading.set(true);
     const request: ReservationCreateRequestDTO = {
-      date: this.reservationForm.get('date')?.value,
+      date: this.datePipe.transform(this.reservationForm.get('date')?.value, 'yyyy-MM-dd')!,
       startTime: this.reservationForm.get('startTime')?.value,
       endTime: this.reservationForm.get('endTime')?.value,
       userId: this.reservationForm.get('userId')?.value,

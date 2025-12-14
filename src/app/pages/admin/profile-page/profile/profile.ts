@@ -139,6 +139,9 @@ export class AdminProfile implements AfterViewInit {
       this.profileForm.get('photo')?.setValue(business.photo);
       this.profileForm.get('provinceId')?.setValue(business.provinceId);
       this.profileForm.get('address')?.setValue(business.address);
+      if (business.address === null || business.address === '') {
+        this.toastr.info('Remember to include your address.');
+      }
       this.profileForm.get('simultaneousBookings')?.setValue(business.simultaneousBookings);
       this.profileForm.get('description')?.setValue(business.description);
       this.profileForm.get('keyword1')?.setValue(business.keyword1);
@@ -159,6 +162,9 @@ export class AdminProfile implements AfterViewInit {
       });
 
       this.availabilities = business.availabilities;
+      if (this.availabilities.filter((availability) => availability.isActive).length === 0) {
+        this.toastr.info('Remember to configure your availabilities. If not, you will not receive reservations.');
+      }
     });
   }
 

@@ -69,12 +69,12 @@ export class Login {
       .login(request)
       .pipe(
         catchError(async (err) => {
-          this.toastr.error('Error, revisa los datos introducidos.');
+          this.toastr.error('Error, check your credentials.');
           this.isLoading.set(false);
         }),
+        // switchMap waits for the login to complete before fetching user details.
         switchMap((res) => {
           if (res) {
-            console.log('res', res);
             let t = new Date(res.accessTokenExpiresAt);
             localStorage.setItem('zen_accessToken', res.accessToken);
             localStorage.setItem('zen_refreshToken', res.refreshToken);

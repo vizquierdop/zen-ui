@@ -13,7 +13,10 @@ export class UsersService {
 
   user$ = this.userSubject.asObservable();
 
-  constructor(private readonly http: HttpClient, private readonly httpHeadersManager: HttpHeadersManagerService) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly httpHeadersManager: HttpHeadersManagerService
+  ) {}
 
   private getUserFromLocalStorage(): UserModel {
     return JSON.parse(localStorage.getItem('zen_userInfo') || 'null') as UserModel;

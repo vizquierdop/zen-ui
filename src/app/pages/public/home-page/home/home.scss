@@ -105,6 +105,11 @@
         color: variables.$secondary;
       }
     }
+    .no-appointments {
+      color: variables.$gray;
+      font-size: 14px;
+      padding: 10px;
+    }
     p-carousel {
       width: 100%;
       .item {
@@ -128,6 +133,148 @@
       }
 
       scrollbar-width: none;
+    }
+  }
+
+  // Tablet styles
+  @media (min-width: 768px) and (max-width: 1023px) {
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .top-sections-container {
+      gap: 16px;
+      
+      .row {
+        gap: 16px;
+        padding: 16px;
+        
+        .section {
+          gap: 16px;
+          padding: 16px;
+          border-radius: 16px;
+          
+          .section-image-container {
+            gap: 12px;
+            img {
+              max-width: 70px;
+              max-height: 70px;
+            }
+          }
+          
+          .section-title-container {
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    
+    .next-appointments-container,
+    .categories-container {
+      gap: 16px;
+      padding: 16px;
+      
+      .row {
+        gap: 16px;
+        
+        .title {
+          font-size: 28px;
+        }
+        
+        .action {
+          font-size: 16px;
+        }
+      }
+      
+      .no-appointments {
+        font-size: 16px;
+        padding: 16px;
+      }
+      
+      p-carousel {
+        .item {
+          padding: 16px;
+        }
+      }
+      
+      .categories-list {
+        gap: 24px;
+        padding: 16px 0;
+      }
+    }
+  }
+
+  // Desktop styles
+  @media (min-width: 1024px) {
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .top-sections-container {
+      gap: 20px;
+      
+      .row {
+        gap: 20px;
+        padding: 20px;
+        
+        .section {
+          gap: 20px;
+          padding: 20px;
+          border-radius: 20px;
+          
+          .section-image-container {
+            gap: 16px;
+            img {
+              max-width: 90px;
+              max-height: 90px;
+            }
+          }
+          
+          .section-title-container {
+            span {
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+    
+    .next-appointments-container,
+    .categories-container {
+      gap: 20px;
+      padding: 20px;
+      
+      .row {
+        gap: 20px;
+        
+        .title {
+          font-size: 32px;
+        }
+        
+        .action {
+          font-size: 18px;
+        }
+      }
+      
+      .no-appointments {
+        font-size: 18px;
+        padding: 20px;
+      }
+      
+      p-carousel {
+        .item {
+          padding: 20px;
+        }
+      }
+      
+      .categories-list {
+        gap: 32px;
+        padding: 20px 0;
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
     }
   }
 }

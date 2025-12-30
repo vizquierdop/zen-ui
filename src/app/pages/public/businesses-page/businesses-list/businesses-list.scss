@@ -41,30 +41,76 @@
     }
     .businesses-list {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: flex-start;
       align-items: flex-start;
-      flex-wrap: wrap;
       gap: 16px;
       width: 100%;
       app-ui-business-full {
-        max-width: 45%;
+        width: 100%;
       }
     }
   }
-}
 
-
-@media screen and (min-width: 600px) {
-  .businesses-content {
+  // Tablet styles
+  @media (min-width: 768px) and (max-width: 1023px) {
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    
+    form {
+      padding: 0 20px;
+    }
+    
     .businesses-list-container {
+      padding: 0 20px;
+      gap: 20px;
+      max-width: 800px;
+      
       .businesses-list {
-        justify-content: flex-start;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        
         app-ui-business-full {
-          max-width: 30%;
+          width: 100%;
+          height: 100%;
         }
       }
     }
   }
+
+  // Desktop styles
+  @media (min-width: 1024px) {
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
     
+    form {
+      padding: 0 24px;
+      
+      .row {
+        gap: 24px;
+      }
+    }
+    
+    .businesses-list-container {
+      padding: 0 24px;
+      gap: 24px;
+      max-width: 1200px;
+      
+      .businesses-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        
+        app-ui-business-full {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
 }

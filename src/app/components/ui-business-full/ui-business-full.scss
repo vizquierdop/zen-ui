@@ -3,6 +3,7 @@
 
 .business-container {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,15 +21,17 @@
     justify-content: center;
     width: 100%;
     border-radius: 20px 20px 0 0;
+    overflow: hidden;
     img {
       width: 100%;
-      height: auto;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
       border-radius: 20px 20px 0 0;
     }
   }
   .business-info-container {
     width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -70,10 +73,98 @@
       }
     }
   }
+
+  // Tablet styles
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .business-image-container {
+      height: 180px;
+      min-height: 180px;
+      img {
+        object-fit: cover;
+      }
+    }
+    
+    .business-info-container {
+      padding: 16px;
+      gap: 10px;
+      
+      .business-info-group {
+        gap: 8px;
+        
+        .business-name {
+          font-size: 17px;
+        }
+        
+        .business-info-icon {
+          height: 18px;
+          width: 18px;
+          font-size: 18px;
+          min-width: 18px;
+        }
+      }
+      
+      .business-info-section {
+        gap: 6px;
+        
+        .info-section-title {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  // Desktop styles
+  @media (min-width: 1024px) {
+    .business-image-container {
+      height: 200px;
+      min-height: 200px;
+      img {
+        object-fit: cover;
+      }
+    }
+    
+    .business-info-container {
+      padding: 20px;
+      gap: 12px;
+      
+      .business-info-group {
+        gap: 10px;
+        
+        .business-name {
+          font-size: 20px;
+        }
+        
+        .business-info-icon {
+          height: 20px;
+          width: 20px;
+          font-size: 20px;
+          min-width: 20px;
+        }
+      }
+      
+      .business-info-section {
+        gap: 8px;
+        
+        .info-section-title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
 
 .business-info-text {
   color: variables.$gray;
   font-size: 10px;
   font-weight: 600;
+  
+  // Tablet styles
+  @media (min-width: 768px) and (max-width: 1023px) {
+    font-size: 14px;
+  }
+  
+  // Desktop styles
+  @media (min-width: 1024px) {
+    font-size: 16px;
+  }
 }

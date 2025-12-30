@@ -96,4 +96,144 @@
       }
     }
   }
+
+  // Tablet styles
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 0 20px;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    .top-section {
+      flex-direction: row;
+      gap: 20px;
+      padding: 16px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      
+      .image-container {
+        width: 250px;
+        min-width: 250px;
+        max-width: 250px;
+        box-shadow: none;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          max-height: 250px;
+        }
+      }
+      
+      .info-container {
+        flex: 1;
+        gap: 12px;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: transparent;
+        
+        .business-info-group {
+          gap: 10px;
+          
+          .business-info-text {
+            font-size: 14px;
+          }
+          
+          .business-info-icon {
+            height: 18px;
+            width: 18px;
+            font-size: 18px;
+            min-width: 18px;
+          }
+        }
+      }
+    }
+    
+    .section {
+      gap: 16px;
+      
+      .section-title {
+        font-size: 18px;
+      }
+      
+      .categories-list {
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      
+      .services-list {
+        gap: 20px;
+      }
+    }
+  }
+
+  // Desktop styles
+  @media (min-width: 1024px) {
+    padding: 0 24px;
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    .top-section {
+      flex-direction: row;
+      gap: 32px;
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      
+      .image-container {
+        width: 400px;
+        min-width: 400px;
+        max-width: 400px;
+        box-shadow: none;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          max-height: 400px;
+        }
+      }
+      
+      .info-container {
+        flex: 1;
+        gap: 16px;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: transparent;
+        
+        .business-info-group {
+          gap: 12px;
+          
+          .business-info-text {
+            font-size: 16px;
+          }
+          
+          .business-info-icon {
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+            min-width: 20px;
+          }
+        }
+      }
+    }
+    
+    .section {
+      gap: 20px;
+      
+      .section-title {
+        font-size: 22px;
+      }
+      
+      .categories-list {
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      
+      .services-list {
+        gap: 24px;
+      }
+    }
+  }
 }

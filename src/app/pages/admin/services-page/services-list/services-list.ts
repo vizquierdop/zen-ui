@@ -30,8 +30,9 @@ import { ObjectDataSource } from '../../../../utils/lists/datasource';
 import { UITableTag } from '../../../../components/ui-table-tag/ui-table-tag';
 import { OfferedServicesService } from '../../../../services/offered-services.service';
 import { UsersService } from '../../../../services/users.service';
-import { OfferedServiceGetAllRequestDTO } from '../../../../models/dtos/offered-service.dto.models';
-import { delay } from 'rxjs';
+import { OfferedServiceGetAllRequestDTO, OfferedServiceUpdateRequestDTO } from '../../../../models/dtos/offered-service.dto.models';
+import { catchError, delay, EMPTY } from 'rxjs';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-services-list',
@@ -48,6 +49,7 @@ import { delay } from 'rxjs';
     MatSortModule,
     MatMenuModule,
     UITableTag,
+    ToastrModule,
   ],
   templateUrl: './services-list.html',
   styleUrl: './services-list.scss',
@@ -77,7 +79,8 @@ export class AdminServicesList implements IListPage, AfterViewInit {
     private readonly dialog: MatDialog,
     private readonly persistentFiltersService: PersistentFiltersService,
     private readonly offeredServicesService: OfferedServicesService,
-    private usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly toastr: ToastrService,
   ) {
     if (this.persistentFiltersService.getSectionFilters(UISectionKeysEnum.ADMIN_SERVICES)) {
       this.filters.set(
@@ -225,5 +228,28 @@ export class AdminServicesList implements IListPage, AfterViewInit {
     });
   }
 
-  updateStatus(offeredService: OfferedServiceModel): void {}
+  updateStatus(offeredService: OfferedServiceModel): void {
+    const request: OfferedServiceUpdateRequestDTO = {
+      id: offeredService.id,
+      isActive: !offeredService.isActive,
+      businessId: this.businessId,
+      description: offeredService.description,
+      duration: offeredService.duration,
+      name: offeredService.name,
+      price: offeredService.price,
+    };
+    this.isLoading.set(true);
+    this.offeredServicesService
+      .update(request).pipe(
+        catchError(() => {
+          this.isLoading.set(false);
+          this.toastr.error('Error updating service status');
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.isLoading.set(false);
+        this.loadData()
+      });
+  }
 }

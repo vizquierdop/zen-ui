@@ -8,12 +8,15 @@ describe('UiField', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiField]
-    })
-    .compileComponents();
+      imports: [UiField],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UiField);
     component = fixture.componentInstance;
+
+    fixture.componentRef.setInput('value', 'Test value');
+    fixture.componentRef.setInput('class', 'green');
+
     fixture.detectChanges();
   });
 

@@ -51,6 +51,7 @@ export class PublicReservationsList implements OnInit {
   totalCount = signal<number>(0);
   hasPreviousPage = signal<boolean>(false);
   hasNextPage = signal<boolean>(false);
+  currentPage = signal(1);
   reservations: ReservationModel[] = [];
 
   userId!: number;
@@ -84,7 +85,7 @@ export class PublicReservationsList implements OnInit {
     const request: ReservationGetAllRequestDTO = {
       userId: this.userId,
       paginationLength: 5,
-      paginationSkip: 1,
+      paginationSkip: this.currentPage(),
     };
     if (this.filtersForm.get('startDate')?.value) {
       request.startDate = this.filtersForm.get('startDate')?.value;
@@ -133,14 +134,16 @@ export class PublicReservationsList implements OnInit {
       default:
         break;
     }
-
+    this.currentPage.set(1);
     this.loadData();
   }
 
   previousPage(): void {
-    // TODO Implement previous page method.
+    this.currentPage.update((val) => val - 1);
+    this.loadData();
   }
   nextPage(): void {
-    // TODO Implement next page method.
+    this.currentPage.update((val) => val + 1);
+    this.loadData();
   }
 }

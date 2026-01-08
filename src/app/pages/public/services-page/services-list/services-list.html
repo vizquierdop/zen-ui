@@ -16,11 +16,13 @@
         </div>
         <div class="services-list-container">
             <app-ui-mobile-paginator [itemsLength]="itemsLength" [totalCount]="totalCount"
-                    [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
-                    (nextPage$)="nextPage()"></app-ui-mobile-paginator>
-            @for (service of services; track service) {
-            <app-ui-service-full [service]="service"></app-ui-service-full>
-            }
+                [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
+                (nextPage$)="nextPage()"></app-ui-mobile-paginator>
+            <div class="services-list">
+                @for (service of services; track service) {
+                <app-ui-service-full [service]="service"></app-ui-service-full>
+                }
+            </div>
         </div>
     </div>
 </div>

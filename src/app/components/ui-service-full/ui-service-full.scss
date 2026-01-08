@@ -64,14 +64,14 @@
 
   // Tablet styles
   @media (min-width: 768px) and (max-width: 1023px) {
-    flex-direction: row;
-    align-items: stretch;
+    // flex-direction: row;
+    // align-items: stretch;
     
     .service-image-container {
-      width: 200px;
-      min-width: 200px;
-      max-width: 200px;
-      border-radius: 20px 0 0 20px;
+      // width: 300px;
+      // min-width: 300px;
+      // max-width: 300px;
+      border-radius: 20px 20px 0 0;
       overflow: hidden;
       img {
         width: 100%;
@@ -112,14 +112,14 @@
 
   // Desktop styles
   @media (min-width: 1024px) {
-    flex-direction: row;
-    align-items: stretch;
+    // flex-direction: row;
+    // align-items: stretch;
     
     .service-image-container {
-      width: 300px;
-      min-width: 300px;
-      max-width: 300px;
-      border-radius: 20px 0 0 20px;
+      // width: 300px;
+      // min-width: 300px;
+      // max-width: 300px;
+      border-radius: 20px 20px 0 0;
       overflow: hidden;
       img {
         width: 100%;

@@ -35,9 +35,11 @@
                 <app-ui-mobile-paginator [itemsLength]="itemsLength" [totalCount]="totalCount"
                     [hasPreviousPage]="hasPreviousPage" [hasNextPage]="hasNextPage" (previousPage$)="previousPage()"
                     (nextPage$)="nextPage()"></app-ui-mobile-paginator>
-                @for (reservation of reservations; track reservation) {
-                <app-ui-reservation-full [reservation]="reservation" (hasToReload$)="loadData()"></app-ui-reservation-full>
-                }
+                    <div class="reservations-list">
+                        @for (reservation of reservations; track reservation) {
+                        <app-ui-reservation-full [reservation]="reservation" (hasToReload$)="loadData()"></app-ui-reservation-full>
+                        }
+                    </div>
             </div>
         </div>
     </div>

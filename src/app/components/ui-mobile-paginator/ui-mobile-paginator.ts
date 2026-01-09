@@ -18,11 +18,4 @@ export class UiMobilePaginator {
   @Output() previousPage$ = new EventEmitter<void>();
   @Output() nextPage$ = new EventEmitter<void>();
 
-  previousPage(): void {
-    this.previousPage$.emit();
-  }
-
-  nextPage(): void {
-    this.nextPage$.emit();
-  }
 }

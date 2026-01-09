@@ -1,10 +1,10 @@
 <div class="ui-mobile-paginator-container">
     <span class="paginator-text">Showing {{ itemsLength() }} of {{ totalCount() }} results.</span>
     <div class="paginator-buttons">
-        <button matMiniFab color="primary" [disabled]="!hasPreviousPage()" aria-label="Previous page">
+        <button matMiniFab color="primary" [disabled]="!hasPreviousPage()" (click)="previousPage$.emit()" aria-label="Previous page">
             <mat-icon>chevron_left</mat-icon>
         </button>
-        <button matMiniFab color="primary" [disabled]="!hasNextPage()" aria-label="Next page">
+        <button matMiniFab color="primary" [disabled]="!hasNextPage()" (click)="nextPage$.emit()" aria-label="Next page">
             <mat-icon>chevron_right</mat-icon>
         </button>
     </div>

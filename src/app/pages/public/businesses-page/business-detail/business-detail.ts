@@ -59,6 +59,7 @@ export class PublicBusinessDetail implements OnInit {
         return EMPTY;
       })
     ).subscribe((response) => {
+      response.offeredServices = response.offeredServices.filter((s) => s.isActive);
       this.business.set(response);
       this.isLoading.set(false);
     });

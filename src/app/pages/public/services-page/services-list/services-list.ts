@@ -53,7 +53,7 @@ export class PublicServicesList implements AfterViewInit {
     const request: OfferedServiceGetAllRequestDTO = {
       isActive: true,
       provinceId: this.user.provinceId,
-      paginationLength: 5,
+      paginationLength: 6,
       paginationSkip: this.currentPage(),
     };
     if (this.searchInput.nativeElement.value) {

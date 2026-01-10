@@ -84,7 +84,7 @@ export class PublicReservationsList implements OnInit {
     this.isLoading.set(true);
     const request: ReservationGetAllRequestDTO = {
       userId: this.userId,
-      paginationLength: 5,
+      paginationLength: 6,
       paginationSkip: this.currentPage(),
     };
     if (this.filtersForm.get('startDate')?.value) {

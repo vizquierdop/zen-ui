@@ -104,7 +104,7 @@ export class PublicBusinessesList implements OnInit, AfterViewInit {
       name: this.filtersForm.get('name')?.value,
       categoryIds: this.filtersForm.get('categoryIds')?.value,
       provinceId: this.user.provinceId,
-      paginationLength: 5,
+      paginationLength: 6,
       paginationSkip: this.currentPage(),
     };
     this.businessesService.getAll(request).pipe(
